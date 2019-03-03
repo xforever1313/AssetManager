@@ -24,7 +24,7 @@ namespace AssetManager.Api
 
         // ---------------- Constructor ----------------
 
-        public Asset()
+        internal Asset()
         {
             this.type = AssetTypeBuilder.UnknownType;
             this.Name = "Untitled Asset";
@@ -44,7 +44,7 @@ namespace AssetManager.Api
             {
                 return this.type;
             }
-            set
+            internal set
             {
                 if( string.IsNullOrWhiteSpace( value ) )
                 {
@@ -86,7 +86,7 @@ namespace AssetManager.Api
             }
             set
             {
-                //this.KeyCheck( key ); // For now...
+                this.KeyCheck( key );
                 this.kvAttributes[key] = value;
             }
         }
@@ -97,6 +97,16 @@ namespace AssetManager.Api
         public IReadOnlyDictionary<string, string> KeyValueAttributes { get; private set; }
 
         // ---------------- Functions ----------------
+
+        /// <summary>
+        /// Adds a new key that is set to null.
+        /// Internal since we only do this when creating a new Asset that
+        /// consumers of the API will use.
+        /// </summary>
+        internal void AddKey( string newKey )
+        {
+            this.kvAttributes[newKey] = null;
+        }
 
         private void KeyCheck( string key )
         {

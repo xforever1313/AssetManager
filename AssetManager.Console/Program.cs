@@ -27,11 +27,8 @@ namespace AssetManager.Cli
             }
 
             {
-                Asset asset = new Asset
-                {
-                    AssetType = "Pokemon Card",
-                    Name = "Politoed"
-                };
+                Asset asset = api.DataBase.GenerateEmptyAsset( "Pokemon Card" );
+                asset.Name = "Politoed";
                 asset["HP"] = 100.ToString();
                 asset["Retreat Cost"] = 3.ToString();
 
@@ -39,25 +36,19 @@ namespace AssetManager.Cli
             }
 
             {
-                Asset asset = new Asset
-                {
-                    AssetType = "Yugioh! Card",
-                    Name = "The 13th Grave"
-                };
-                asset["Attack"] = 1200.ToString();
-                asset["Defense"] = 900.ToString();
+                Asset asset = api.DataBase.GenerateEmptyAsset( "Yugioh! Card" );
+                asset.Name = "The 13th Grave";
+                asset["Attack"] = 1200;
+                asset["Defense"] = 900;
 
                 api.DataBase.AddAsset( asset );
             }
 
             {
-                Asset asset = new Asset
-                {
-                    AssetType = "Yugioh! Card",
-                    Name = "Overdrive"
-                };
-                asset["Attack"] = 1600.ToString();
-                asset["Defense"] = 1500.ToString();
+                Asset asset = api.DataBase.GenerateEmptyAsset( "Yugioh! Card" );
+                asset.Name = "Overdrive";
+                asset["Attack"] = 1600;
+                asset["Defense"] = 1500;
 
                 api.DataBase.AddAsset( asset );
             }
