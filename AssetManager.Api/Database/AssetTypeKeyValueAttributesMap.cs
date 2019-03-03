@@ -21,6 +21,7 @@ namespace AssetManager.Api.Database
 
         public AssetTypeKeyValueAttributesMap()
         {
+            this.AttributeType = AttributeTypes.StringAttribute;
         }
 
         // ---------------- Properties ----------------
@@ -32,5 +33,11 @@ namespace AssetManager.Api.Database
 
         [Required]
         public virtual KeyValueAttributeType KeyValueAttributeType { get; set; }
+
+        /// <summary>
+        /// The type of attribute that is used for the asset type.
+        /// Defaulted to <see cref="AttributeTypes.StringAttribute"/>
+        /// </summary>
+        public AttributeTypes AttributeType { get; set; }
     }
 }

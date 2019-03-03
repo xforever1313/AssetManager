@@ -12,46 +12,48 @@ using System.Text;
 namespace AssetManager.Api
 {
     /// <summary>
-    /// This class aides in building an Asset Type.
+    /// This class helps build attriutes to be used with <see cref="AssetTypeBuilder"/>
     /// </summary>
-    public class AssetTypeBuilder
+    public class AttributeBuilder
     {
         // ---------------- Fields ----------------
 
-        internal const string UnknownType = "Unknown Asset";
-
-        private string name;
+        private string key;
 
         // ---------------- Constructor ----------------
 
-        public AssetTypeBuilder( string assetName )
+        public AttributeBuilder()
         {
-            this.Name = assetName;
-            this.KeyValueAttributeKeys = new List<AttributeBuilder>();
+            this.Type = AttributeTypes.StringAttribute;
+            this.key = "Unknown Key";
         }
 
         // ---------------- Properties ----------------
 
         /// <summary>
-        /// The name of the specific asset instance.
+        /// The key that will be used for this attribute.
         /// </summary>
-        public string Name
+        public string Key
         {
             get
             {
-                return this.name;
+                return this.key;
             }
             set
             {
                 if( string.IsNullOrWhiteSpace( value ) )
                 {
-                    throw new ArgumentException( nameof( Name ) + " can not be null, empty, or whitespace." );
+                    throw new ArgumentException( nameof( key ) + " can not be null, empty, or whitespace." );
                 }
-                this.name = value;
+                this.key = value;
             }
         }
 
-        public IList<AttributeBuilder> KeyValueAttributeKeys { get; private set; }
+        /// <summary>
+        /// The type of attribute the attribute will be.
+        /// Defaulted to <see cref="AttributeTypes.StringAttribute"/>
+        /// </summary>
+        public AttributeTypes Type { get; set; }
 
         // ---------------- Functions ----------------
     }

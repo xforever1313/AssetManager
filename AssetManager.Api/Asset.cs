@@ -20,7 +20,7 @@ namespace AssetManager.Api
 
         private string type;
         private string name;
-        private readonly Dictionary<string, string> kvAttributes;
+        private readonly Dictionary<string, IAttribute> kvAttributes;
 
         // ---------------- Constructor ----------------
 
@@ -28,9 +28,9 @@ namespace AssetManager.Api
         {
             this.type = AssetTypeBuilder.UnknownType;
             this.Name = "Untitled Asset";
-            this.kvAttributes = new Dictionary<string, string>();
+            this.kvAttributes = new Dictionary<string, IAttribute>();
 
-            this.KeyValueAttributes = new ReadOnlyDictionary<string, string>( this.kvAttributes );
+            this.KeyValueAttributes = new ReadOnlyDictionary<string, IAttribute>( this.kvAttributes );
         }
 
         // ---------------- Properties ----------------
@@ -77,7 +77,7 @@ namespace AssetManager.Api
         /// Gets or sets the given key in the Key-Value attribute's value.
         /// </summary>
         /// <exception cref="KeyNotFoundException">If the key does not exist.</exception>
-        public string this[string key]
+        internal IAttribute this[string key]
         {
             get
             {
@@ -87,6 +87,14 @@ namespace AssetManager.Api
             set
             {
                 this.KeyCheck( key );
+
+                if( this.kvAttributes[key].AttributeType != value.AttributeType )
+                {
+                    throw new InvalidOperationException(
+                        "Attribute Types not compatible, need to pass in the correct attribute type for key '" + key + "'"
+                    );
+                }
+
                 this.kvAttributes[key] = value;
             }
         }
@@ -94,18 +102,46 @@ namespace AssetManager.Api
         /// <summary>
         /// Key-Value attributes associated with this asset.
         /// </summary>
-        public IReadOnlyDictionary<string, string> KeyValueAttributes { get; private set; }
+        internal IReadOnlyDictionary<string, IAttribute> KeyValueAttributes { get; private set; }
 
         // ---------------- Functions ----------------
 
         /// <summary>
-        /// Adds a new key that is set to null.
+        /// Creates a new instance of the attribute inside the given key
+        /// so it can be modified without affecting this class's internal list.
+        /// Once modified, pass it into <see cref="SetAttribute(string, IAttribute)"/>
+        /// to modify the value.
+        /// </summary>
+        public TAttr CloneAttributeAsType<TAttr>( string key ) where TAttr : IAttribute
+        {
+            this.KeyCheck( key );
+
+            TAttr attr = AttributeFactory.CreateAttribute<TAttr>();
+            if( attr.AttributeType != this.kvAttributes[key].AttributeType )
+            {
+                throw new InvalidOperationException(
+                    "Attribute Types not compatible, need to pass in the correct attribute type for key '" + key + "'"
+                );
+            }
+
+            attr.Deserialize( this.kvAttributes[key].Serialize() );
+
+            return attr;
+        }
+
+        public void SetAttribute( string key, IAttribute value )
+        {
+            this[key] = value;
+        }
+
+        /// <summary>
+        /// Adds a new key that is set to an empty instance.
         /// Internal since we only do this when creating a new Asset that
         /// consumers of the API will use.
         /// </summary>
-        internal void AddKey( string newKey )
+        internal void AddEmptyKeyValue( string newKey, AttributeTypes attributeType )
         {
-            this.kvAttributes[newKey] = null;
+            this.kvAttributes[newKey] = AttributeFactory.CreateAttribute( attributeType );
         }
 
         private void KeyCheck( string key )

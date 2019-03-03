@@ -35,11 +35,11 @@ namespace AssetManager.Api.Database
 
                 conn.AssetTypes.Add( assetType );
 
-                foreach( string key in builder.KeyValueAttributeKeys )
+                foreach( AttributeBuilder key in builder.KeyValueAttributeKeys )
                 {
                     KeyValueAttributeType keyValueAttributeType = new KeyValueAttributeType
                     {
-                        Name = key
+                        Name = key.Key
                     };
 
                     conn.KeyValueAttributeTypes.Add( keyValueAttributeType );
@@ -47,7 +47,8 @@ namespace AssetManager.Api.Database
                     AssetTypeKeyValueAttributesMap map = new AssetTypeKeyValueAttributesMap
                     {
                         AssetType = assetType,
-                        KeyValueAttributeType = keyValueAttributeType
+                        KeyValueAttributeType = keyValueAttributeType,
+                        AttributeType = key.Type
                     };
 
                     conn.AssetTypeKeyValueAttributesMaps.Add( map );
@@ -81,7 +82,7 @@ namespace AssetManager.Api.Database
 
                 foreach( AssetTypeKeyValueAttributesMap map in maps )
                 {
-                    asset.AddKey( map.KeyValueAttributeType.Name );
+                    asset.AddEmptyKeyValue( map.KeyValueAttributeType.Name, map.AttributeType );
                 }
 
                 return asset;
@@ -113,7 +114,7 @@ namespace AssetManager.Api.Database
                     {
                         AssetInstance = assetInstance,
                         Key = map.KeyValueAttributeType,
-                        Value = asset.KeyValueAttributes[map.KeyValueAttributeType.Name];
+                        Value = asset.KeyValueAttributes[map.KeyValueAttributeType.Name].Serialize()
                     };
 
                     conn.AssetInstanceKeyValueAttributeValues.Add( value );
