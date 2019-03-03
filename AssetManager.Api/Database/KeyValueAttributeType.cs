@@ -21,7 +21,7 @@ namespace AssetManager.Api.Database
     /// (for, well, Console Games) or "Operating System" (For PC Games).
     /// The value is defined elsewhere.
     /// </example>
-    public class KeyValueAttributeType
+    internal class KeyValueAttributeType
     {
         // ---------------- Constructor ----------------
 

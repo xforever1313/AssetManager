@@ -28,9 +28,12 @@ namespace AssetManager.Api.Database
         {
             using( DatabaseConnection conn = new DatabaseConnection() )
             {
+                DateTime timestamp = DateTime.UtcNow;
                 AssetType assetType = new AssetType
                 {
-                    Name = builder.Name
+                    Name = builder.Name,
+                    CreationDate = timestamp,
+                    ModifiedDate = timestamp
                 };
 
                 conn.AssetTypes.Add( assetType );
@@ -96,10 +99,13 @@ namespace AssetManager.Api.Database
                 // First, find the type of asset.
                 AssetType assetType = this.GetAssetType( conn, asset.AssetType );
 
+                DateTime timestamp = DateTime.UtcNow;
                 AssetInstance assetInstance = new AssetInstance
                 {
                     Name = asset.Name,
-                    AssetType = assetType
+                    AssetType = assetType,
+                    CreationDate = timestamp,
+                    ModifiedDate = timestamp
                 };
 
                 // Next, get all of the attributes that are associated with the asset type.

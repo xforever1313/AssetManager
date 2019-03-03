@@ -13,7 +13,7 @@ namespace AssetManager.Api.Database
     /// This class maps which <see cref="Database.KeyValueAttributeType"/> go
     /// with which <see cref="AssetType"/>
     /// </summary>
-    public class AssetTypeKeyValueAttributesMap
+    internal class AssetTypeKeyValueAttributesMap
     {
         // ---------------- Fields ----------------
 

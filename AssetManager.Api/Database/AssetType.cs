@@ -5,6 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace AssetManager.Api.Database
@@ -17,7 +18,7 @@ namespace AssetManager.Api.Database
     /// If we are keeping track of Video Games, <see cref="AssetType"/> could be
     /// something like "PC Games" and "Console Games".
     /// </example>
-    public class AssetType
+    internal class AssetType
     {
         // ---------------- Constructor ----------------
 
@@ -32,5 +33,17 @@ namespace AssetManager.Api.Database
 
         [Required]
         public string Name { get; set; }
+
+        /// <summary>
+        /// The date in UTC time that the type was put
+        /// into the database.
+        /// </summary>
+        public DateTime CreationDate { get; set; }
+
+        /// <summary>
+        /// The date in UTC time that the type was last modified
+        /// in the database.
+        /// </summary>
+        public DateTime ModifiedDate { get; set; }
     }
 }

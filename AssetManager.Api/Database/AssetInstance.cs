@@ -5,6 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace AssetManager.Api.Database
@@ -16,7 +17,7 @@ namespace AssetManager.Api.Database
     /// If we are keeping track of video games, this would be the specific
     /// game, whose name would be the Title of the game.
     /// </example>
-    public class AssetInstance
+    internal class AssetInstance
     {
         // ---------------- Constructor ----------------
 
@@ -34,5 +35,17 @@ namespace AssetManager.Api.Database
 
         [Required]
         public virtual AssetType AssetType { get; set; }
+
+        /// <summary>
+        /// The date in UTC time that the type was put
+        /// into the database.
+        /// </summary>
+        public DateTime CreationDate { get; set; }
+
+        /// <summary>
+        /// The date in UTC time that the type was last modified
+        /// in the database.
+        /// </summary>
+        public DateTime ModifiedDate { get; set; }
     }
 }

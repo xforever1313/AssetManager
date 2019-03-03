@@ -15,7 +15,7 @@ namespace AssetManager.Api.Database
     /// When sorting video games, a PC game's Key of "Operating System"
     /// would have the value "Windows 95" in this table.
     /// </example>
-    public class AssetInstanceKeyValueAttributeValues
+    internal class AssetInstanceKeyValueAttributeValues
     {
         // ---------------- Constructor ----------------
 
