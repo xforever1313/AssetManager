@@ -1,0 +1,36 @@
+﻿//
+//          Copyright Seth Hendrick 2019.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+//
+
+using System.ComponentModel.DataAnnotations;
+
+namespace AssetManager.Api.Database
+{
+    /// <summary>
+    /// This is the type of asset being use.
+    /// Can also be thought of as "Asset Categories".
+    /// </summary>
+    /// <example>
+    /// If we are keeping track of Video Games, <see cref="AssetType"/> could be
+    /// something like "PC Games" and "Console Games".
+    /// </example>
+    public class AssetType
+    {
+        // ---------------- Constructor ----------------
+
+        public AssetType()
+        {
+            this.Name = string.Empty;
+        }
+
+        // ---------------- Properties ---------------
+
+        public int Id { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+    }
+}
