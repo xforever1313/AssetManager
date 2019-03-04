@@ -5,9 +5,6 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 
 namespace AssetManager.Api.Database
@@ -16,10 +13,14 @@ namespace AssetManager.Api.Database
     {
         // ---------------- Fields ----------------
 
+        private readonly IDatabaseConfig databaseConfig;
+
         // ---------------- Constructor ----------------
 
-        public DatabaseConnection()
+        public DatabaseConnection( IDatabaseConfig databaseConfig )
         {
+            this.databaseConfig = databaseConfig;
+
             this.Database.EnsureCreated();
         }
 
@@ -39,7 +40,12 @@ namespace AssetManager.Api.Database
 
         protected override void OnConfiguring( DbContextOptionsBuilder optionsBuilder )
         {
-            optionsBuilder.UseSqlite( @"Data Source=C:\Users\xfore\Downloads\assetmanager.db" );
+            this.databaseConfig.OnConfiguring( optionsBuilder );
+        }
+
+        protected override void OnModelCreating( ModelBuilder modelBuilder )
+        {
+            this.databaseConfig.OnModelCreating( modelBuilder );
         }
     }
 }

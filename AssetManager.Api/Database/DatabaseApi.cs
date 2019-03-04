@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 
 namespace AssetManager.Api.Database
@@ -16,17 +17,20 @@ namespace AssetManager.Api.Database
     {
         // ---------------- Fields ----------------
 
+        private readonly IDatabaseConfig databaseConfig;
+
         // ---------------- Constructor ----------------
 
-        public DatabaseApi()
+        public DatabaseApi( IDatabaseConfig databaseConfig )
         {
+            this.databaseConfig = databaseConfig;
         }
 
         // ---------------- Functions ----------------
 
         public void AddAssetType( AssetTypeBuilder builder )
         {
-            using( DatabaseConnection conn = new DatabaseConnection() )
+            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfig ) )
             {
                 DateTime timestamp = DateTime.UtcNow;
                 AssetType assetType = new AssetType
@@ -67,7 +71,7 @@ namespace AssetManager.Api.Database
         /// </summary>
         public Asset GenerateEmptyAsset( string assetTypeName )
         {
-            using( DatabaseConnection conn = new DatabaseConnection() )
+            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfig ) )
             {
                 // First, find the type of asset.
                 AssetType assetType = this.GetAssetType( conn, assetTypeName );
@@ -94,7 +98,7 @@ namespace AssetManager.Api.Database
 
         public void AddAsset( Asset asset )
         {
-            using( DatabaseConnection conn = new DatabaseConnection() )
+            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfig ) )
             {
                 // First, find the type of asset.
                 AssetType assetType = this.GetAssetType( conn, asset.AssetType );
