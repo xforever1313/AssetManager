@@ -20,7 +20,7 @@ namespace AssetManager.Cli
 
             AssetManagerSettings settings = new AssetManagerSettings
             {
-                DatabaseAssemblyPath = @"C:\Users\xfore\Documents\Source\AssetManager\AssetManager.Sqlite\bin\Debug\netcoreapp2.2\AssetManager.Sqlite.dll"
+                DatabaseAssemblyPath = @"C:\Users\xfore\Documents\Source\AssetManager\AssetManager.Sqlite\bin\Debug\netcoreapp2.2\win-x64\publish\AssetManager.Sqlite.dll"
             };
 
             AssetManagerApi api = new AssetManagerApi( settings );
