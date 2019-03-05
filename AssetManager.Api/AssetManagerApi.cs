@@ -17,9 +17,16 @@ namespace AssetManager.Api
     {
         // ---------------- Constructor ----------------
 
-        public AssetManagerApi( AssetManagerSettings settings )
+        /// <summary>
+        /// Creates an instance of the top-level API.
+        /// </summary>
+        /// <param name="databaseConfig">
+        /// The database config to use.
+        /// Assumption is it was already inited.
+        /// </param>
+        public AssetManagerApi( IDatabaseConfig databaseConfig )
         {
-            this.Init( settings );
+            this.DataBase = new DatabaseApi( databaseConfig );
         }
 
         // ---------------- Properties ----------------
@@ -27,34 +34,5 @@ namespace AssetManager.Api
         public DatabaseApi DataBase { get; private set; }
 
         // ---------------- Functions ----------------
-
-        private void Init( AssetManagerSettings settings )
-        {
-            settings.Validate();
-
-            // Load the assembly that contains the database information.
-            Debug.WriteLine( "Loading Database Assemblies" );
-            Assembly assembly = Assembly.LoadFrom( settings.DatabaseAssemblyPath );
-            Debug.WriteLine( "Loading Database Assemblies...Done!" );
-            DatabaseConfigAttribute attr = assembly.GetCustomAttribute<DatabaseConfigAttribute>();
-            if( attr == null )
-            {
-                throw new InvalidOperationException(
-                    "Loaded assembly " + settings.DatabaseAssemblyPath + " does not define " + nameof( DatabaseConfigAttribute )
-                );
-            }
-
-            object db = Activator.CreateInstance( attr.DatabaseConfigTypeInfo );
-            IDatabaseConfig databaseConfig = ( db as IDatabaseConfig );
-            if( databaseConfig == null )
-            {
-                throw new InvalidOperationException(
-                    "Class tagged as " + nameof( DatabaseConfigAttribute ) + " does not implement " + nameof( IDatabaseConfig )
-                );
-            }
-
-            databaseConfig.Init( settings.AssetManagerSettingsDirectory );
-            this.DataBase = new DatabaseApi( databaseConfig );
-        }
     }
 }

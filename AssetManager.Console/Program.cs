@@ -23,7 +23,7 @@ namespace AssetManager.Cli
                 DatabaseAssemblyPath = @"C:\Users\xfore\Documents\Source\AssetManager\AssetManager.Sqlite\bin\Debug\netcoreapp2.2\win-x64\publish\AssetManager.Sqlite.dll"
             };
 
-            AssetManagerApi api = new AssetManagerApi( settings );
+            AssetManagerApi api = AssetManagerApiFactory.CreateApiFromSettings( settings );
 
             {
                 AssetTypeBuilder builder = new AssetTypeBuilder( "Pokemon Card" );
