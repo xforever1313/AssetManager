@@ -6,10 +6,8 @@
 //
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
 using AssetManager.Api.Database;
 
 namespace AssetManager.Api
@@ -79,24 +77,27 @@ namespace AssetManager.Api
         {
             // Load the assembly that contains the database information.
             Assembly assembly = Assembly.LoadFrom( settings.DatabaseAssemblyPath );
-            DatabaseConfigAttribute attr = assembly.GetCustomAttribute<DatabaseConfigAttribute>();
+
+            DatabaseConfigLoaderAttribute attr = assembly.GetCustomAttribute<DatabaseConfigLoaderAttribute>();
             if( attr == null )
             {
                 throw new InvalidOperationException(
-                    "Loaded assembly " + settings.DatabaseAssemblyPath + " does not define " + nameof( DatabaseConfigAttribute )
+                    "Loaded assembly " + settings.DatabaseAssemblyPath + " does not define " + nameof( DatabaseConfigLoaderAttribute )
                 );
             }
 
-            object db = Activator.CreateInstance( attr.DatabaseConfigTypeInfo );
-            IDatabaseConfig databaseConfig = ( db as IDatabaseConfig );
-            if( databaseConfig == null )
+            object dbLoader = Activator.CreateInstance( attr.DatabaseConfigLoaderType );
+            IDatabaseConfigLoader loader = dbLoader as IDatabaseConfigLoader;
+            if( loader == null )
             {
                 throw new InvalidOperationException(
-                    "Class tagged as " + nameof( DatabaseConfigAttribute ) + " does not implement " + nameof( IDatabaseConfig )
+                    "Class tagged as " + nameof( DatabaseConfigLoaderAttribute ) + " does not implement " + nameof( IDatabaseConfigLoader )
                 );
             }
 
-            databaseConfig.Init( settings.AssetManagerSettingsDirectory );
+            IDatabaseConfig databaseConfig = loader.Load( settings );
+            databaseConfig.Validate();
+
             return databaseConfig;
         }
     }

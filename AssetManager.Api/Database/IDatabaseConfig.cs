@@ -5,26 +5,10 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-using System;
 using Microsoft.EntityFrameworkCore;
 
 namespace AssetManager.Api.Database
 {
-    /// <summary>
-    /// Tag the class in an assembly that implements <see cref="IDatabaseConfig"/>
-    /// so we can create an instance of it.
-    /// </summary>
-    [AttributeUsage( AttributeTargets.Assembly, AllowMultiple = false, Inherited = false )]
-    public class DatabaseConfigAttribute : Attribute
-    {
-        public DatabaseConfigAttribute( Type type )
-        {
-            this.DatabaseConfigTypeInfo = type;
-        }
-
-        public Type DatabaseConfigTypeInfo { get; private set; }
-    }
-
     /// <summary>
     /// This interface is used to configure a database.
     /// External DLLs will implement this interface; depending on the database type.
@@ -32,7 +16,10 @@ namespace AssetManager.Api.Database
     /// </summary>
     public interface IDatabaseConfig
     {
-        void Init( string assetManagerSettingsPath );
+        /// <summary>
+        /// Ensures the database configuration is in a good state.
+        /// </summary>
+        void Validate();
 
         /// <summary>
         /// Called when <see cref="DbContext.OnConfiguring(DbContextOptionsBuilder)"/> is called.

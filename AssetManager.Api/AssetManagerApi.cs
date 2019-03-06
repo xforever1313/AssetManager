@@ -5,10 +5,6 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
 using AssetManager.Api.Database;
 
 namespace AssetManager.Api

@@ -6,13 +6,8 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
 using AssetManager.Api.Database;
 using Microsoft.EntityFrameworkCore;
-
-[assembly: DatabaseConfig( typeof( AssetManager.Sqlite.SqliteDatabaseConfig ) )]
 
 namespace AssetManager.Sqlite
 {
@@ -26,14 +21,18 @@ namespace AssetManager.Sqlite
 
         // ---------------- Properties ----------------
 
-        public string DatabaseLocation { get; private set; }
+        public string DatabaseLocation { get; set; }
 
         // ---------------- Functions ----------------
 
-        public void Init( string assetManagerSettingsPath )
+        public void Validate()
         {
-            // For now...
-            this.DatabaseLocation = @"C:\Users\xfore\Downloads\assetmanager.db";
+            if( string.IsNullOrWhiteSpace( this.DatabaseLocation ) )
+            {
+                throw new InvalidOperationException(
+                    nameof( this.DatabaseLocation ) + " can not be null, empty, or whitespace."
+                );
+            }
         }
 
         public void OnConfiguring( DbContextOptionsBuilder optionsBuilder )
