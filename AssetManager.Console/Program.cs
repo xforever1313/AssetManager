@@ -18,12 +18,7 @@ namespace AssetManager.Cli
         {
             File.Delete( @"C:\Users\xfore\Downloads\assetmanager.db" );
 
-            AssetManagerSettings settings = new AssetManagerSettings
-            {
-                DatabaseAssemblyPath = @"C:\Users\xfore\Documents\Source\AssetManager\AssetManager.Sqlite\bin\Debug\netcoreapp2.2\win-x64\publish\AssetManager.Sqlite.dll"
-            };
-
-            AssetManagerApi api = AssetManagerApiFactory.CreateApiFromSettings( settings );
+            AssetManagerApi api = AssetManagerApiFactory.CreateApiFromDefaultConfigFile();
 
             {
                 AssetTypeBuilder builder = new AssetTypeBuilder( "Pokemon Card" );

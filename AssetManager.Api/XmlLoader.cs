@@ -51,7 +51,7 @@ namespace AssetManager.Api
                 switch( childNode.Name.ToLower() )
                 {
                     case "databaseassembly":
-                        settings.DatabaseAssemblyPath = childNode.Value;
+                        settings.DatabaseAssemblyPath = childNode.InnerText;
                         break;
                 }
             }
