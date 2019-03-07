@@ -23,11 +23,14 @@ namespace AssetManager.Api
         public AssetManagerApi( IDatabaseConfig databaseConfig )
         {
             this.DataBase = new DatabaseApi( databaseConfig );
+            this.AsyncDataBase = new AsyncDatabaseApi( this.DataBase );
         }
 
         // ---------------- Properties ----------------
 
         public IDatabaseApi DataBase { get; private set; }
+
+        public IAsyncDatabaseApi AsyncDataBase { get; private set; }
 
         // ---------------- Functions ----------------
     }

@@ -1,18 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
+﻿//
+//          Copyright Seth Hendrick 2019.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+//
+
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using AssetManager.Api;
 using AssetManager.Web.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AssetManager.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
+        // ----------------- Fields -----------------
+
+        // ----------------- Constructor -----------------
+
+        public HomeController( [FromServices] IAssetManagerApi api ) :
+            base( api )
+        {
+        }
+
+        // ----------------- Functions -----------------
+
         public IActionResult Index()
         {
-            return View();
+            return View( this.Api );
         }
 
         public IActionResult Privacy()

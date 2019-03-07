@@ -14,5 +14,7 @@ namespace AssetManager.Api
         // ---------------- Properties ----------------
 
         IDatabaseApi DataBase { get; }
+
+        IAsyncDatabaseApi AsyncDataBase { get; }
     }
 }

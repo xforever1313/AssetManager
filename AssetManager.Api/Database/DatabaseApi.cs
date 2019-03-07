@@ -135,6 +135,18 @@ namespace AssetManager.Api.Database
             }
         }
 
+        public IEnumerable<string> GetAssetTypeNames()
+        {
+            IEnumerable<string> names;
+
+            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfig ) )
+            {
+                names = conn.AssetTypes.Select( a => a.Name );
+            }
+
+            return names;
+        }
+
         private AssetType GetAssetType( DatabaseConnection conn, string assetTypeName )
         {
             AssetType assetType = conn.AssetTypes.FirstOrDefault( t => t.Name == assetTypeName );

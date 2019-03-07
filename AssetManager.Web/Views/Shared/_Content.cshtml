@@ -1,6 +1,8 @@
-﻿@{ 
+﻿@{
     @using AssetManager.Api;
     Layout = "_Layout";
+
+    @model IAssetManagerApi;
 }
 
 @section scripts{
@@ -39,7 +41,10 @@
                 <li>
                     <a href="#"><i class="fa fa-desktop"></i>Assets<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                            <li><a href="#"><i class="fa fa-circle"></i>Test</a></li>
+                        @foreach( string assetName in await Model.AsyncDataBase.AsyncGetAssetTypeNames() )
+                        {
+                            <li><a href="#"><i class="fa fa-circle"></i>@assetName</a></li>
+                        }
                     </ul>
                 </li>
             </ul>

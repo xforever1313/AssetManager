@@ -8,31 +8,36 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AssetManager.Api.Database
 {
-    public interface IDatabaseApi
+    /// <summary>
+    /// This is the same interface as <see cref="IDatabaseApi"/>,
+    /// but all functions return tasks.
+    /// </summary>
+    public interface IAsyncDatabaseApi
     {
         // ---------------- Functions ----------------
 
         /// <summary>
         /// Adds the given asset type to the database.
         /// </summary>
-        void AddAssetType( AssetTypeBuilder builder );
+        Task AsyncAddAssetType( AssetTypeBuilder builder );
 
         /// <summary>
         /// Generates an empty asset based on the given type.
         /// </summary>
-        Asset GenerateEmptyAsset( string assetTypeName );
+        Task<Asset> AsyncGenerateEmptyAsset( string assetTypeName );
 
         /// <summary>
         /// Adds the given asset to the database.
         /// </summary>
-        void AddAsset( Asset asset );
+        Task AsyncAddAsset( Asset asset );
 
         /// <summary>
         /// Retrieves the names of the asset types.
         /// </summary>
-        IEnumerable<string> GetAssetTypeNames();
+        Task<IEnumerable<string>> AsyncGetAssetTypeNames();
     }
 }
