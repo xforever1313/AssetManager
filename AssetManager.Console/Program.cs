@@ -14,83 +14,94 @@ namespace AssetManager.Cli
 {
     class Program
     {
-        static void Main( string[] args )
+        static int Main( string[] args )
         {
-            File.Delete( @"C:\Users\xfore\Downloads\assetmanager.db" );
-
-            AssetManagerApi api = AssetManagerApiFactory.CreateApiFromDefaultConfigFile();
-
+            try
             {
-                AssetTypeBuilder builder = new AssetTypeBuilder( "Pokemon Card" );
+                File.Delete( @"C:\Users\xfore\Downloads\assetmanager.db" );
 
-                AttributeBuilder hpAttribute = new AttributeBuilder
+                AssetManagerApi api = AssetManagerApiFactory.CreateApiFromDefaultConfigFile();
+
                 {
-                    Key = "HP",
-                    Type = AttributeTypes.Integer
-                };
-                builder.KeyValueAttributeKeys.Add( hpAttribute );
+                    AssetTypeBuilder builder = new AssetTypeBuilder( "Pokemon Card" );
 
-                AttributeBuilder retreatCostBuilder = new AttributeBuilder
+                    AttributeBuilder hpAttribute = new AttributeBuilder
+                    {
+                        Key = "HP",
+                        Type = AttributeTypes.Integer
+                    };
+                    builder.KeyValueAttributeKeys.Add( hpAttribute );
+
+                    AttributeBuilder retreatCostBuilder = new AttributeBuilder
+                    {
+                        Key = "Retreat Cost",
+                        Type = AttributeTypes.Integer
+                    };
+                    builder.KeyValueAttributeKeys.Add( retreatCostBuilder );
+
+                    api.DataBase.AddAssetType( builder );
+                }
+
                 {
-                    Key = "Retreat Cost",
-                    Type = AttributeTypes.Integer
-                };
-                builder.KeyValueAttributeKeys.Add( retreatCostBuilder );
+                    AssetTypeBuilder builder = new AssetTypeBuilder( "Yugioh! Card" );
 
-                api.DataBase.AddAssetType( builder );
-            }
+                    AttributeBuilder attackBuilder = new AttributeBuilder
+                    {
+                        Key = "Attack",
+                        Type = AttributeTypes.Integer
+                    };
+                    builder.KeyValueAttributeKeys.Add( attackBuilder );
 
-            {
-                AssetTypeBuilder builder = new AssetTypeBuilder( "Yugioh! Card" );
+                    AttributeBuilder defenseBuilder = new AttributeBuilder
+                    {
+                        Key = "Defense",
+                        Type = AttributeTypes.Integer
+                    };
+                    builder.KeyValueAttributeKeys.Add( defenseBuilder );
 
-                AttributeBuilder attackBuilder = new AttributeBuilder
+                    api.DataBase.AddAssetType( builder );
+                }
+
                 {
-                    Key = "Attack",
-                    Type = AttributeTypes.Integer
-                };
-                builder.KeyValueAttributeKeys.Add( attackBuilder );
+                    Asset asset = api.DataBase.GenerateEmptyAsset( "Pokemon Card" );
+                    asset.Name = "Politoed";
+                    asset.SetAttribute( "HP", new IntegerAttribute() { Value = 100 } );
+                    asset.SetAttribute( "Retreat Cost", new IntegerAttribute() { Value = 3 } );
 
-                AttributeBuilder defenseBuilder = new AttributeBuilder
+                    api.DataBase.AddAsset( asset );
+                }
+
                 {
-                    Key = "Defense",
-                    Type = AttributeTypes.Integer
-                };
-                builder.KeyValueAttributeKeys.Add( defenseBuilder );
+                    Asset asset = api.DataBase.GenerateEmptyAsset( "Yugioh! Card" );
+                    asset.Name = "The 13th Grave";
 
-                api.DataBase.AddAssetType( builder );
+                    IntegerAttribute attackAttr = asset.CloneAttributeAsType<IntegerAttribute>( "Attack" );
+                    attackAttr.Value = 1200;
+                    asset.SetAttribute( "Attack", attackAttr );
+
+                    IntegerAttribute defenseAttr = asset.CloneAttributeAsType<IntegerAttribute>( "Defense" );
+                    defenseAttr.Value = 900;
+                    asset.SetAttribute( "Defense", attackAttr );
+
+                    api.DataBase.AddAsset( asset );
+                }
+
+                {
+                    Asset asset = api.DataBase.GenerateEmptyAsset( "Yugioh! Card" );
+                    asset.Name = "Overdrive";
+                    asset.SetAttribute( "Attack", new IntegerAttribute( 1600 ) );
+                    asset.SetAttribute( "Defense", new IntegerAttribute( 1500 ) );
+
+                    api.DataBase.AddAsset( asset );
+                }
+
+                return 0;
             }
-
+            catch( Exception e )
             {
-                Asset asset = api.DataBase.GenerateEmptyAsset( "Pokemon Card" );
-                asset.Name = "Politoed";
-                asset.SetAttribute( "HP", new IntegerAttribute() { Value = 100 } );
-                asset.SetAttribute( "Retreat Cost", new IntegerAttribute() { Value = 3 } );
-
-                api.DataBase.AddAsset( asset );
-            }
-
-            {
-                Asset asset = api.DataBase.GenerateEmptyAsset( "Yugioh! Card" );
-                asset.Name = "The 13th Grave";
-
-                IntegerAttribute attackAttr = asset.CloneAttributeAsType<IntegerAttribute>( "Attack" );
-                attackAttr.Value = 1200;
-                asset.SetAttribute( "Attack", attackAttr );
-
-                IntegerAttribute defenseAttr = asset.CloneAttributeAsType<IntegerAttribute>( "Defense" );
-                defenseAttr.Value = 900;
-                asset.SetAttribute( "Defense", attackAttr );
-
-                api.DataBase.AddAsset( asset );
-            }
-
-            {
-                Asset asset = api.DataBase.GenerateEmptyAsset( "Yugioh! Card" );
-                asset.Name = "Overdrive";
-                asset.SetAttribute( "Attack", new IntegerAttribute( 1600 ) );
-                asset.SetAttribute( "Defense", new IntegerAttribute( 1500 ) );
-
-                api.DataBase.AddAsset( asset );
+                Console.WriteLine( "UNHANDLED EXCEPTION:" );
+                Console.Write( e.ToString() );
+                return -1;
             }
         }
     }

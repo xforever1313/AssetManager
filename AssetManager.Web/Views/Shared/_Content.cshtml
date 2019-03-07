@@ -1,0 +1,76 @@
+﻿@{ 
+    @using AssetManager.Api;
+    Layout = "_Layout";
+}
+
+@section scripts{
+    @RenderSection( "scripts", required: false )
+}
+
+@section extrahead{
+    @RenderSection( "extrahead", required: false )
+}
+
+<div id="wrapper">
+    <!-- Top row -->
+    <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+        <!-- Top-left -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <h1 id="main-title" style="padding:0.5em;float:left;">Asset Manager</h1>
+    </nav>
+
+    <!-- Side Bar -->
+    <nav class="navbar-default navbar-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+                <li>
+                    <a href="/Home"><img class="image avatar" src="/static/img/logo.png" width="240" height="240" /></a>
+                </li>
+                <li>
+                    <a href="/Home"><i class="fa fa-home"></i>Home</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-desktop"></i>Assets<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                            <li><a href="#"><i class="fa fa-circle"></i>Test</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Page -->
+    <div id="page-wrapper">
+        <article id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-head-line">@ViewData["Title"]</h1>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div>
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-sec">
+        <div>
+            &copy; @DateTime.Now.Year <a href="https://shendrick.net">Seth Hendrick</a> | Design By : <a href="http://www.binarytheme.com/">BinaryTheme.com</a> |
+            <span>Page generated on @(DateTime.UtcNow.ToString( "R" ))</span>
+        </div>
+    </div>
+</div>
