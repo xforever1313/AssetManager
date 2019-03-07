@@ -9,7 +9,7 @@ using AssetManager.Api.Database;
 
 namespace AssetManager.Api
 {
-    public class AssetManagerApi
+    public class AssetManagerApi : IAssetManagerApi
     {
         // ---------------- Constructor ----------------
 
@@ -27,7 +27,7 @@ namespace AssetManager.Api
 
         // ---------------- Properties ----------------
 
-        public DatabaseApi DataBase { get; private set; }
+        public IDatabaseApi DataBase { get; private set; }
 
         // ---------------- Functions ----------------
     }

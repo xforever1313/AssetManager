@@ -47,12 +47,12 @@ namespace AssetManager.Api
 
         // ---------------- Functions ----------------
 
-        public static AssetManagerApi CreateApiFromDefaultConfigFile()
+        public static IAssetManagerApi CreateApiFromDefaultConfigFile()
         {
             return CreateApiFromConfig( DefaultSettingsDirectory );
         }
 
-        public static AssetManagerApi CreateApiFromConfig( string configDirectory )
+        public static IAssetManagerApi CreateApiFromConfig( string configDirectory )
         {
             AssetManagerSettings settings = new AssetManagerSettings
             {
@@ -64,7 +64,7 @@ namespace AssetManager.Api
             return CreateApiFromSettings( settings );
         }
 
-        public static AssetManagerApi CreateApiFromSettings( AssetManagerSettings settings )
+        public static IAssetManagerApi CreateApiFromSettings( AssetManagerSettings settings )
         {
             settings.Validate();
 

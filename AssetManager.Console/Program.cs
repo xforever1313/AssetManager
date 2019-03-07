@@ -20,7 +20,7 @@ namespace AssetManager.Cli
             {
                 File.Delete( @"C:\Users\xfore\Downloads\assetmanager.db" );
 
-                AssetManagerApi api = AssetManagerApiFactory.CreateApiFromDefaultConfigFile();
+                IAssetManagerApi api = AssetManagerApiFactory.CreateApiFromDefaultConfigFile();
 
                 {
                     AssetTypeBuilder builder = new AssetTypeBuilder( "Pokemon Card" );
