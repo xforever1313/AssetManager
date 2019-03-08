@@ -33,6 +33,6 @@ namespace AssetManager.Api.Database
         /// <summary>
         /// Retrieves the names of the asset types.
         /// </summary>
-        IEnumerable<string> GetAssetTypeNames();
+        IList<string> GetAssetTypeNames();
     }
 }

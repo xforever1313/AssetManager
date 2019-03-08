@@ -135,13 +135,16 @@ namespace AssetManager.Api.Database
             }
         }
 
-        public IEnumerable<string> GetAssetTypeNames()
+        public IList<string> GetAssetTypeNames()
         {
-            IEnumerable<string> names;
+            List<string> names;
 
             using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfig ) )
             {
-                names = conn.AssetTypes.Select( a => a.Name );
+                names = new List<string>(
+                    conn.AssetTypes.Select( a => a.Name )
+                    .OrderBy( a => a )
+                );
             }
 
             return names;
