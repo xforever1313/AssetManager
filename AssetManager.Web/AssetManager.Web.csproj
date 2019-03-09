@@ -3,7 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Scripts\AssetTypeMaker.ts" />
+  </ItemGroup>
 
 
   <ItemGroup>
@@ -15,6 +20,16 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AssetManager.Api\AssetManager.Api.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\AssetTypeMaker.ts" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="wwwroot\static\compiled_ts\" />
   </ItemGroup>
 
 </Project>
