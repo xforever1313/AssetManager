@@ -41,10 +41,34 @@
                 <li>
                     <a href="#"><i class="fa fa-desktop"></i>Assets<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        @foreach( string assetName in await Model.AsyncDataBase.AsyncGetAssetTypeNames() )
+                        @try
                         {
-                            <li><a href="#"><i class="fa fa-circle"></i>@assetName</a></li>
+                            @foreach( string assetName in await Model.AsyncDataBase.AsyncGetAssetTypeNames() )
+                            {
+                                <li><a href="#"><i class="fa fa-circle"></i>@assetName</a></li>
+                            }
                         }
+                        catch( Exception e )
+                        {
+                            <li><a href="#"><i class="fa fa-exclamation"></i>Could not load asset types! @e.Message</a></li>
+                        }
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-info-circle"></i>About<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="/About"><i class="fa fa-info" aria-hidden="true"></i>App Info</a>
+                        </li>
+                        <li>
+                            <a href="/About/License"><i class="fa fa-file-text" aria-hidden="true"></i>Licence</a>
+                        </li>
+                        <li>
+                            <a href="/About/Credits"><i class="fa fa-file-text-o" aria-hidden="true"></i>Credits</a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/xforever1313/AssetManager"><i class="fa fa-github"></i>GitHub</a>
+                        </li>
                     </ul>
                 </li>
             </ul>
