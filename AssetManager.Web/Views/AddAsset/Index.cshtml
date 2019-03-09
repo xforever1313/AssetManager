@@ -4,14 +4,34 @@
     Layout = "_Content";
 }
 
-<div class="text-center">
-    <p>Compiler: <input id="compiler" value="TypeScript" onkeyup="document.getElementById('message').innerText=sayHello()" /></p>
-    <p>Framework: <input id="framework" value="ASP.NET" onkeyup="document.getElementById('message').innerText = sayHello()" /></p>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Asset Type Creator
+            </div>
+            <div class="panel-body">
+                <div id="app">
+                </div>
+                <div class="btn-group">
+                    <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+                        Add Attribute
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" onclick="maker.AddAttribute('Integer')">Integer</a></li>
+                        <li><a href="#" onclick="maker.AddAttribute('String')">String</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<div id="message"></div>
 
 @section scripts
 {
     <script src="~/static/compiled_ts/AssetTypeMaker.js"></script>
+    <script>
+        let maker = new AssetTypeMaker();
+    </script>
 }
