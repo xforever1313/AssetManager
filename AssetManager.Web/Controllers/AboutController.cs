@@ -28,5 +28,10 @@ namespace AssetManager.Web.Controllers
         {
             return View( this.Api );
         }
+
+        public IActionResult Credits()
+        {
+            return View( this.Api );
+        }
     }
 }

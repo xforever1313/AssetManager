@@ -1,0 +1,46 @@
+﻿@using AssetManager.Api;
+@{
+    ViewData["Title"] = "Credits";
+    Layout = "_Content";
+
+    @model IAssetManagerApi;
+}
+
+<p>This software is made possible by several open-source and third-party libraries.  They are listed below.</p>
+
+@{
+    int id = 0;
+}
+
+@foreach( CreditsInfo info in Model.GetCredits() )
+{
+
+    // Need unique ID for each credits information.
+    ++id;
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                @info.Title
+            </h4>
+        </div>
+        <div class="panel-body">
+            <p><strong>Purpose: </strong>@info.Purpose</p>
+            <p><strong>Project URL: </strong><a href="@info.Url">@info.Url</a></p>
+            <p><strong>Code: </strong><a href="info.CodeUrl">@info.CodeUrl</a></p>
+            <div class="panel panel-default">
+                <div class="panel-heading" style="overflow:hidden;">
+                    <span class="panel-title" style="float:left;">@info.License</span>
+                    <a data-toggle="collapse" href="#license@(id)"><span style="float:right;"><i class="fa fa-angle-double-down" aria-hidden="true"></i></span></a>
+                </div>
+                <div id="license@(id)" class="panel-collapse in" style="height: auto">
+                    <div class="panel-body">
+                        <p><strong>License URL: </strong><a href="info.LicenseUrl">@info.LicenseUrl</a></p>
+                        @Html.Raw( @info.LicenseText )
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
