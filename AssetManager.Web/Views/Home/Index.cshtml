@@ -7,15 +7,3 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
-
-<div class="text-center">
-    <p>Compiler: <input id="compiler" value="TypeScript" onkeyup="document.getElementById('message').innerText=sayHello()" /></p>
-    <p>Framework: <input id="framework" value="ASP.NET" onkeyup="document.getElementById('message').innerText = sayHello()" /></p>
-</div>
-
-<div id="message"></div>
-
-@section scripts
-{
-    <script src="~/static/compiled_ts/AssetTypeMaker.js"></script>
-}
