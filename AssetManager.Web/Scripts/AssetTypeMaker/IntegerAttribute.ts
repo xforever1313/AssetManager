@@ -5,21 +5,21 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-class StringAttribute extends BaseAttribute {
+class IntegerAttribute extends BaseAttribute {
 
     // ---------------- Constructor ----------------
 
     constructor() {
-        super("String Attribute");
+        super("Integer Attribute");
 
         let helpDiv = <HTMLDivElement>(document.createElement("div"));
         helpDiv.className = "form-group";
         this.AppendChild(helpDiv);
 
-        helpDiv.innerText = "A string attribute is a key-value pair, " +
-            "where the key is the attribute name, and the value is a string of " +
-            "any size.  The key is set here, but the value is set by the user.  An example of this could be " +
-            "having the attribute name be 'Location', and the value would be 'New York'.";
+        helpDiv.innerText = "An integer attribute is a key-value pair, " +
+            "where the key is the attribute name, and the value is an interger.  " +
+            "The key is set here, but the value is set by the user.  An example of this could be " +
+            "having the attribute name be 'Population', and the value would be '10000'.";
     }
 
     // ---------------- Functions ----------------

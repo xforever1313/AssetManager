@@ -35,7 +35,7 @@ abstract class BaseAttribute implements IAttribute {
 
     // ---------------- Constructor ----------------
 
-    constructor() {
+    constructor(name: string) {
         this.key = "";
 
         this.div = <HTMLDivElement>(document.createElement("div"));
@@ -43,7 +43,7 @@ abstract class BaseAttribute implements IAttribute {
 
         let panelHeadingDiv = <HTMLDivElement>(document.createElement("div"));
         panelHeadingDiv.className = "panel-heading";
-        panelHeadingDiv.innerText = "String Attribute";
+        panelHeadingDiv.innerText = name;
         this.div.appendChild(panelHeadingDiv);
 
         this.parentDiv = <HTMLDivElement>(document.createElement("div"));

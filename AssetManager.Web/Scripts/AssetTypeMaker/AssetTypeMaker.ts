@@ -35,6 +35,7 @@ class AssetTypeMaker {
 
         switch (attrType) {
             case AttributeType.IntegerAttribute:
+                attr = new IntegerAttribute();
                 break;
             case AttributeType.StringAttribute:
                 attr = new StringAttribute();
