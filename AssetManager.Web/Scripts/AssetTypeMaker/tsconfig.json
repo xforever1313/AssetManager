@@ -9,12 +9,8 @@
     "target": "es5",
     "outFile": "../../wwwroot/static/compiled_ts/AssetTypeMaker.js"
   },
-  "files": [
-    "Helpers.ts",
-    "IAttribute.ts",
-    "BaseAttribute.ts",
-    "StringAttribute.ts",
-    "AssetTypeMaker.ts"
+  "include": [
+    "*.ts"
   ],
   "compileOnSave": true
 }
