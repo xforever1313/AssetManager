@@ -13,14 +13,17 @@
             <div class="panel-body">
                 <div id="app">
                 </div>
+                <noscript>
+                    Javacript Required to run the Asset Type Editor.
+                </noscript>
                 <div class="btn-group">
                     <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
                         Add Attribute
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a href="#" onclick="maker.AddAttribute('Integer')">Integer</a></li>
-                        <li><a href="#" onclick="maker.AddAttribute('String')">String</a></li>
+                        <li><a href="#" onclick="maker.AddAttribute(AttributeType.IntegerAttribute)">Integer</a></li>
+                        <li><a href="#" onclick="maker.AddAttribute(AttributeType.StringAttribute)">String</a></li>
                     </ul>
                 </div>
             </div>
