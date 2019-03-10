@@ -7,10 +7,14 @@
     "removeComments": false,
     "sourceMap": true,
     "target": "es5",
-    "outDir": "../wwwroot/static/compiled_ts"
+    "outFile": "../../wwwroot/static/compiled_ts/AssetTypeMaker.js"
   },
   "files": [
-    "./AssetTypeMaker.ts"
+    "Helpers.ts",
+    "IAttribute.ts",
+    "BaseAttribute.ts",
+    "StringAttribute.ts",
+    "AssetTypeMaker.ts"
   ],
   "compileOnSave": true
 }

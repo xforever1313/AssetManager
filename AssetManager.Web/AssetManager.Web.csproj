@@ -8,6 +8,10 @@
 
   <ItemGroup>
     <None Remove="Scripts\AssetTypeMaker.ts" />
+    <None Remove="Scripts\AssetTypeMaker\BaseAttribute.ts" />
+    <None Remove="Scripts\AssetTypeMaker\Helpers.ts" />
+    <None Remove="Scripts\AssetTypeMaker\IAttribute.ts" />
+    <None Remove="Scripts\AssetTypeMaker\StringAttribute.ts" />
   </ItemGroup>
 
 
@@ -25,7 +29,11 @@
 
 
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\AssetTypeMaker.ts" />
+    <TypeScriptCompile Include="Scripts\AssetTypeMaker\AssetTypeMaker.ts" />
+    <TypeScriptCompile Include="Scripts\AssetTypeMaker\BaseAttribute.ts" />
+    <TypeScriptCompile Include="Scripts\AssetTypeMaker\Helpers.ts" />
+    <TypeScriptCompile Include="Scripts\AssetTypeMaker\IAttribute.ts" />
+    <TypeScriptCompile Include="Scripts\AssetTypeMaker\StringAttribute.ts" />
   </ItemGroup>
 
 

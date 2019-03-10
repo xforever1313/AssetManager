@@ -5,97 +5,6 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-// ---------------- Main Class ----------------
-
-enum AttributeType {
-    StringAttribute,
-    IntegerAttribute
-}
-
-class AssetTypeMaker {
-
-    // ---------------- Fields ----------------
-
-    private readonly appDiv: HTMLDivElement;
-
-    private readonly attrList: Array<IAttribute>;
-
-    // ---------------- Constructor ----------------
-
-    constructor() {
-        this.appDiv = document.getElementById("app") as HTMLDivElement;
-        this.attrList = new Array<IAttribute>();
-    }
-
-    // ---------------- Functions ----------------
-
-    public AddAttribute(attrType: AttributeType): void {
-
-        var attr: IAttribute = undefined;
-
-        switch (attrType) {
-            case AttributeType.IntegerAttribute:
-                break;
-            case AttributeType.StringAttribute:
-                attr = new StringAttribute();
-                break;
-        }
-
-        if (attr !== undefined) {
-            this.attrList.push(attr);
-            this.appDiv.appendChild(attr.GetHtmlDiv());
-
-            let maker = this;
-            attr.OnDelete = function (theAttr: IAttribute) {
-                maker.appDiv.removeChild(theAttr.GetHtmlDiv());
-
-                // Holy crap, typescript doesn't have a REMOVE function for an array!?
-                const index = maker.attrList.indexOf(theAttr);
-                if (index > -1) {
-                    maker.attrList.splice(index, 1);
-                }
-            };
-        }
-    }
-
-    public Validate(): boolean {
-        var success: boolean = true;
-        for (let attr of this.attrList) {
-            if (attr.Validate() === false) {
-                success = false;
-            }
-        }
-
-        return success;
-    }
-
-    public Submit(): void {
-        if (this.Validate() === false) {
-            // Do nothing yet...
-        }
-    }
-}
-
-// ---------------- Attributes ----------------
-
-interface IAttribute {
-
-    // ---------------- Events ----------------
-
-    /**
-     * Action that is called when the delete button on an attribute
-     * is clicked on.
-     */
-    OnDelete: (attr: IAttribute) => void;
-
-    /**
-     * Ensures the attribute is in a valid state.
-     **/
-    Validate(): boolean;
-
-    GetHtmlDiv(): HTMLDivElement;
-}
-
 abstract class BaseAttribute implements IAttribute {
 
     // ---------------- Events ----------------
@@ -200,7 +109,7 @@ abstract class BaseAttribute implements IAttribute {
         return this.div;
     }
 
-    protected AppendChild(childNode: HTMLDivElement): void{
+    protected AppendChild(childNode: HTMLDivElement): void {
         this.parentDiv.insertBefore(childNode, this.controlDiv);
     }
 
@@ -267,61 +176,5 @@ abstract class BaseAttribute implements IAttribute {
      * If not, return an array that contains error messages.
      * If there is nothing wrong, return null.
      **/
-    public abstract ValidateChild(): Array<string> ;
-}
-
-class StringAttribute extends BaseAttribute {
-
-    // ---------------- Fields ----------------
-
-    private value: string;
-
-    private valueHtml: HTMLTextAreaElement;
-
-    // ---------------- Constructor ----------------
-
-    constructor() {
-        super();
-        this.value = "";
-
-        let valueFormDiv = <HTMLDivElement>(document.createElement("div"));
-        valueFormDiv.className = "form-group";
-        this.AppendChild(valueFormDiv);
-
-        let valueLabel = <HTMLLabelElement>(document.createElement("label"));
-        valueLabel.innerText = "Value:";
-        valueFormDiv.appendChild(valueLabel);
-
-        this.valueHtml = <HTMLTextAreaElement>(document.createElement("textarea"));
-        this.valueHtml.className = "form-control";
-        valueFormDiv.appendChild(this.valueHtml);
-
-        this.valueHtml.oninput = (() => this.SetValue(this.valueHtml.value));
-    }
-
-    public SetValue(newValue: string): void {
-
-        if (Helpers.StringIsNullOrEmpty(newValue)) {
-            newValue = "";
-        }
-
-        this.value = newValue;
-    }
-
-    public GetValue(): string {
-        return this.value;
-    }
-
-    // ---------------- Functions ----------------
-    
-    public ValidateChild(): Array<string> {
-        // Nothing to validate, string value can be anything.
-        return null;
-    }
-}
-
-class Helpers {
-    public static StringIsNullOrEmpty(str: string): boolean {
-        return (str === null) || (str === undefined) || (str === "");
-    }
+    public abstract ValidateChild(): Array<string>;
 }
