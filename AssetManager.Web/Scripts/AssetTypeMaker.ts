@@ -71,23 +71,21 @@ interface IAttribute {
     GetHtmlDiv(): HTMLDivElement;
 }
 
-class StringAttribute implements IAttribute {
+abstract class BaseAttribute implements IAttribute {
 
     // ---------------- Fields ----------------
 
     private key: string;
 
-    private value: string;
+    private readonly div: HTMLDivElement;
+    private readonly keyHtml: HTMLInputElement;
 
-    private div: HTMLDivElement;
-    private keyHtml: HTMLInputElement;
-    private valueHtml: HTMLTextAreaElement;
+    private readonly parentDiv: HTMLDivElement;
 
     // ---------------- Constructor ----------------
 
     constructor() {
-        this.key = "Hello";
-        this.value = "World";
+        this.key = "";
 
         this.div = <HTMLDivElement>(document.createElement("div"));
         this.div.className = "panel panel-info";
@@ -97,14 +95,14 @@ class StringAttribute implements IAttribute {
         panelHeadingDiv.innerText = "String Attribute";
         this.div.appendChild(panelHeadingDiv);
 
-        let panelBodyDiv = <HTMLDivElement>(document.createElement("div"));
-        panelBodyDiv.className = "panel-body";
-        this.div.appendChild(panelBodyDiv);
+        this.parentDiv = <HTMLDivElement>(document.createElement("div"));
+        this.parentDiv.className = "panel-body";
+        this.div.appendChild(this.parentDiv);
 
         {
             let keyFormDiv = <HTMLDivElement>(document.createElement("div"));
             keyFormDiv.className = "form-group";
-            panelBodyDiv.appendChild(keyFormDiv);
+            this.parentDiv.appendChild(keyFormDiv);
 
             let keyLabel = <HTMLLabelElement>(document.createElement("label"));
             keyLabel.innerText = "Name:";
@@ -115,28 +113,11 @@ class StringAttribute implements IAttribute {
             this.keyHtml.className = "form-control";
             keyFormDiv.appendChild(this.keyHtml);
         }
-
-        {
-            let valueFormDiv = <HTMLDivElement>(document.createElement("div"));
-            valueFormDiv.className = "form-group";
-            panelBodyDiv.appendChild(valueFormDiv);
-
-            let valueLabel = <HTMLLabelElement>(document.createElement("label"));
-            valueLabel.innerText = "Value:";
-            valueFormDiv.appendChild(valueLabel);
-
-            this.valueHtml = <HTMLTextAreaElement>(document.createElement("textarea"));
-            this.valueHtml.className = "form-control";
-            valueFormDiv.appendChild(this.valueHtml);
-        }
-
-        this.keyHtml.onkeypress = (() => this.SetKey(this.keyHtml.innerText));
-        this.valueHtml.onkeypress = (() => this.SetValue(this.valueHtml.innerText));
     }
 
     // ---------------- Getter/s Setters ----------------
 
-    public SetKey(newKey: string): void{
+    public SetKey(newKey: string): void {
 
         if (Helpers.StringIsNullOrEmpty(newKey)) {
             newKey = "";
@@ -147,6 +128,60 @@ class StringAttribute implements IAttribute {
 
     public GetKey(): string {
         return this.key;
+    }
+
+    public GetHtmlDiv(): HTMLDivElement {
+        return this.div;
+    }
+
+    protected GetParentDiv(): HTMLDivElement {
+        return this.parentDiv;
+    }
+
+    public Validate(): boolean {
+        var success: boolean = true;
+        var errorString: string = "";
+
+        if (Helpers.StringIsNullOrEmpty(this.GetKey())) {
+            success = false;
+            errorString += "Key can not be null or empty.";
+        }
+
+        return success;
+    }
+
+    public abstract ValidateChild(): boolean;
+}
+
+class StringAttribute extends BaseAttribute {
+
+    // ---------------- Fields ----------------
+
+    private value: string;
+
+    private valueHtml: HTMLTextAreaElement;
+
+    // ---------------- Constructor ----------------
+
+    constructor() {
+        super();
+        this.value = "";
+
+        let parentDiv = this.GetParentDiv();
+
+        let valueFormDiv = <HTMLDivElement>(document.createElement("div"));
+        valueFormDiv.className = "form-group";
+        parentDiv.appendChild(valueFormDiv);
+
+        let valueLabel = <HTMLLabelElement>(document.createElement("label"));
+        valueLabel.innerText = "Value:";
+        valueFormDiv.appendChild(valueLabel);
+
+        this.valueHtml = <HTMLTextAreaElement>(document.createElement("textarea"));
+        this.valueHtml.className = "form-control";
+        valueFormDiv.appendChild(this.valueHtml);
+
+        this.valueHtml.onkeypress = (() => this.SetValue(this.valueHtml.innerText));
     }
 
     public SetValue(newValue: string): void {
@@ -162,24 +197,15 @@ class StringAttribute implements IAttribute {
         return this.value;
     }
 
-    public GetHtmlDiv(): HTMLDivElement {
-        return this.div;
-    }
-
     // ---------------- Functions ----------------
     
-    public Validate(): boolean {
+    public ValidateChild(): boolean {
         var success: boolean = true;
         var errorString: string = "";
 
-        if (Helpers.StringIsNullOrEmpty(this.GetKey())) {
+        if (Helpers.StringIsNullOrEmpty(this.GetValue())) {
             success = false;
-            errorString += "Key can not be null or empty.";
-        }
-
-        if (Helpers.StringIsNullOrEmpty(this.GetKey())) {
-            success = false;
-            errorString += "Key can not be null or empty.";
+            errorString += "Value can not be null or empty.";
         }
 
         return success;
