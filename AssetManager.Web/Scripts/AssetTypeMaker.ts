@@ -44,6 +44,17 @@ class AssetTypeMaker {
         if (attr !== undefined) {
             this.attrList.push(attr);
             this.appDiv.appendChild(attr.GetHtmlDiv());
+
+            let maker = this;
+            attr.OnDelete = function (theAttr: IAttribute) {
+                maker.appDiv.removeChild(theAttr.GetHtmlDiv());
+
+                // Holy crap, typescript doesn't have a REMOVE function for an array!?
+                const index = maker.attrList.indexOf(theAttr);
+                if (index > -1) {
+                    maker.attrList.splice(index, 1);
+                }
+            };
         }
     }
 
@@ -69,6 +80,14 @@ class AssetTypeMaker {
 
 interface IAttribute {
 
+    // ---------------- Events ----------------
+
+    /**
+     * Action that is called when the delete button on an attribute
+     * is clicked on.
+     */
+    OnDelete: (attr: IAttribute) => void;
+
     /**
      * Ensures the attribute is in a valid state.
      **/
@@ -79,6 +98,10 @@ interface IAttribute {
 
 abstract class BaseAttribute implements IAttribute {
 
+    // ---------------- Events ----------------
+
+    public OnDelete: (attr: IAttribute) => void;
+
     // ---------------- Fields ----------------
 
     private key: string;
@@ -87,7 +110,6 @@ abstract class BaseAttribute implements IAttribute {
     private readonly errorMessage: HTMLDivElement;
 
     private readonly keyHtml: HTMLInputElement;
-
     private readonly keyDiv: HTMLDivElement;
 
     /**
@@ -95,6 +117,12 @@ abstract class BaseAttribute implements IAttribute {
      * its childrent to.
      */
     private readonly parentDiv: HTMLDivElement;
+
+    /**
+     * DIV that has control over moving or deleting
+     * attributes.
+     */
+    private readonly controlDiv: HTMLDivElement;
 
     // ---------------- Constructor ----------------
 
@@ -132,6 +160,25 @@ abstract class BaseAttribute implements IAttribute {
 
             this.keyHtml.oninput = (() => this.SetKey(this.keyHtml.value));
         }
+
+        // Add control DIV
+        {
+            this.controlDiv = <HTMLDivElement>(document.createElement("div"));
+            this.controlDiv.className = "form-group";
+
+            let deleteButton: HTMLButtonElement = <HTMLButtonElement>(document.createElement("button"));
+            deleteButton.className = "btn btn-danger";
+            deleteButton.type = "button";
+            deleteButton.innerText = "Delete";
+            deleteButton.onclick = () => {
+                if ((this.OnDelete !== undefined) && (this.OnDelete !== null)) {
+                    this.OnDelete(this);
+                }
+            };
+            this.controlDiv.appendChild(deleteButton);
+
+            this.parentDiv.appendChild(this.controlDiv);
+        }
     }
 
     // ---------------- Getters / Setters ----------------
@@ -153,8 +200,8 @@ abstract class BaseAttribute implements IAttribute {
         return this.div;
     }
 
-    protected GetParentDiv(): HTMLDivElement {
-        return this.parentDiv;
+    protected AppendChild(childNode: HTMLDivElement): void{
+        this.parentDiv.insertBefore(childNode, this.controlDiv);
     }
 
     // ---------------- Functions ----------------
@@ -237,11 +284,9 @@ class StringAttribute extends BaseAttribute {
         super();
         this.value = "";
 
-        let parentDiv = this.GetParentDiv();
-
         let valueFormDiv = <HTMLDivElement>(document.createElement("div"));
         valueFormDiv.className = "form-group";
-        parentDiv.appendChild(valueFormDiv);
+        this.AppendChild(valueFormDiv);
 
         let valueLabel = <HTMLLabelElement>(document.createElement("label"));
         valueLabel.innerText = "Value:";
