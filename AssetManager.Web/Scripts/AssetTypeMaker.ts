@@ -57,6 +57,12 @@ class AssetTypeMaker {
 
         return success;
     }
+
+    public Submit(): void {
+        if (this.Validate() === false) {
+            // Do nothing yet...
+        }
+    }
 }
 
 // ---------------- Attributes ----------------
@@ -78,8 +84,16 @@ abstract class BaseAttribute implements IAttribute {
     private key: string;
 
     private readonly div: HTMLDivElement;
+    private readonly errorMessage: HTMLDivElement;
+
     private readonly keyHtml: HTMLInputElement;
 
+    private readonly keyDiv: HTMLDivElement;
+
+    /**
+     * The DIV that the child attribute will append
+     * its childrent to.
+     */
     private readonly parentDiv: HTMLDivElement;
 
     // ---------------- Constructor ----------------
@@ -99,23 +113,28 @@ abstract class BaseAttribute implements IAttribute {
         this.parentDiv.className = "panel-body";
         this.div.appendChild(this.parentDiv);
 
+        this.errorMessage = <HTMLDivElement>(document.createElement("div"));
+        this.errorMessage.className = "alert alert-danger";
+
         {
-            let keyFormDiv = <HTMLDivElement>(document.createElement("div"));
-            keyFormDiv.className = "form-group";
-            this.parentDiv.appendChild(keyFormDiv);
+            this.keyDiv = <HTMLDivElement>(document.createElement("div"));
+            this.keyDiv.className = "form-group";
+            this.parentDiv.appendChild(this.keyDiv);
 
             let keyLabel = <HTMLLabelElement>(document.createElement("label"));
             keyLabel.innerText = "Name:";
-            keyFormDiv.appendChild(keyLabel);
+            this.keyDiv.appendChild(keyLabel);
 
             this.keyHtml = <HTMLInputElement>(document.createElement("input"));
             this.keyHtml.type = "text";
             this.keyHtml.className = "form-control";
-            keyFormDiv.appendChild(this.keyHtml);
+            this.keyDiv.appendChild(this.keyHtml);
+
+            this.keyHtml.oninput = (() => this.SetKey(this.keyHtml.value));
         }
     }
 
-    // ---------------- Getter/s Setters ----------------
+    // ---------------- Getters / Setters ----------------
 
     public SetKey(newKey: string): void {
 
@@ -138,19 +157,70 @@ abstract class BaseAttribute implements IAttribute {
         return this.parentDiv;
     }
 
+    // ---------------- Functions ----------------
+
     public Validate(): boolean {
         var success: boolean = true;
-        var errorString: string = "";
 
-        if (Helpers.StringIsNullOrEmpty(this.GetKey())) {
+        let keyGood = (Helpers.StringIsNullOrEmpty(this.GetKey()) === false);
+        success = keyGood;
+
+        let childProblems: Array<string> = this.ValidateChild();
+        if ((childProblems !== null) && (childProblems.length > 0)) {
             success = false;
-            errorString += "Key can not be null or empty.";
+        }
+
+        if (success === false) {
+            this.div.className = "panel panel-danger";
+
+            let errorList: HTMLUListElement = document.createElement("ul");
+            if (keyGood === false) {
+                if (childProblems === null) {
+                    childProblems = new Array<string>();
+                }
+                childProblems.push("Attribute name can not be empty.");
+            }
+
+            for (let msg of childProblems) {
+                let listElement: HTMLLIElement = document.createElement("li");
+                listElement.innerText = msg;
+                errorList.appendChild(listElement);
+            }
+
+            // Remove the old error message children.
+            while (this.errorMessage.firstChild) {
+                this.errorMessage.removeChild(this.errorMessage.firstChild);
+            }
+
+            // Replace.
+            this.errorMessage.appendChild(errorList);
+            this.parentDiv.insertBefore(this.errorMessage, this.keyDiv);
+        }
+        else {
+            var remove: boolean = false;
+            this.parentDiv.childNodes.forEach(
+                c => {
+                    if (c.isSameNode(this.errorMessage)) {
+                        remove = true;
+                    }
+                }
+            );
+
+            if (remove) {
+                this.parentDiv.removeChild(this.errorMessage);
+            }
+            this.div.className = "panel panel-info";
         }
 
         return success;
     }
 
-    public abstract ValidateChild(): boolean;
+    /**
+     * The child does validation to ensure it is in an okay state.
+     * If not, return an array that contains error messages.
+     * If there is nothing wrong, return null.
+     **/
+    public abstract ValidateChild(): Array<string> ;
 }
 
 class StringAttribute extends BaseAttribute {
@@ -181,7 +251,7 @@ class StringAttribute extends BaseAttribute {
         this.valueHtml.className = "form-control";
         valueFormDiv.appendChild(this.valueHtml);
 
-        this.valueHtml.onkeypress = (() => this.SetValue(this.valueHtml.innerText));
+        this.valueHtml.oninput = (() => this.SetValue(this.valueHtml.value));
     }
 
     public SetValue(newValue: string): void {
@@ -199,16 +269,9 @@ class StringAttribute extends BaseAttribute {
 
     // ---------------- Functions ----------------
     
-    public ValidateChild(): boolean {
-        var success: boolean = true;
-        var errorString: string = "";
-
-        if (Helpers.StringIsNullOrEmpty(this.GetValue())) {
-            success = false;
-            errorString += "Value can not be null or empty.";
-        }
-
-        return success;
+    public ValidateChild(): Array<string> {
+        // Nothing to validate, string value can be anything.
+        return null;
     }
 }
 
