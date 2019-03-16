@@ -6,6 +6,7 @@
 //
 
 using AssetManager.Api;
+using AssetManager.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AssetManager.Web.Controllers
@@ -24,6 +25,14 @@ namespace AssetManager.Web.Controllers
         public IActionResult Index()
         {
             return View( this.Api );
+        }
+
+        [HttpPost]
+        public IActionResult AddAssetType( [FromBody] AssetTypeMaker maker )
+        {
+            this.Api.DataBase.AddAssetType( maker );
+
+            return this.Redirect( "/" );
         }
     }
 }
