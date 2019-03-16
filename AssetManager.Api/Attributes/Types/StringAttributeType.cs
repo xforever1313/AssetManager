@@ -5,13 +5,24 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace AssetManager.Api.Attributes.Types
 {
-    public class StringAttributeType
+    public class StringAttributeType : BaseAttributeType
     {
+        // ---------------- Constructor ----------------
+
+        public StringAttributeType() :
+            base()
+        {
+        }
+
+        // ---------------- Functions ----------------
+
+        protected override bool ValidateInternal( out string errors )
+        {
+            // Nothing to validate.
+            errors = string.Empty;
+            return true;
+        }
     }
 }
