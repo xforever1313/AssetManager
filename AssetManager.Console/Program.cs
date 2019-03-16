@@ -9,6 +9,7 @@ using System;
 using System.IO;
 using AssetManager.Api;
 using AssetManager.Api.Attributes;
+using AssetManager.Api.Attributes.Types;
 
 namespace AssetManager.Cli
 {
@@ -25,19 +26,18 @@ namespace AssetManager.Cli
                 {
                     AssetTypeBuilder builder = new AssetTypeBuilder( "Pokemon Card" );
 
-                    AttributeBuilder hpAttribute = new AttributeBuilder
+                    IntegerAttributeType hpAttribute = new IntegerAttributeType
                     {
-                        Key = "HP",
-                        Type = AttributeTypes.Integer
+                        Key = "HP"
                     };
-                    builder.KeyValueAttributeKeys.Add( hpAttribute );
 
-                    AttributeBuilder retreatCostBuilder = new AttributeBuilder
+                    builder.AttributeTypes.Add( hpAttribute );
+
+                    IntegerAttributeType retreatCostAttribute = new IntegerAttributeType
                     {
-                        Key = "Retreat Cost",
-                        Type = AttributeTypes.Integer
+                        Key = "Retreat Cost"
                     };
-                    builder.KeyValueAttributeKeys.Add( retreatCostBuilder );
+                    builder.AttributeTypes.Add( retreatCostAttribute );
 
                     api.DataBase.AddAssetType( builder );
                 }
@@ -45,19 +45,17 @@ namespace AssetManager.Cli
                 {
                     AssetTypeBuilder builder = new AssetTypeBuilder( "Yugioh! Card" );
 
-                    AttributeBuilder attackBuilder = new AttributeBuilder
+                    IntegerAttributeType attackAttribute = new IntegerAttributeType
                     {
-                        Key = "Attack",
-                        Type = AttributeTypes.Integer
+                        Key = "Attack"
                     };
-                    builder.KeyValueAttributeKeys.Add( attackBuilder );
+                    builder.AttributeTypes.Add( attackAttribute );
 
-                    AttributeBuilder defenseBuilder = new AttributeBuilder
+                    IntegerAttributeType defenseAttribute = new IntegerAttributeType
                     {
-                        Key = "Defense",
-                        Type = AttributeTypes.Integer
+                        Key = "Defense"
                     };
-                    builder.KeyValueAttributeKeys.Add( defenseBuilder );
+                    builder.AttributeTypes.Add( defenseAttribute );
 
                     api.DataBase.AddAssetType( builder );
                 }

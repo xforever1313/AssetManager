@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
+using AssetManager.Api.Attributes.Types;
 
 namespace AssetManager.Api
 {
@@ -24,10 +24,15 @@ namespace AssetManager.Api
 
         // ---------------- Constructor ----------------
 
+        public AssetTypeBuilder() :
+            this( UnknownType )
+        {
+        }
+
         public AssetTypeBuilder( string assetName )
         {
             this.Name = assetName;
-            this.KeyValueAttributeKeys = new List<AttributeBuilder>();
+            this.AttributeTypes = new List<IAttributeType>();
         }
 
         // ---------------- Properties ----------------
@@ -51,7 +56,7 @@ namespace AssetManager.Api
             }
         }
 
-        public IList<AttributeBuilder> KeyValueAttributeKeys { get; private set; }
+        public IList<IAttributeType> AttributeTypes { get; protected set; }
 
         // ---------------- Functions ----------------
     }

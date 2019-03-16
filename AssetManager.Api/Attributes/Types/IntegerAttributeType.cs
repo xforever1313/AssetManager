@@ -12,7 +12,7 @@ namespace AssetManager.Api.Attributes.Types
         // ---------------- Constructor ----------------
 
         public IntegerAttributeType() :
-            base()
+            base( AttributeTypes.Integer )
         {
         }
 

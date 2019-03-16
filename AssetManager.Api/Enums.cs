@@ -12,37 +12,39 @@ namespace AssetManager.Api
     /// </summary>
     public enum AttributeTypes
     {
+        AssetName = 1,
+
         /// <summary>
         /// Attribute whose value is a string of any length.
         /// </summary>
-        StringAttribute,
+        StringAttribute = 2,
 
         /// <summary>
         /// Attribute whose value is an integer.
         /// </summary>
-        Integer,
+        Integer = 3,
 
         /// <summary>
         /// Render the value as an image.
         /// The value is a URL to an image.
         /// </summary>
-        Image,
+        Image = 4,
 
         /// <summary>
         /// Render the value as an ordered list.
         /// The value is CSV, which needs to be split.
         /// </summary>
-        OrderedList,
+        OrderedList = 5,
 
         /// <summary>
         /// Render the value as an unordered list,
         /// The value is CSV, which needs to be split.
         /// </summary>
-        UnorderedList,
+        UnorderedList = 6,
 
         /// <summary>
         /// Render the value as a hyper-link to the specified URL.
         /// </summary>
-        Url
+        Url = 7
     }
 }

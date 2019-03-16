@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AssetManager.Api.Attributes.Types;
 using Microsoft.EntityFrameworkCore;
 
 namespace AssetManager.Api.Database
@@ -41,7 +42,7 @@ namespace AssetManager.Api.Database
 
                 conn.AssetTypes.Add( assetType );
 
-                foreach( AttributeBuilder key in builder.KeyValueAttributeKeys )
+                foreach( IAttributeType key in builder.AttributeTypes )
                 {
                     KeyValueAttributeType keyValueAttributeType = new KeyValueAttributeType
                     {
@@ -54,7 +55,7 @@ namespace AssetManager.Api.Database
                     {
                         AssetType = assetType,
                         KeyValueAttributeType = keyValueAttributeType,
-                        AttributeType = key.Type
+                        AttributeType = key.AttributeType
                     };
 
                     conn.AssetTypeKeyValueAttributesMaps.Add( map );

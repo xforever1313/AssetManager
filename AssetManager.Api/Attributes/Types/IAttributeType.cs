@@ -16,6 +16,11 @@ namespace AssetManager.Api.Attributes.Types
         /// </summary>
         string Key { get; set; }
 
+        /// <summary>
+        /// The type of attribute it is.
+        /// </summary>
+        AttributeTypes AttributeType { get; }
+
         // ---------------- Functions ----------------
 
         /// <summary>

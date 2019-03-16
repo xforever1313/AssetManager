@@ -12,7 +12,7 @@ namespace AssetManager.Api.Attributes.Types
         // ---------------- Constructor ----------------
 
         public AssetNameAttributeType() :
-            base()
+            base( AttributeTypes.AssetName )
         {
         }
 

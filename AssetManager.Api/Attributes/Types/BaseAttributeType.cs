@@ -14,13 +14,16 @@ namespace AssetManager.Api.Attributes.Types
     {
         // ---------------- Constructor ----------------
 
-        protected BaseAttributeType()
+        protected BaseAttributeType( AttributeTypes attributeType )
         {
+            this.AttributeType = attributeType;
         }
 
         // ---------------- Properties ----------------
 
         public string Key { get; set; }
+
+        public AttributeTypes AttributeType { get; private set; }
 
         // ---------------- Functions ----------------
 
