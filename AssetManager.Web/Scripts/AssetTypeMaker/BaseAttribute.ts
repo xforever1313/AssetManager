@@ -15,6 +15,8 @@ abstract class BaseAttribute implements IAttribute {
 
     private key: string;
 
+    private isReadOnly: boolean;
+
     private readonly div: HTMLDivElement;
     private readonly errorMessage: HTMLDivElement;
 
@@ -35,11 +37,17 @@ abstract class BaseAttribute implements IAttribute {
 
     // ---------------- Constructor ----------------
 
-    constructor(name: string) {
+    constructor(name: string, readonly: boolean = false) {
         this.key = "";
+        this.isReadOnly = readonly;
 
         this.div = <HTMLDivElement>(document.createElement("div"));
-        this.div.className = "panel panel-info";
+        if (readonly) {
+            this.div.className = "panel panel-default";
+        }
+        else {
+            this.div.className = "panel panel-info";
+        }
 
         let panelHeadingDiv = <HTMLDivElement>(document.createElement("div"));
         panelHeadingDiv.className = "panel-heading";
@@ -71,7 +79,7 @@ abstract class BaseAttribute implements IAttribute {
         }
 
         // Add control DIV
-        {
+        if(readonly === false) {
             this.controlDiv = <HTMLDivElement>(document.createElement("div"));
             this.controlDiv.className = "form-group";
 
@@ -165,7 +173,12 @@ abstract class BaseAttribute implements IAttribute {
             if (remove) {
                 this.parentDiv.removeChild(this.errorMessage);
             }
-            this.div.className = "panel panel-info";
+            if (this.isReadOnly) {
+                this.div.className = "panel panel-default";
+            }
+            else {
+                this.div.className = "panel panel-info";
+            }
         }
 
         return success;

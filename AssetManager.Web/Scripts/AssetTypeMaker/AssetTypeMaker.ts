@@ -9,7 +9,8 @@
 
 enum AttributeType {
     StringAttribute,
-    IntegerAttribute
+    IntegerAttribute,
+    AssetNameAttribute
 }
 
 class AssetTypeMaker {
@@ -40,22 +41,27 @@ class AssetTypeMaker {
             case AttributeType.StringAttribute:
                 attr = new StringAttribute();
                 break;
+            case AttributeType.AssetNameAttribute:
+                attr = new AssetNameAttribute();
+                break;
         }
 
         if (attr !== undefined) {
             this.attrList.push(attr);
             this.appDiv.appendChild(attr.GetHtmlDiv());
 
-            let maker = this;
-            attr.OnDelete = function (theAttr: IAttribute) {
-                maker.appDiv.removeChild(theAttr.GetHtmlDiv());
+            if (attrType !== AttributeType.AssetNameAttribute) {
+                let maker = this;
+                attr.OnDelete = function (theAttr: IAttribute) {
+                    maker.appDiv.removeChild(theAttr.GetHtmlDiv());
 
-                // Holy crap, typescript doesn't have a REMOVE function for an array!?
-                const index = maker.attrList.indexOf(theAttr);
-                if (index > -1) {
-                    maker.attrList.splice(index, 1);
-                }
-            };
+                    // Holy crap, typescript doesn't have a REMOVE function for an array!?
+                    const index = maker.attrList.indexOf(theAttr);
+                    if (index > -1) {
+                        maker.attrList.splice(index, 1);
+                    }
+                };
+            }
         }
     }
 
