@@ -5,7 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-class AssetNameAttribute extends BaseAttribute {
+class AssetNameAttributeType extends BaseAttributeType {
 
     // ---------------- Constructor ----------------
 

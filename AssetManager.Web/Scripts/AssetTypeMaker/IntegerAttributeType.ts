@@ -5,7 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-class IntegerAttribute extends BaseAttribute {
+class IntegerAttributeType extends BaseAttributeType {
 
     // ---------------- Constructor ----------------
 

@@ -19,30 +19,30 @@ class AssetTypeMaker {
 
     private readonly appDiv: HTMLDivElement;
 
-    private readonly attrList: Array<IAttribute>;
+    private readonly attrList: Array<IAttributeType>;
 
     // ---------------- Constructor ----------------
 
     constructor() {
         this.appDiv = document.getElementById("app") as HTMLDivElement;
-        this.attrList = new Array<IAttribute>();
+        this.attrList = new Array<IAttributeType>();
     }
 
     // ---------------- Functions ----------------
 
     public AddAttribute(attrType: AttributeType): void {
 
-        var attr: IAttribute = undefined;
+        var attr: IAttributeType = undefined;
 
         switch (attrType) {
             case AttributeType.IntegerAttribute:
-                attr = new IntegerAttribute();
+                attr = new IntegerAttributeType();
                 break;
             case AttributeType.StringAttribute:
-                attr = new StringAttribute();
+                attr = new StringAttributeType();
                 break;
             case AttributeType.AssetNameAttribute:
-                attr = new AssetNameAttribute();
+                attr = new AssetNameAttributeType();
                 break;
         }
 
@@ -52,7 +52,7 @@ class AssetTypeMaker {
 
             if (attrType !== AttributeType.AssetNameAttribute) {
                 let maker = this;
-                attr.OnDelete = function (theAttr: IAttribute) {
+                attr.OnDelete = function (theAttr: IAttributeType) {
                     maker.appDiv.removeChild(theAttr.GetHtmlDiv());
 
                     // Holy crap, typescript doesn't have a REMOVE function for an array!?

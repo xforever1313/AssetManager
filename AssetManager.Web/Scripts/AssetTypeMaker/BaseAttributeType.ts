@@ -5,11 +5,11 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-abstract class BaseAttribute implements IAttribute {
+abstract class BaseAttributeType implements IAttributeType {
 
     // ---------------- Events ----------------
 
-    public OnDelete: (attr: IAttribute) => void;
+    public OnDelete: (attr: IAttributeType) => void;
 
     // ---------------- Fields ----------------
 

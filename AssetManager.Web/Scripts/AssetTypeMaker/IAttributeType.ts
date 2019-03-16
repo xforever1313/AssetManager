@@ -5,7 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-interface IAttribute {
+interface IAttributeType {
 
     // ---------------- Events ----------------
 
@@ -13,7 +13,7 @@ interface IAttribute {
      * Action that is called when the delete button on an attribute
      * is clicked on.
      */
-    OnDelete: (attr: IAttribute) => void;
+    OnDelete: (attr: IAttributeType) => void;
 
     /**
      * Ensures the attribute is in a valid state.
