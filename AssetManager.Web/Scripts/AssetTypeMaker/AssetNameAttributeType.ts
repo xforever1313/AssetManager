@@ -10,7 +10,7 @@ class AssetNameAttributeType extends BaseAttributeType {
     // ---------------- Constructor ----------------
 
     constructor() {
-        super("Asset Name", true);
+        super("Asset Name", AttributeType.AssetNameAttribute, true);
 
         let helpDiv = <HTMLDivElement>(document.createElement("div"));
         helpDiv.className = "form-group";
@@ -21,6 +21,15 @@ class AssetNameAttributeType extends BaseAttributeType {
     }
 
     // ---------------- Functions ----------------
+
+    public ToJson(): object {
+        let data = {
+            "Key": this.GetKey(),
+            "AttributeType": this.AttributeType
+        };
+
+        return data;
+    }
 
     public ValidateChild(): Array<string> {
         // Nothing to validate.

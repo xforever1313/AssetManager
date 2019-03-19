@@ -29,10 +29,12 @@
 
 
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\AssetTypeMaker\AssetNameAttributeType.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\AssetTypeMaker.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\BaseAttributeType.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\Helpers.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\IAttributeType.ts" />
+    <TypeScriptCompile Include="Scripts\AssetTypeMaker\IntegerAttributeType.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\StringAttributeType.ts" />
   </ItemGroup>
 

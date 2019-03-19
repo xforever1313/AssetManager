@@ -37,8 +37,9 @@ abstract class BaseAttributeType implements IAttributeType {
 
     // ---------------- Constructor ----------------
 
-    constructor(name: string, readonly: boolean = false) {
+    constructor(name: string, type: AttributeType, readonly: boolean = false) {
         this.key = "";
+        this.AttributeType = type;
         this.isReadOnly = readonly;
 
         this.div = <HTMLDivElement>(document.createElement("div"));
@@ -98,6 +99,10 @@ abstract class BaseAttributeType implements IAttributeType {
         }
     }
 
+    // ---------------- Properties ----------------
+
+    readonly AttributeType: AttributeType;
+
     // ---------------- Getters / Setters ----------------
 
     public SetKey(newKey: string): void {
@@ -122,6 +127,8 @@ abstract class BaseAttributeType implements IAttributeType {
     }
 
     // ---------------- Functions ----------------
+
+    public abstract ToJson(): object;
 
     public Validate(): boolean {
         var success: boolean = true;

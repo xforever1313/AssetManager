@@ -10,7 +10,7 @@ class IntegerAttributeType extends BaseAttributeType {
     // ---------------- Constructor ----------------
 
     constructor() {
-        super("Integer Attribute");
+        super("Integer Attribute", AttributeType.IntegerAttribute);
 
         let helpDiv = <HTMLDivElement>(document.createElement("div"));
         helpDiv.className = "form-group";
@@ -23,6 +23,15 @@ class IntegerAttributeType extends BaseAttributeType {
     }
 
     // ---------------- Functions ----------------
+
+    public ToJson(): object {
+        let data = {
+            "Key": this.GetKey(),
+            "AttributeType": this.AttributeType
+        };
+
+        return data;
+    }
 
     public ValidateChild(): Array<string> {
         // Nothing to validate.

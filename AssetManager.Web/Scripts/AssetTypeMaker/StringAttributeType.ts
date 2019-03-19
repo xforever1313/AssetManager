@@ -10,7 +10,7 @@ class StringAttributeType extends BaseAttributeType {
     // ---------------- Constructor ----------------
 
     constructor() {
-        super("String Attribute");
+        super("String Attribute", AttributeType.StringAttribute);
 
         let helpDiv = <HTMLDivElement>(document.createElement("div"));
         helpDiv.className = "form-group";
@@ -23,6 +23,15 @@ class StringAttributeType extends BaseAttributeType {
     }
 
     // ---------------- Functions ----------------
+
+    public ToJson(): object {
+        let data = {
+            "Key": this.GetKey(),
+            "AttributeType": this.AttributeType
+        };
+
+        return data;
+    }
 
     public ValidateChild(): Array<string> {
         // Nothing to validate.

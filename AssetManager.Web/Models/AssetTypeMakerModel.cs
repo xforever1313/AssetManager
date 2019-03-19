@@ -14,26 +14,19 @@ using AssetManager.Api.Attributes.Types;
 
 namespace AssetManager.Web.Models
 {
-    public class AssetTypeMaker : AssetTypeBuilder
+    public class AssetTypeMakerModel
     {
         // ---------------- Fields ----------------
 
         // ---------------- Constructor ----------------
 
-        public AssetTypeMaker() :
-            base()
+        public AssetTypeMakerModel()
         {
         }
 
         // ---------------- Properties ----------------
 
-        public IAttributeType[] AttributeList
-        {
-            set
-            {
-                this.AttributeTypes = value;
-            }
-        }
+        public AttributeTypeModel[] AttributeList { get; set; }
 
         // ---------------- Functions ----------------
     }

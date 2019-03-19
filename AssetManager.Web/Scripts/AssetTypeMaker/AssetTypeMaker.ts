@@ -5,14 +5,6 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-// ---------------- Main Class ----------------
-
-enum AttributeType {
-    StringAttribute,
-    IntegerAttribute,
-    AssetNameAttribute
-}
-
 class AssetTypeMaker {
 
     // ---------------- Fields ----------------
@@ -78,7 +70,24 @@ class AssetTypeMaker {
 
     public Submit(): void {
         if (this.Validate() === false) {
-            // Do nothing yet...
+            // Handle Validation error.
+        }
+        else {
+            const dataType = "application/json; charset=utf-8";
+            let data = {
+                AttributeList: new Array<object>()
+            };
+
+            for (var i = 0; i < this.attrList.length; ++i) {
+                data.AttributeList.push(this.attrList[i].ToJson());
+            }
+
+            console.log(JSON.stringify(data));
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "/AddAsset/AddAssetType/");
+            xhr.setRequestHeader("Content-Type", dataType);
+            xhr.send(JSON.stringify(data));
         }
     }
 }

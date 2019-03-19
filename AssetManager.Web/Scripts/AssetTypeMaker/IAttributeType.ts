@@ -5,6 +5,12 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+enum AttributeType {
+    StringAttribute,
+    IntegerAttribute,
+    AssetNameAttribute
+}
+
 interface IAttributeType {
 
     // ---------------- Events ----------------
@@ -15,10 +21,18 @@ interface IAttributeType {
      */
     OnDelete: (attr: IAttributeType) => void;
 
+    // ---------------- Properties -----------------
+
+    AttributeType: AttributeType;
+
+    // ---------------- Functions -----------------
+
     /**
      * Ensures the attribute is in a valid state.
      **/
     Validate(): boolean;
 
     GetHtmlDiv(): HTMLDivElement;
+
+    ToJson(): object;
 }

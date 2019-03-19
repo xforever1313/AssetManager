@@ -8,6 +8,7 @@
 using AssetManager.Api;
 using AssetManager.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace AssetManager.Web.Controllers
 {
@@ -28,9 +29,9 @@ namespace AssetManager.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddAssetType( [FromBody] AssetTypeMaker maker )
+        public IActionResult AddAssetType( [FromBody] AssetTypeMakerModel maker )
         {
-            this.Api.DataBase.AddAssetType( maker );
+            // this.Api.DataBase.AddAssetType( maker );
 
             return this.Redirect( "/" );
         }
