@@ -6,9 +6,9 @@
 //
 
 enum AttributeType {
-    StringAttribute,
-    IntegerAttribute,
-    AssetNameAttribute
+    AssetNameAttribute = 1,
+    StringAttribute = 2,
+    IntegerAttribute = 3,
 }
 
 interface IAttributeType {

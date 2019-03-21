@@ -29,9 +29,9 @@ namespace AssetManager.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddAssetType( [FromBody] AssetTypeMakerModel maker )
+        public IActionResult AddAssetType( [FromBody] AssetTypeBuilderModel maker )
         {
-            // this.Api.DataBase.AddAssetType( maker );
+            this.Api.DataBase.AddAssetType( maker );
 
             return this.Redirect( "/" );
         }

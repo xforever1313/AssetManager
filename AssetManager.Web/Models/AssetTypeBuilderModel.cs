@@ -6,21 +6,23 @@
 //
 
 using AssetManager.Api;
+using Newtonsoft.Json;
 
 namespace AssetManager.Web.Models
 {
-    public class AttributeTypeModel
+    [JsonConverter( typeof( AssetTypeBuilderConverter ) )]
+    public class AssetTypeBuilderModel : AssetTypeBuilder
     {
         // ---------------- Constructor ----------------
 
-        public AttributeTypeModel()
+        public AssetTypeBuilderModel() :
+            base()
         {
         }
 
-        // ---------------- Properties ----------------
-
-        public string Key { get; set; }
-
-        public AttributeTypes AttributeType { get; set; }
+        public AssetTypeBuilderModel( string name ) :
+            base( name )
+        {
+        }
     }
 }
