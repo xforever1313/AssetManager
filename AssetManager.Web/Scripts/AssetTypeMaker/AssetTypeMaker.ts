@@ -85,7 +85,7 @@ class AssetTypeMaker {
             console.log(JSON.stringify(data));
 
             let xhr = new XMLHttpRequest();
-            xhr.open("POST", "/AddAsset/AddAssetType/");
+            xhr.open("POST", "/AddAssetType/AddAssetType/");
             xhr.setRequestHeader("Content-Type", dataType);
             xhr.send(JSON.stringify(data));
         }

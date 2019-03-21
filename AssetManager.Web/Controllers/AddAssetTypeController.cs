@@ -11,11 +11,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AssetManager.Web.Controllers
 {
-    public class AddAssetController : BaseController
+    public class AddAssetTypeController : BaseController
     {
         // ---------------- Constructor ----------------
 
-        public AddAssetController( [FromServices] IAssetManagerApi api ) :
+        public AddAssetTypeController( [FromServices] IAssetManagerApi api ) :
             base( api )
         {
         }
@@ -25,6 +25,14 @@ namespace AssetManager.Web.Controllers
         public IActionResult Index()
         {
             return View( this.Api );
+        }
+
+        [HttpPost]
+        public IActionResult AddAssetType( [FromBody] AssetTypeBuilderModel maker )
+        {
+            this.Api.DataBase.AddAssetType( maker );
+
+            return this.Redirect( "/" );
         }
     }
 }
