@@ -5,8 +5,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-using System;
 using System.Text;
+using SethCS.Exceptions;
 
 namespace AssetManager.Api.Attributes.Types
 {
@@ -27,26 +27,40 @@ namespace AssetManager.Api.Attributes.Types
 
         // ---------------- Functions ----------------
 
-        public void Validate()
+        public bool TryValidate( out string errors )
         {
             bool success = true;
             StringBuilder builder = new StringBuilder();
 
-            builder.AppendLine( "Can not validate attribute:" );
+            builder.AppendLine( "Can not validate " + this.AttributeType.ToString() + ":" );
             if( string.IsNullOrWhiteSpace( this.Key ) )
             {
                 success = false;
                 builder.AppendLine( "- Key can not be null, empty, whitespace." );
             }
-            if( this.ValidateInternal( out string errors ) == false )
+            if( this.ValidateInternal( out string internalErrors ) == false )
             {
                 success = false;
-                builder.AppendLine( errors );
+                builder.AppendLine( internalErrors );
             }
 
-            if( success == false )
+            if( success )
             {
-                throw new InvalidOperationException( builder.ToString() );
+                errors = string.Empty;
+            }
+            else
+            {
+                errors = builder.ToString();
+            }
+
+            return success;
+        }
+
+        public void Validate()
+        {
+            if( this.TryValidate( out string errors ) == false )
+            {
+                throw new ValidationException( errors );
             }
         }
 

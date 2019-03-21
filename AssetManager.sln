@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssetManager.Cli", "AssetMa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssetManager.Sqlite", "AssetManager.Sqlite\AssetManager.Sqlite.csproj", "{F7A9FD21-D46D-4DB4-A7FB-1E05BBB47519}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetManager.Web", "AssetManager.Web\AssetManager.Web.csproj", "{FB9038E8-F2B1-483C-8D7E-FB45E3125C1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssetManager.Web", "AssetManager.Web\AssetManager.Web.csproj", "{FB9038E8-F2B1-483C-8D7E-FB45E3125C1B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibSethCS.Standard", "SethCS\SethCS\LibSethCS.Standard.csproj", "{71285C41-AD05-46D8-AAA6-B9B8EEAAD556}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{FB9038E8-F2B1-483C-8D7E-FB45E3125C1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB9038E8-F2B1-483C-8D7E-FB45E3125C1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB9038E8-F2B1-483C-8D7E-FB45E3125C1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71285C41-AD05-46D8-AAA6-B9B8EEAAD556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71285C41-AD05-46D8-AAA6-B9B8EEAAD556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71285C41-AD05-46D8-AAA6-B9B8EEAAD556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71285C41-AD05-46D8-AAA6-B9B8EEAAD556}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

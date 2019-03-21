@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AssetManager.Api.Attributes.Types;
 using Microsoft.EntityFrameworkCore;
+using SethCS.Exceptions;
 
 namespace AssetManager.Api.Database
 {
@@ -30,6 +31,9 @@ namespace AssetManager.Api.Database
 
         public void AddAssetType( AssetTypeBuilder builder )
         {
+            ArgumentChecker.IsNotNull( builder, nameof( builder ) );
+            builder.Validate();
+
             using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfig ) )
             {
                 DateTime timestamp = DateTime.UtcNow;
@@ -71,6 +75,8 @@ namespace AssetManager.Api.Database
         /// </summary>
         public Asset GenerateEmptyAsset( string assetTypeName )
         {
+            ArgumentChecker.StringIsNotNullOrEmpty( assetTypeName, nameof( assetTypeName ) );
+
             using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfig ) )
             {
                 // First, find the type of asset.
@@ -98,6 +104,8 @@ namespace AssetManager.Api.Database
 
         public void AddAsset( Asset asset )
         {
+            ArgumentChecker.IsNotNull( asset, nameof( asset ) );
+
             using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfig ) )
             {
                 // First, find the type of asset.

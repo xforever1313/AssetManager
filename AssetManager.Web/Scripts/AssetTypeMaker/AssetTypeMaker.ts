@@ -86,6 +86,18 @@ class AssetTypeMaker {
 
             let xhr = new XMLHttpRequest();
             xhr.open("POST", "/AddAssetType/AddAssetType/");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    // If we are successful, return to the home screen.
+                    if (xhr.status === 200) {
+                        window.location.href = "/";
+                    }
+                    else {
+                        alert(xhr.responseText);
+                    }
+                }
+            };
+
             xhr.setRequestHeader("Content-Type", dataType);
             xhr.send(JSON.stringify(data));
         }

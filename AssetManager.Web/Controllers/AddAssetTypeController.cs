@@ -5,6 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System;
 using AssetManager.Api;
 using AssetManager.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -30,9 +31,16 @@ namespace AssetManager.Web.Controllers
         [HttpPost]
         public IActionResult AddAssetType( [FromBody] AssetTypeBuilderModel maker )
         {
-            this.Api.DataBase.AddAssetType( maker );
+            try
+            {
+                this.Api.DataBase.AddAssetType( maker );
+            }
+            catch( Exception e )
+            {
+                return this.BadRequest( e.Message );
+            }
 
-            return this.Redirect( "/" );
+            return this.Ok();
         }
     }
 }
