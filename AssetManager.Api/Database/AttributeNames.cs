@@ -10,22 +10,19 @@ using System.ComponentModel.DataAnnotations;
 namespace AssetManager.Api.Database
 {
     /// <summary>
-    /// These are the type of attributes an asset can have
-    /// whose type is of "Key-Value."
-    /// 
-    /// This class is the name of the "Key".
+    /// This is nothing more than a table of attribute names.
     /// </summary>
     /// <example>
     /// If we are keeping track of video games, whose <see cref="AssetType"/>
-    /// are PC games and Console Games, a Key-Value attribute's Key could be "Console Name"
+    /// are PC games and Console Games, an attribute name could be "Console Name"
     /// (for, well, Console Games) or "Operating System" (For PC Games).
     /// The value is defined elsewhere.
     /// </example>
-    internal class KeyValueAttributeType
+    internal class AttributeNames
     {
         // ---------------- Constructor ----------------
 
-        public KeyValueAttributeType()
+        public AttributeNames()
         {
             this.Name = string.Empty;
         }

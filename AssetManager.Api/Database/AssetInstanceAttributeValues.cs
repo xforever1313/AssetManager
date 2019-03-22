@@ -8,18 +8,18 @@
 namespace AssetManager.Api.Database
 {
     /// <summary>
-    /// This is the actual values of the key-value attributes
+    /// This is the actual values of the attributes
     /// for an INSTANCE of an asset.
     /// </summary>
     /// <example>
     /// When sorting video games, a PC game's Key of "Operating System"
     /// would have the value "Windows 95" in this table.
     /// </example>
-    internal class AssetInstanceKeyValueAttributeValues
+    internal class AssetInstanceAttributeValues
     {
         // ---------------- Constructor ----------------
 
-        public AssetInstanceKeyValueAttributeValues()
+        public AssetInstanceAttributeValues()
         {
         }
 
@@ -36,7 +36,7 @@ namespace AssetManager.Api.Database
         /// <summary>
         /// The associated Key that this value is tied to.
         /// </summary>
-        public virtual KeyValueAttributeType Key { get; set; }
+        public virtual AttributeNames AttributeName { get; set; }
 
         /// <summary>
         /// The associated value.

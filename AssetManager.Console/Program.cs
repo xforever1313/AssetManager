@@ -19,7 +19,10 @@ namespace AssetManager.Cli
         {
             try
             {
-                File.Delete( @"C:\Users\xfore\Downloads\assetmanager.db" );
+                if( File.Exists( @"C:\Users\xfore\Downloads\assetmanager.db" ) )
+                {
+                    File.Delete( @"C:\Users\xfore\Downloads\assetmanager.db" );
+                }
 
                 IAssetManagerApi api = AssetManagerApiFactory.CreateApiFromDefaultConfigFile();
 

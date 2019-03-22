@@ -48,21 +48,21 @@ namespace AssetManager.Api.Database
 
                 foreach( IAttributeType key in builder.AttributeTypes )
                 {
-                    KeyValueAttributeType keyValueAttributeType = new KeyValueAttributeType
+                    AttributeNames keyValueAttributeType = new AttributeNames
                     {
                         Name = key.Key
                     };
 
-                    conn.KeyValueAttributeTypes.Add( keyValueAttributeType );
+                    conn.AttributeNames.Add( keyValueAttributeType );
 
-                    AssetTypeKeyValueAttributesMap map = new AssetTypeKeyValueAttributesMap
+                    AssetTypeAttributesMap map = new AssetTypeAttributesMap
                     {
                         AssetType = assetType,
-                        KeyValueAttributeType = keyValueAttributeType,
+                        AttributeName = keyValueAttributeType,
                         AttributeType = key.AttributeType
                     };
 
-                    conn.AssetTypeKeyValueAttributesMaps.Add( map );
+                    conn.AssetTypeAttributesMaps.Add( map );
                 }
 
                 conn.SaveChanges();
@@ -88,14 +88,14 @@ namespace AssetManager.Api.Database
                 };
 
                 // Next, get all of the attributes that are associated with the asset type.
-                IEnumerable<AssetTypeKeyValueAttributesMap> maps = this.GetAttributesAssociatedWithAssetType(
+                IEnumerable<AssetTypeAttributesMap> maps = this.GetAttributesAssociatedWithAssetType(
                     conn,
                     assetType
                 );
 
-                foreach( AssetTypeKeyValueAttributesMap map in maps )
+                foreach( AssetTypeAttributesMap map in maps )
                 {
-                    asset.AddEmptyKeyValue( map.KeyValueAttributeType.Name, map.AttributeType );
+                    asset.AddEmptyKeyValue( map.AttributeName.Name, map.AttributeType );
                 }
 
                 return asset;
@@ -121,21 +121,21 @@ namespace AssetManager.Api.Database
                 };
 
                 // Next, get all of the attributes that are associated with the asset type.
-                IEnumerable<AssetTypeKeyValueAttributesMap> maps = this.GetAttributesAssociatedWithAssetType(
+                IEnumerable<AssetTypeAttributesMap> maps = this.GetAttributesAssociatedWithAssetType(
                     conn,
                     assetType
                 );
 
-                foreach( AssetTypeKeyValueAttributesMap map in maps )
+                foreach( AssetTypeAttributesMap map in maps )
                 {
-                    AssetInstanceKeyValueAttributeValues value = new AssetInstanceKeyValueAttributeValues
+                    AssetInstanceAttributeValues value = new AssetInstanceAttributeValues
                     {
                         AssetInstance = assetInstance,
-                        Key = map.KeyValueAttributeType,
-                        Value = asset.KeyValueAttributes[map.KeyValueAttributeType.Name].Serialize()
+                        AttributeName = map.AttributeName,
+                        Value = asset.KeyValueAttributes[map.AttributeName.Name].Serialize()
                     };
 
-                    conn.AssetInstanceKeyValueAttributeValues.Add( value );
+                    conn.AssetInstanceAttributeValues.Add( value );
                 }
 
                 conn.AssetInstances.Add( assetInstance );
@@ -170,10 +170,10 @@ namespace AssetManager.Api.Database
             return assetType;
         }
 
-        private IEnumerable<AssetTypeKeyValueAttributesMap> GetAttributesAssociatedWithAssetType( DatabaseConnection conn, AssetType assetType )
+        private IEnumerable<AssetTypeAttributesMap> GetAttributesAssociatedWithAssetType( DatabaseConnection conn, AssetType assetType )
         {
-            return conn.AssetTypeKeyValueAttributesMaps
-                .Include( nameof( AssetTypeKeyValueAttributesMap.KeyValueAttributeType ) )
+            return conn.AssetTypeAttributesMaps
+                .Include( nameof( AssetTypeAttributesMap.AttributeName ) )
                 .Where( m => m.AssetType.Id == assetType.Id );
         }
     }

@@ -28,13 +28,13 @@ namespace AssetManager.Api.Database
 
         public DbSet<AssetInstance> AssetInstances { get; set; }
 
-        public DbSet<AssetInstanceKeyValueAttributeValues> AssetInstanceKeyValueAttributeValues { get; set; }
+        public DbSet<AssetInstanceAttributeValues> AssetInstanceAttributeValues { get; set; }
 
         public DbSet<AssetType> AssetTypes { get; set; }
 
-        public DbSet<AssetTypeKeyValueAttributesMap> AssetTypeKeyValueAttributesMaps { get; set; }
+        public DbSet<AssetTypeAttributesMap> AssetTypeAttributesMaps { get; set; }
 
-        public DbSet<KeyValueAttributeType> KeyValueAttributeTypes { get; set; }
+        public DbSet<AttributeNames> AttributeNames { get; set; }
 
         // ---------------- Functions ----------------
 
