@@ -48,17 +48,17 @@ namespace AssetManager.Api.Database
 
                 foreach( IAttributeType key in builder.AttributeTypes )
                 {
-                    AttributeNames keyValueAttributeType = new AttributeNames
+                    AttributeNames attributeName = new AttributeNames
                     {
                         Name = key.Key
                     };
 
-                    conn.AttributeNames.Add( keyValueAttributeType );
+                    conn.AttributeNames.Add( attributeName );
 
                     AssetTypeAttributesMap map = new AssetTypeAttributesMap
                     {
                         AssetType = assetType,
-                        AttributeName = keyValueAttributeType,
+                        AttributeName = attributeName,
                         AttributeType = key.AttributeType
                     };
 
@@ -95,7 +95,7 @@ namespace AssetManager.Api.Database
 
                 foreach( AssetTypeAttributesMap map in maps )
                 {
-                    asset.AddEmptyKeyValue( map.AttributeName.Name, map.AttributeType );
+                    asset.AddEmptyAttribute( map.AttributeName.Name, map.AttributeType );
                 }
 
                 return asset;
@@ -132,7 +132,7 @@ namespace AssetManager.Api.Database
                     {
                         AssetInstance = assetInstance,
                         AttributeName = map.AttributeName,
-                        Value = asset.KeyValueAttributes[map.AttributeName.Name].Serialize()
+                        Value = asset.Attributes[map.AttributeName.Name].Serialize()
                     };
 
                     conn.AssetInstanceAttributeValues.Add( value );

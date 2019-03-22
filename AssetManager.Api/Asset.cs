@@ -20,7 +20,7 @@ namespace AssetManager.Api
 
         private string type;
         private string name;
-        private readonly Dictionary<string, IAttribute> kvAttributes;
+        private readonly Dictionary<string, IAttribute> attributes;
 
         // ---------------- Constructor ----------------
 
@@ -28,9 +28,9 @@ namespace AssetManager.Api
         {
             this.type = AssetTypeBuilder.UnknownType;
             this.Name = "Untitled Asset";
-            this.kvAttributes = new Dictionary<string, IAttribute>();
+            this.attributes = new Dictionary<string, IAttribute>();
 
-            this.KeyValueAttributes = new ReadOnlyDictionary<string, IAttribute>( this.kvAttributes );
+            this.Attributes = new ReadOnlyDictionary<string, IAttribute>( this.attributes );
         }
 
         // ---------------- Properties ----------------
@@ -82,27 +82,27 @@ namespace AssetManager.Api
             get
             {
                 this.KeyCheck( key );
-                return this.KeyValueAttributes[key];
+                return this.Attributes[key];
             }
             set
             {
                 this.KeyCheck( key );
 
-                if( this.kvAttributes[key].AttributeType != value.AttributeType )
+                if( this.attributes[key].AttributeType != value.AttributeType )
                 {
                     throw new InvalidOperationException(
                         "Attribute Types not compatible, need to pass in the correct attribute type for key '" + key + "'"
                     );
                 }
 
-                this.kvAttributes[key] = value;
+                this.attributes[key] = value;
             }
         }
 
         /// <summary>
         /// Key-Value attributes associated with this asset.
         /// </summary>
-        internal IReadOnlyDictionary<string, IAttribute> KeyValueAttributes { get; private set; }
+        internal IReadOnlyDictionary<string, IAttribute> Attributes { get; private set; }
 
         // ---------------- Functions ----------------
 
@@ -117,14 +117,14 @@ namespace AssetManager.Api
             this.KeyCheck( key );
 
             TAttr attr = AttributeFactory.CreateAttribute<TAttr>();
-            if( attr.AttributeType != this.kvAttributes[key].AttributeType )
+            if( attr.AttributeType != this.attributes[key].AttributeType )
             {
                 throw new InvalidOperationException(
                     "Attribute Types not compatible, need to pass in the correct attribute type for key '" + key + "'"
                 );
             }
 
-            attr.Deserialize( this.kvAttributes[key].Serialize() );
+            attr.Deserialize( this.attributes[key].Serialize() );
 
             return attr;
         }
@@ -139,14 +139,14 @@ namespace AssetManager.Api
         /// Internal since we only do this when creating a new Asset that
         /// consumers of the API will use.
         /// </summary>
-        internal void AddEmptyKeyValue( string newKey, AttributeTypes attributeType )
+        internal void AddEmptyAttribute( string newKey, AttributeTypes attributeType )
         {
-            this.kvAttributes[newKey] = AttributeFactory.CreateAttribute( attributeType );
+            this.attributes[newKey] = AttributeFactory.CreateAttribute( attributeType );
         }
 
         private void KeyCheck( string key )
         {
-            if( this.KeyValueAttributes.ContainsKey( key ) == false )
+            if( this.Attributes.ContainsKey( key ) == false )
             {
                 throw new KeyNotFoundException(
                     "Could not find key '" + key + "' in asset " + this.Name + "'s Key-Value attributes."
