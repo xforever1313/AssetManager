@@ -21,7 +21,9 @@ class AssetTypeMaker {
         this.appDiv = document.getElementById("app") as HTMLDivElement;
         this.assetTypeNameEditor = new AssetTypeNameEditor(
             document.getElementById("AssetTypeNameTextbox") as HTMLInputElement,
-            document.getElementById("AssetTypeNameTextBoxError") as HTMLDivElement
+            document.getElementById("AssetTypeNameTextBoxError") as HTMLDivElement,
+            document.getElementById("addAssetButton") as HTMLButtonElement,
+            document.getElementById("addAttributeButton") as HTMLButtonElement
         );
         this.attrList = new Array<IAttributeType>();
     }
@@ -83,6 +85,7 @@ class AssetTypeMaker {
             // Handle Validation error.
         }
         else {
+            this.DisableForm();
             const dataType = "application/json; charset=utf-8";
             let data = {
                 AssetTypeName: this.assetTypeNameEditor.GetName(),
@@ -95,6 +98,7 @@ class AssetTypeMaker {
 
             console.log(JSON.stringify(data));
 
+            let maker = this;
             let xhr = new XMLHttpRequest();
             xhr.open("POST", "/AddAssetType/AddAssetType/");
             xhr.onreadystatechange = function () {
@@ -105,6 +109,7 @@ class AssetTypeMaker {
                     }
                     else {
                         alert(xhr.responseText);
+                        maker.EnableForm();
                     }
                 }
             };
@@ -112,5 +117,19 @@ class AssetTypeMaker {
             xhr.setRequestHeader("Content-Type", dataType);
             xhr.send(JSON.stringify(data));
         }
+    }
+
+    private EnableForm(): void {
+        for (let attr of this.attrList) {
+            attr.EnableForm();
+        }
+        this.assetTypeNameEditor.EnableForm();
+    }
+
+    private DisableForm(): void {
+        for (let attr of this.attrList) {
+            attr.DisableForm();
+        }
+        this.assetTypeNameEditor.DisableForm();
     }
 }

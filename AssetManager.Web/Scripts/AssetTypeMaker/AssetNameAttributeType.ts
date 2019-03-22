@@ -35,4 +35,12 @@ class AssetNameAttributeType extends BaseAttributeType {
         // Nothing to validate.
         return null;
     }
+
+    protected EnableFormInternal(): void {
+        // Nothing to do.
+    }
+
+    protected DisableFormInternal(): void {
+        // Nothing to do.
+    }
 }

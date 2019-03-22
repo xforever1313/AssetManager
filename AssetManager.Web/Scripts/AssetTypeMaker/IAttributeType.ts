@@ -27,6 +27,10 @@ interface IAttributeType {
 
     // ---------------- Functions -----------------
 
+    EnableForm(): void;
+
+    DisableForm(): void;
+
     /**
      * Ensures the attribute is in a valid state.
      **/

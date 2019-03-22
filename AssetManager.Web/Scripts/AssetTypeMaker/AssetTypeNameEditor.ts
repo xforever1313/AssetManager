@@ -10,16 +10,24 @@ class AssetTypeNameEditor {
     // ---------------- Fields ----------------
 
     private readonly textBox: HTMLInputElement;
-
     private readonly errorDiv: HTMLDivElement;
+    private readonly submitButton: HTMLButtonElement;
+    private readonly addAssetButton: HTMLButtonElement;
 
     private assetTypeName: string;
 
     // ---------------- Constructor ----------------
 
-    constructor(textBox: HTMLInputElement, errorDiv: HTMLDivElement) {
+    constructor(
+        textBox: HTMLInputElement,
+        errorDiv: HTMLDivElement,
+        submitButton: HTMLButtonElement,
+        addAssetButton: HTMLButtonElement
+    ) {
         this.textBox = textBox;
         this.errorDiv = errorDiv;
+        this.submitButton = submitButton;
+        this.addAssetButton = addAssetButton;
 
         this.assetTypeName = "";
 
@@ -53,5 +61,17 @@ class AssetTypeNameEditor {
 
     public GetName(): string {
         return this.assetTypeName;
+    }
+
+    public EnableForm(): void {
+        this.textBox.readOnly = false;
+        this.submitButton.disabled = false;
+        this.addAssetButton.disabled = false;
+    }
+
+    public DisableForm(): void {
+        this.textBox.readOnly = true;
+        this.submitButton.disabled = true;
+        this.addAssetButton.disabled = true;
     }
 }

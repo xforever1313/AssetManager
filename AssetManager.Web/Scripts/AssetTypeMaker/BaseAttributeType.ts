@@ -22,6 +22,7 @@ abstract class BaseAttributeType implements IAttributeType {
 
     private readonly keyHtml: HTMLInputElement;
     private readonly keyDiv: HTMLDivElement;
+    private readonly deleteButton: HTMLButtonElement;
 
     /**
      * The DIV that the child attribute will append
@@ -84,16 +85,16 @@ abstract class BaseAttributeType implements IAttributeType {
             this.controlDiv = <HTMLDivElement>(document.createElement("div"));
             this.controlDiv.className = "form-group";
 
-            let deleteButton: HTMLButtonElement = <HTMLButtonElement>(document.createElement("button"));
-            deleteButton.className = "btn btn-danger";
-            deleteButton.type = "button";
-            deleteButton.innerText = "Delete";
-            deleteButton.onclick = () => {
+            this.deleteButton = <HTMLButtonElement>(document.createElement("button"));
+            this.deleteButton.className = "btn btn-danger";
+            this.deleteButton.type = "button";
+            this.deleteButton.innerText = "Delete";
+            this.deleteButton.onclick = () => {
                 if ((this.OnDelete !== undefined) && (this.OnDelete !== null)) {
                     this.OnDelete(this);
                 }
             };
-            this.controlDiv.appendChild(deleteButton);
+            this.controlDiv.appendChild(this.deleteButton);
 
             this.parentDiv.appendChild(this.controlDiv);
         }
@@ -127,6 +128,26 @@ abstract class BaseAttributeType implements IAttributeType {
     }
 
     // ---------------- Functions ----------------
+
+    public EnableForm(): void {
+        this.keyHtml.readOnly = false;
+        if (this.deleteButton) {
+            this.deleteButton.disabled = false;
+        }
+        this.EnableFormInternal();
+    }
+
+    public DisableForm(): void {
+        this.keyHtml.readOnly = true;
+        if (this.deleteButton) {
+            this.deleteButton.disabled = true;
+        }
+        this.DisableFormInternal();
+    }
+
+    protected abstract EnableFormInternal(): void;
+
+    protected abstract DisableFormInternal(): void;
 
     public abstract ToJson(): object;
 
