@@ -41,7 +41,15 @@ namespace AssetManager.Web
 
             foreach( JToken childNode in rootNode.Children() )
             {
-                if( childNode.Path == "AttributeList" )
+                if( childNode.Path == "AssetTypeName" )
+                {
+                    string name = childNode.ToObject<string>();
+                    if( string.IsNullOrWhiteSpace( name ) == false )
+                    {
+                        builder.Name = name;
+                    }
+                }
+                else if( childNode.Path == "AttributeList" )
                 {
                     foreach( JToken attrNode in childNode.Children() )
                     {

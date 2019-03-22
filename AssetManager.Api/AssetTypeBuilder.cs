@@ -39,7 +39,7 @@ namespace AssetManager.Api
         /// <summary>
         /// The name of the specific asset instance.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         public IList<IAttributeType> AttributeTypes { get; protected set; }
 

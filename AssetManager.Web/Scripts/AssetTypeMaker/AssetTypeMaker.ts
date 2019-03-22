@@ -11,12 +11,18 @@ class AssetTypeMaker {
 
     private readonly appDiv: HTMLDivElement;
 
+    private readonly assetTypeNameEditor: AssetTypeNameEditor;
+
     private readonly attrList: Array<IAttributeType>;
 
     // ---------------- Constructor ----------------
 
     constructor() {
         this.appDiv = document.getElementById("app") as HTMLDivElement;
+        this.assetTypeNameEditor = new AssetTypeNameEditor(
+            document.getElementById("AssetTypeNameTextbox") as HTMLInputElement,
+            document.getElementById("AssetTypeNameTextBoxError") as HTMLDivElement
+        );
         this.attrList = new Array<IAttributeType>();
     }
 
@@ -65,6 +71,10 @@ class AssetTypeMaker {
             }
         }
 
+        if (this.assetTypeNameEditor.Validate() === false) {
+            success = false;
+        }
+
         return success;
     }
 
@@ -75,6 +85,7 @@ class AssetTypeMaker {
         else {
             const dataType = "application/json; charset=utf-8";
             let data = {
+                AssetTypeName: this.assetTypeNameEditor.GetName(),
                 AttributeList: new Array<object>()
             };
 
