@@ -13,44 +13,25 @@ using SethCS.Exceptions;
 namespace AssetMananger.UnitTests.Api.Attributes.Types
 {
     [TestFixture]
-    public class IntegerAttributeTypeTests
+    public class StringAttributeTypeTests
     {
         [Test]
         public void ValidateTest()
         {
-            IntegerAttributeType uut = new IntegerAttributeType
+            StringAttributeType uut = new StringAttributeType
             {
-                Key = "Some Int",
+                Key = "Some String",
                 DefaultValue = null,
-                MaxValue = null,
-                MinValue = null,
                 Required = false
             };
 
             Assert.DoesNotThrow( () => uut.Validate() );
 
-            // Having a Max, min, and default should be okay.
-            uut.DefaultValue = 10;
-            uut.MinValue = 0;
-            uut.MaxValue = 100;
+            // Having a default value should be okay.
+            uut.DefaultValue = "Hello";
             Assert.DoesNotThrow( () => uut.Validate() );
-
-            // Having a default value outside of the range should throw an exception.
-            uut.DefaultValue = -1;
-            Assert.Throws<ValidationException>( () => uut.Validate() );
-            uut.DefaultValue = null;
 
             // Not having a default value with a min/max should work okay.
-            Assert.DoesNotThrow( () => uut.Validate() );
-
-            // Having a max < min should throw.
-            uut.MinValue = 101;
-            Assert.Throws<ValidationException>( () => uut.Validate() );
-
-            // Just having a default value should be okay.
-            uut.MinValue = null;
-            uut.MaxValue = null;
-            uut.DefaultValue = 10;
             Assert.DoesNotThrow( () => uut.Validate() );
 
             // Null key is not okay
@@ -65,25 +46,18 @@ namespace AssetMananger.UnitTests.Api.Attributes.Types
 @"
 {
     ""Key"": ""Test Attribute"",
-    ""AttributeType"": 3,
+    ""AttributeType"": 2,
     ""Required"": false,
-    ""PossibleValues"": {
-        ""Version"": 1,
-        ""MinValue"": 3,
-        ""MaxValue"": null
-    },
+    ""PossibleValues"": null,
     ""DefaultValue"": null
 }
 ";
             JObject o = JObject.Parse( json );
-
-            IntegerAttributeType uut = new IntegerAttributeType();
+            StringAttributeType uut = new StringAttributeType();
             uut.Deserialize( o );
 
             Assert.AreEqual( "Test Attribute", uut.Key );
             Assert.AreEqual( false, uut.Required );
-            Assert.AreEqual( 3, uut.MinValue );
-            Assert.IsNull( uut.MaxValue );
             Assert.IsNull( uut.DefaultValue );
         }
 
@@ -94,26 +68,19 @@ namespace AssetMananger.UnitTests.Api.Attributes.Types
 @"
 {
     ""Key"": ""Test Attribute"",
-    ""AttributeType"": 3,
+    ""AttributeType"": 2,
     ""Required"": true,
-    ""PossibleValues"": {
-        ""Version"": 1,
-        ""MinValue"": null,
-        ""MaxValue"": 1
-    },
-    ""DefaultValue"": 2
+    ""PossibleValues"": null,
+    ""DefaultValue"": ""Hello""
 }
 ";
             JObject o = JObject.Parse( json );
-
-            IntegerAttributeType uut = new IntegerAttributeType();
+            StringAttributeType uut = new StringAttributeType();
             uut.Deserialize( o );
 
             Assert.AreEqual( "Test Attribute", uut.Key );
             Assert.AreEqual( true, uut.Required );
-            Assert.IsNull( uut.MinValue );
-            Assert.AreEqual( 1, uut.MaxValue );
-            Assert.AreEqual( 2, uut.DefaultValue );
+            Assert.AreEqual( "Hello", uut.DefaultValue );
         }
 
         /// <summary>
@@ -122,23 +89,19 @@ namespace AssetMananger.UnitTests.Api.Attributes.Types
         [Test]
         public void SerializeDeserializeTest()
         {
-            IntegerAttributeType originalObject = new IntegerAttributeType
+            StringAttributeType originalObject = new StringAttributeType
             {
-                Key = "My Object",
-                MaxValue = 100,
-                MinValue = 0,
-                Required = true,
-                DefaultValue = 50
+                Key = "My Attribute",
+                DefaultValue = "World",
+                Required = true
             };
 
             JObject serialObjected = originalObject.Serialize();
 
-            IntegerAttributeType uut = new IntegerAttributeType();
+            StringAttributeType uut = new StringAttributeType();
             uut.Deserialize( serialObjected );
 
             Assert.AreEqual( originalObject.Key, uut.Key );
-            Assert.AreEqual( originalObject.MaxValue, uut.MaxValue );
-            Assert.AreEqual( originalObject.MinValue, uut.MinValue );
             Assert.AreEqual( originalObject.Required, uut.Required );
             Assert.AreEqual( originalObject.DefaultValue, uut.DefaultValue );
         }

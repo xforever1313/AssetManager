@@ -25,9 +25,18 @@ class StringAttributeType extends BaseAttributeType {
     // ---------------- Functions ----------------
 
     public ToJson(): object {
+
+        let defaultValue: string = null;
+        let possibleValues: object = null;
+
+        //TODO: Fill in properties.
+
         let data = {
             "Key": this.GetKey(),
-            "AttributeType": this.AttributeType
+            "AttributeType": this.AttributeType,
+            "Required": false,
+            "PossibleValues": possibleValues,
+            "DefaultValue": defaultValue
         };
 
         return data;
