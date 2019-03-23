@@ -38,6 +38,16 @@ namespace AssetManager.Api.Attributes.Types
             return null;
         }
 
+        public override string SerializeDefaultValue()
+        {
+            return this.DefaultValue;
+        }
+
+        public override void DeserializeDefaultValue( string data )
+        {
+            this.DefaultValue = data;
+        }
+
         public override string Serialize()
         {
             JObject root = new JObject

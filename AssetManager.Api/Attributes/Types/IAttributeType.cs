@@ -52,6 +52,19 @@ namespace AssetManager.Api.Attributes.Types
         string SerializePossibleValues();
 
         /// <summary>
+        /// Takes the default value of the attribute and
+        /// converts it to a string.
+        /// </summary>
+        /// <returns></returns>
+        string SerializeDefaultValue();
+
+        /// <summary>
+        /// Converts the given string of the default value and sets
+        /// it to the attribute's default value.
+        /// </summary>
+        void DeserializeDefaultValue( string data );
+
+        /// <summary>
         /// Serializes the entire object into a string.
         /// </summary>
         string Serialize();

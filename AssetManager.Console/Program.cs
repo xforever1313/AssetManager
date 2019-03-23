@@ -31,14 +31,20 @@ namespace AssetManager.Cli
 
                     IntegerAttributeType hpAttribute = new IntegerAttributeType
                     {
-                        Key = "HP"
+                        Key = "HP",
+                        MinValue = 10,
+                        Required = false,
+                        DefaultValue = 50
                     };
 
                     builder.AttributeTypes.Add( hpAttribute );
 
                     IntegerAttributeType retreatCostAttribute = new IntegerAttributeType
                     {
-                        Key = "Retreat Cost"
+                        Key = "Retreat Cost",
+                        MinValue = 0,
+                        MaxValue = 4,
+                        Required = false
                     };
                     builder.AttributeTypes.Add( retreatCostAttribute );
 
@@ -50,13 +56,17 @@ namespace AssetManager.Cli
 
                     IntegerAttributeType attackAttribute = new IntegerAttributeType
                     {
-                        Key = "Attack"
+                        Key = "Attack",
+                        MinValue = 0,
+                        Required = true
                     };
                     builder.AttributeTypes.Add( attackAttribute );
 
                     IntegerAttributeType defenseAttribute = new IntegerAttributeType
                     {
-                        Key = "Defense"
+                        Key = "Defense",
+                        MinValue = 0,
+                        Required = true
                     };
                     builder.AttributeTypes.Add( defenseAttribute );
 

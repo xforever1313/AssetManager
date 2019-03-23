@@ -32,6 +32,8 @@ namespace AssetManager.Api.Database
 
         public DbSet<AssetType> AssetTypes { get; set; }
 
+        public DbSet<AttributeProperties> AttributeProperties { get; set; }
+
         public DbSet<AssetTypeAttributesMap> AssetTypeAttributesMaps { get; set; }
 
         public DbSet<AttributeNames> AttributeNames { get; set; }

@@ -55,11 +55,20 @@ namespace AssetManager.Api.Database
 
                     conn.AttributeNames.Add( attributeName );
 
+                    AttributeProperties properties = new AttributeProperties
+                    {
+                        DefaultValue = key.SerializeDefaultValue(),
+                        PossibleValues = key.SerializePossibleValues(),
+                        Required = key.Required
+                    };
+                    conn.AttributeProperties.Add( properties );
+
                     AssetTypeAttributesMap map = new AssetTypeAttributesMap
                     {
                         AssetType = assetType,
                         AttributeName = attributeName,
-                        AttributeType = key.AttributeType
+                        AttributeType = key.AttributeType,
+                        AttributeProperties = properties
                     };
 
                     conn.AssetTypeAttributesMaps.Add( map );

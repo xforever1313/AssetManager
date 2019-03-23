@@ -108,6 +108,23 @@ namespace AssetManager.Api.Attributes.Types
             return possibleValues;
         }
 
+        public override void DeserializeDefaultValue( string data )
+        {
+            if( data == null )
+            {
+                this.DefaultValue = null;
+            }
+            else
+            {
+                this.DefaultValue = int.Parse( data );
+            }
+        }
+
+        public override string SerializeDefaultValue()
+        {
+            return this.DefaultValue.HasValue ? this.DefaultValue.Value.ToString() : null;
+        }
+
         public override string Serialize()
         {
             JObject root = new JObject

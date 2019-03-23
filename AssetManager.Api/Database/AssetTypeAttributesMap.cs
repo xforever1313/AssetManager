@@ -34,6 +34,9 @@ namespace AssetManager.Api.Database
         [Required]
         public virtual AttributeNames AttributeName { get; set; }
 
+        [Required]
+        public virtual AttributeProperties AttributeProperties { get; set; }
+
         /// <summary>
         /// The type of attribute that is used for the asset type.
         /// Defaulted to <see cref="AttributeTypes.StringAttribute"/>

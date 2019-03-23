@@ -39,5 +39,15 @@ namespace AssetManager.Api.Attributes.Types
         {
             throw new System.NotImplementedException();
         }
+
+        public override string SerializeDefaultValue()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void DeserializeDefaultValue( string data )
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
