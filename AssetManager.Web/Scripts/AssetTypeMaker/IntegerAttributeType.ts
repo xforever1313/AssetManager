@@ -22,33 +22,56 @@ class IntegerAttributeType extends BaseAttributeType {
             "having the attribute name be 'Population', and the value would be '10000'.";
     }
 
+    // ---------------- Properties ----------------
+
+    public MinValue: Number;
+
+    public MaxValue: Number;
+
+    public DefaultValue: Number;
+
     // ---------------- Functions ----------------
 
     public ToJson(): object {
-
-        let minValue: Number = null;
-        let maxValue: Number = null;
-        let defaultValue: Number = null;
-
-        //TODO: Fill in properties.
         let data = {
             "Key": this.GetKey(),
             "AttributeType": this.AttributeType,
             "Required": false,
             "PossibleValues": {
                 "Version": 1,
-                "MinValue": minValue,
-                "MaxValue": maxValue
+                "MinValue": this.MinValue,
+                "MaxValue": this.MaxValue
             },
-            "DefaultValue": defaultValue
+            "DefaultValue": this.DefaultValue
         };
 
         return data;
     }
 
     public ValidateChild(): Array<string> {
-        // Nothing to validate.
-        return null;
+        let errors: Array<string> = new Array<string>();
+
+        if (Helpers.IsNotNullOrUndefined(this.MinValue) && Helpers.IsNotNullOrUndefined(this.MaxValue)) {
+            if (this.MinValue > this.MaxValue) {
+                errors.push("Min Value can not be greater than the maximum value.");
+            }
+        }
+
+        if (Helpers.IsNotNullOrUndefined(this.DefaultValue)) {
+            if (Helpers.IsNotNullOrUndefined(this.MinValue)) {
+                if (this.MinValue > this.DefaultValue) {
+                    errors.push("The default value can not be less than the minimum value.")
+                }
+            }
+
+            if (Helpers.IsNotNullOrUndefined(this.MaxValue)) {
+                if (this.MaxValue < this.DefaultValue) {
+                    errors.push("The default value can not be greater than the maximum value.")
+                }
+            }
+        }
+
+        return errors;
     }
 
     protected EnableFormInternal(): void {

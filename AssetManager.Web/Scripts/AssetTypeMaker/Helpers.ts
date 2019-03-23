@@ -9,4 +9,12 @@ class Helpers {
     public static StringIsNullOrEmpty(str: string): boolean {
         return (str === null) || (str === undefined) || (str === "");
     }
+
+    public static IsNullOrUndefined(o: object): boolean {
+        return (o === undefined) || (o === null);
+    }
+
+    public static IsNotNullOrUndefined(o: object): boolean {
+        return (o !== undefined) && (o !== null);
+    }
 }

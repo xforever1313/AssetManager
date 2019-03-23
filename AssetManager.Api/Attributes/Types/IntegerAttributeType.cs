@@ -69,13 +69,13 @@ namespace AssetManager.Api.Attributes.Types
                 if( this.MinValue.HasValue && ( this.MinValue.Value > this.DefaultValue.Value ) )
                 {
                     success = false;
-                    builder.AppendLine( "- Min value can not be greater than the default value." );
+                    builder.AppendLine( "- The default value can not be less than the minimum value." );
                 }
 
                 if( this.MaxValue.HasValue && ( this.MaxValue.Value < this.DefaultValue.Value ) )
                 {
                     success = false;
-                    builder.AppendLine( "- Max value can not be less than the default value." );
+                    builder.AppendLine( "- The default value can not be greater than the maximum value." );
                 }
             }
 
