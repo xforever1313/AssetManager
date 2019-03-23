@@ -22,21 +22,21 @@ class StringAttributeType extends BaseAttributeType {
             "having the attribute name be 'Location', and the value would be 'New York'.";
     }
 
+    // ---------------- Properties ----------------
+
+    public DefaultValue: string;
+
     // ---------------- Functions ----------------
 
     public ToJson(): object {
-
-        let defaultValue: string = null;
         let possibleValues: object = null;
-
-        //TODO: Fill in properties.
 
         let data = {
             "Key": this.GetKey(),
             "AttributeType": this.AttributeType,
             "Required": false,
             "PossibleValues": possibleValues,
-            "DefaultValue": defaultValue
+            "DefaultValue": this.DefaultValue
         };
 
         return data;
