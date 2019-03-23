@@ -5,9 +5,11 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System;
 using System.Collections.Generic;
 using System.Text;
 using AssetManager.Api.Attributes.Types;
+using Newtonsoft.Json.Linq;
 using SethCS.Exceptions;
 
 namespace AssetManager.Api
@@ -74,6 +76,51 @@ namespace AssetManager.Api
             if( success == false )
             {
                 throw new ValidationException( builder.ToString() );
+            }
+        }
+
+        public void Deserialize( JToken rootNode )
+        {
+            foreach( JToken childNode in rootNode.Children() )
+            {
+                if( childNode.Path == "AssetTypeName" )
+                {
+                    string name = childNode.ToObject<string>();
+                    if( string.IsNullOrWhiteSpace( name ) == false )
+                    {
+                        this.Name = name;
+                    }
+                }
+                else if( childNode.Path == "AttributeList" )
+                {
+                    // This is the array of attributes.
+                    foreach( JArray attrNode in childNode.Children<JArray>() )
+                    {
+                        foreach( JObject attrProperties in attrNode )
+                        {
+                            AttributeTypes? attrType = null;
+                            foreach( JProperty attrValue in attrProperties.Children<JProperty>() )
+                            {
+                                if( attrValue.Name == "AttributeType" )
+                                {
+                                    attrType = (AttributeTypes)attrValue.ToObject<long>();
+                                }
+                            }
+
+                            if( attrType == null )
+                            {
+                                throw new InvalidOperationException( "Attribute Type can not be null." );
+                            }
+
+                            IAttributeType attributeType = AttributeTypeFactory.CreateAttributeType( attrType.Value );
+                            attributeType.Deserialize( attrProperties );
+                            this.AttributeTypes.Add( attributeType );
+                        }
+
+                        // There should only be one array.  Break.
+                        break;
+                    }
+                }
             }
         }
     }

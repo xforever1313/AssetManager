@@ -24,5 +24,17 @@ namespace AssetManager.Web.Models
             base( name )
         {
         }
+
+        // ---------------- Properties ----------------
+
+        /// <summary>
+        /// Did we create the asset type correctly?
+        /// </summary>
+        public bool Success { get; set; }
+
+        /// <summary>
+        /// Were there any errors.  Empty if <see cref="Success"/> is set to true.
+        /// </summary>
+        public string ErrorMessage { get; set; }
     }
 }

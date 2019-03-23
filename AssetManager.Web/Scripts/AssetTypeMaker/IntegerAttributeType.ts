@@ -26,6 +26,7 @@ class IntegerAttributeType extends BaseAttributeType {
 
     public ToJson(): object {
 
+        let minValue: Number = null;
         let maxValue: Number = null;
         let defaultValue: Number = null;
 
@@ -36,7 +37,7 @@ class IntegerAttributeType extends BaseAttributeType {
             "Required": false,
             "PossibleValues": {
                 "Version": 1,
-                "MinValue": 3,
+                "MinValue": minValue,
                 "MaxValue": maxValue
             },
             "DefaultValue": defaultValue

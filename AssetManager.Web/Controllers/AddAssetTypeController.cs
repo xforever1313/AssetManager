@@ -31,6 +31,11 @@ namespace AssetManager.Web.Controllers
         [HttpPost]
         public IActionResult AddAssetType( [FromBody] AssetTypeBuilderModel maker )
         {
+            if( maker.Success == false )
+            {
+                return this.BadRequest( maker.ErrorMessage );
+            }
+
             try
             {
                 this.Api.DataBase.AddAssetType( maker );
