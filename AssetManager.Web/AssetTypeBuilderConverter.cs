@@ -24,17 +24,11 @@ namespace AssetManager.Web
 
         // ---------------- Functions ----------------
 
-        protected override AssetTypeBuilderModel Create( Type objectType, JObject jObject )
+        protected override AssetTypeBuilderModel Create( Type objectType, JObject rootNode )
         {
-            if( jObject == null )
-            {
-                throw new ArgumentNullException( nameof( jObject ) );
-            }
-
-            JToken rootNode = jObject.First;
             if( rootNode == null )
             {
-                throw new ArgumentException( "Malformed JSON.  Can not find root node" );
+                throw new ArgumentNullException( nameof( rootNode ) );
             }
 
             AssetTypeBuilderModel builder = new AssetTypeBuilderModel( "Test" );
@@ -51,56 +45,70 @@ namespace AssetManager.Web
                 }
                 else if( childNode.Path == "AttributeList" )
                 {
-                    foreach( JToken attrNode in childNode.Children() )
+                    // This is the array of attributes.
+                    foreach( JArray attrNode in childNode.Children<JArray>() )
                     {
-                        string key = null;
-                        AttributeTypes? attrType = null;
-
-                        foreach( JProperty attrValue in attrNode.Children<JProperty>() )
+                        foreach( JObject attrProperties in attrNode )
                         {
-                            if( attrValue.Name == "Key" )
+                            string key = null;
+                            AttributeTypes? attrType = null;
+
+                            foreach( JProperty attrValue in attrProperties.Children<JProperty>() )
                             {
-                                key = attrNode.Value<string>( attrValue.Name );
+                                if( attrValue.Name == "Key" )
+                                {
+                                    key = attrNode.Value<string>( attrValue.Name );
+                                }
+                                else if( attrValue.Name == "AttributeType" )
+                                {
+                                    attrType = (AttributeTypes)attrNode.Value<long>( attrValue.Name );
+                                }
                             }
-                            else if( attrValue.Name == "AttributeType" )
+                            if( ( key == null ) || ( attrType == null ) )
                             {
-                                attrType = (AttributeTypes)attrNode.Value<long>( attrValue.Name );
+                                throw new InvalidOperationException( "Key or Attribute Type can not be null." );
                             }
+
+                            IAttributeType type;
+                            switch( attrType.Value )
+                            {
+                                case AttributeTypes.StringAttribute:
+                                    type = new StringAttributeType
+                                    {
+                                        Key = key
+                                    };
+                                    break;
+
+                                case AttributeTypes.Integer:
+                                    IntegerAttributeType intType = new IntegerAttributeType
+                                    {
+                                        Key = key
+                                    };
+
+                                    if( attrNode["Properties"] != null )
+                                    {
+                                        intType.Deserialize( attrNode["Properties"] );
+                                    }
+
+                                    type = intType;
+                                    break;
+
+                                case AttributeTypes.AssetName:
+                                    type = new AssetNameAttributeType
+                                    {
+                                        Key = key
+                                    };
+                                    break;
+
+                                default:
+                                    throw new InvalidOperationException( "Invalid attribute type: " + attrType.Value );
+                            }
+
+                            builder.AttributeTypes.Add( type );
                         }
-                        if( ( key == null ) || ( attrType == null ) )
-                        {
-                            throw new InvalidOperationException( "Key or Attribute Type can not be null." );
-                        }
 
-                        IAttributeType type;
-                        switch( attrType.Value )
-                        {
-                            case AttributeTypes.StringAttribute:
-                                type = new StringAttributeType
-                                {
-                                    Key = key
-                                };
-                                break;
-
-                            case AttributeTypes.Integer:
-                                type = new IntegerAttributeType
-                                {
-                                    Key = key
-                                };
-                                break;
-
-                            case AttributeTypes.AssetName:
-                                type = new AssetNameAttributeType
-                                {
-                                    Key = key
-                                };
-                                break;
-
-                            default:
-                                throw new InvalidOperationException( "Invalid attribute type: " + attrType.Value );
-                        }
-
-                        builder.AttributeTypes.Add( type );
+                        // There should only be one array.  Break.
+                        break;
                     }
                 }
             }

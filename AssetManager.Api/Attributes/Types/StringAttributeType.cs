@@ -16,11 +16,15 @@ namespace AssetManager.Api.Attributes.Types
         {
         }
 
+        // ---------------- Properties ----------------
+
+        public string DefaultValue { get; set; }
+
         // ---------------- Functions ----------------
 
         protected override bool ValidateInternal( out string errors )
         {
-            // Nothing to validate.
+            // Nothing to validate; Default value is okay to be null.
             errors = string.Empty;
             return true;
         }

@@ -25,9 +25,21 @@ class IntegerAttributeType extends BaseAttributeType {
     // ---------------- Functions ----------------
 
     public ToJson(): object {
+
+        let maxValue: Number = null;
+        let defaultValue: Number = null;
+
+        //TODO: Fill in properties.
         let data = {
             "Key": this.GetKey(),
-            "AttributeType": this.AttributeType
+            "AttributeType": this.AttributeType,
+            "Required": false,
+            "PossibleValues": {
+                "Version": 1,
+                "MinValue": 3,
+                "MaxValue": maxValue
+            },
+            "DefaultValue": defaultValue
         };
 
         return data;

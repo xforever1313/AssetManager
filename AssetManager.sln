@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssetManager.Web", "AssetMa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibSethCS.Standard", "SethCS\SethCS\LibSethCS.Standard.csproj", "{71285C41-AD05-46D8-AAA6-B9B8EEAAD556}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetMananger.UnitTests", "AssetMananger.UnitTests\AssetMananger.UnitTests.csproj", "{B955F0D4-089D-40F7-A978-8F852ED3E568}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{71285C41-AD05-46D8-AAA6-B9B8EEAAD556}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71285C41-AD05-46D8-AAA6-B9B8EEAAD556}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71285C41-AD05-46D8-AAA6-B9B8EEAAD556}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B955F0D4-089D-40F7-A978-8F852ED3E568}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B955F0D4-089D-40F7-A978-8F852ED3E568}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B955F0D4-089D-40F7-A978-8F852ED3E568}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B955F0D4-089D-40F7-A978-8F852ED3E568}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

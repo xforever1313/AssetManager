@@ -21,6 +21,11 @@ namespace AssetManager.Api.Attributes.Types
         /// </summary>
         AttributeTypes AttributeType { get; }
 
+        /// <summary>
+        /// Is this attribute required to be specified by the user?
+        /// </summary>
+        bool Required { get; set; }
+
         // ---------------- Functions ----------------
 
         /// <summary>
