@@ -23,9 +23,15 @@ class AssetNameAttributeType extends BaseAttributeType {
     // ---------------- Functions ----------------
 
     public ToJson(): object {
+        let defaultValue: object = null;
+        let possibleValues: object = null;
+
         let data = {
             "Key": this.GetKey(),
-            "AttributeType": this.AttributeType
+            "AttributeType": this.AttributeType,
+            "Required": true, // Always required
+            "DefaultValue": defaultValue,
+            "PossibleValues": possibleValues
         };
 
         return data;

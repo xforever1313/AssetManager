@@ -6,7 +6,6 @@
 //
 
 using AssetManager.Api.Attributes.Types;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SethCS.Exceptions;
 
