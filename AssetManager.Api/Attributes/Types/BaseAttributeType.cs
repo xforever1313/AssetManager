@@ -6,6 +6,7 @@
 //
 
 using System.Text;
+using Newtonsoft.Json.Linq;
 using SethCS.Exceptions;
 
 namespace AssetManager.Api.Attributes.Types
@@ -77,8 +78,13 @@ namespace AssetManager.Api.Attributes.Types
 
         public abstract string Serialize();
 
-        public abstract void Deserialize( string data );
+        public void Deserialize( string data )
+        {
+            this.Deserialize( JToken.Parse( data ) );
+        }
 
         protected abstract bool ValidateInternal( out string errors );
+
+        public abstract void Deserialize( JToken data );
     }
 }

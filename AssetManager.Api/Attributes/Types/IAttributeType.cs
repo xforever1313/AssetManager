@@ -5,6 +5,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using Newtonsoft.Json.Linq;
+
 namespace AssetManager.Api.Attributes.Types
 {
     public interface IAttributeType
@@ -74,5 +76,11 @@ namespace AssetManager.Api.Attributes.Types
         /// on the serialization data passed in.
         /// </summary>
         void Deserialize( string data );
+
+        /// <summary>
+        /// Overwrite's this object's properties based
+        /// on the serialization data passed in.
+        /// </summary>
+        void Deserialize( JToken data );
     }
 }

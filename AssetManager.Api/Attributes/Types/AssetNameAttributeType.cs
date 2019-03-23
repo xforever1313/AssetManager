@@ -5,6 +5,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using Newtonsoft.Json.Linq;
+
 namespace AssetManager.Api.Attributes.Types
 {
     public class AssetNameAttributeType : BaseAttributeType
@@ -25,14 +27,20 @@ namespace AssetManager.Api.Attributes.Types
             return true;
         }
 
-        public override void Deserialize( string data )
-        {
-            throw new System.NotImplementedException();
-        }
-
         public override string SerializePossibleValues()
         {
-            throw new System.NotImplementedException();
+            // There no limitations on the possible values.
+            return null;
+        }
+
+        public override string SerializeDefaultValue()
+        {
+            return null;
+        }
+
+        public override void DeserializeDefaultValue( string data )
+        {
+            // Ignored, there are no default values.
         }
 
         public override string Serialize()
@@ -40,12 +48,7 @@ namespace AssetManager.Api.Attributes.Types
             throw new System.NotImplementedException();
         }
 
-        public override string SerializeDefaultValue()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void DeserializeDefaultValue( string data )
+        public override void Deserialize( JToken rootNode )
         {
             throw new System.NotImplementedException();
         }

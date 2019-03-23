@@ -62,10 +62,8 @@ namespace AssetManager.Api.Attributes.Types
             return root.ToString();
         }
 
-        public override void Deserialize( string data )
+        public override void Deserialize( JToken rootNode )
         {
-            JToken rootNode = JToken.Parse( data );
-
             foreach( JProperty property in rootNode.Children<JProperty>() )
             {
                 if( property.Name == "Key" )
