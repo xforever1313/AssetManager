@@ -69,6 +69,12 @@ namespace AssetManager.Api.Attributes.Types
             }
         }
 
+        public abstract string SerializePossibleValues();
+
+        public abstract string Serialize();
+
+        public abstract void Deserialize( string data );
+
         protected abstract bool ValidateInternal( out string errors );
     }
 }

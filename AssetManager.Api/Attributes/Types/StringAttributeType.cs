@@ -32,51 +32,35 @@ namespace AssetManager.Api.Attributes.Types
             errors = string.Empty;
             return true;
         }
-    }
 
-    /// <summary>
-    /// This converts <see cref="StringAttributeType"/> to/from JSON
-    /// </summary>
-    /// <example>
-    /// {
-    ///     "Key": "My Attribute",
-    ///     "AttributeType": 2,
-    ///     "Required": false,
-    ///     "PossibleValues": null,
-    ///     "DefaultValue": "Hello"
-    /// };
-    /// </example>
-    public static class StringAttributeTypeSerialzier
-    {
-        public static JObject SerializePossibleValues( this StringAttributeType attr )
+        public override string SerializePossibleValues()
         {
-            // No possible values property on string attribute types, return null.
             return null;
         }
 
-        public static JObject Serialize( this StringAttributeType attr )
+        public override string Serialize()
         {
             JObject root = new JObject
             {
-                ["Key"] = attr.Key,
-                ["AttributeType"] = Convert.ToInt32( attr.AttributeType ),
-                ["Required"] = attr.Required,
-                ["DefaultValue"] = attr.DefaultValue,
-                ["PossibleValues"] = SerializePossibleValues( attr )
+                ["Key"] = this.Key,
+                ["AttributeType"] = Convert.ToInt32( this.AttributeType ),
+                ["Required"] = this.Required,
+                ["DefaultValue"] = this.DefaultValue,
+                ["PossibleValues"] = SerializePossibleValues()
             };
 
-            return root;
+            return root.ToString();
         }
 
-        public static void Deserialize( this StringAttributeType attr, JToken rootNode )
+        public override void Deserialize( string data )
         {
-            // Do no validation here, that is up to the class itself.  If something is null or missing, so be it.
+            JToken rootNode = JToken.Parse( data );
 
             foreach( JProperty property in rootNode.Children<JProperty>() )
             {
                 if( property.Name == "Key" )
                 {
-                    attr.Key = property.ToObject<string>();
+                    this.Key = property.ToObject<string>();
                 }
                 else if( property.Name == "AttributeType" )
                 {
@@ -89,11 +73,11 @@ namespace AssetManager.Api.Attributes.Types
                 }
                 else if( property.Name == "Required" )
                 {
-                    attr.Required = property.ToObject<bool>();
+                    this.Required = property.ToObject<bool>();
                 }
                 else if( property.Name == "DefaultValue" )
                 {
-                    attr.DefaultValue = property.ToObject<string>();
+                    this.DefaultValue = property.ToObject<string>();
                 }
                 else if( property.Name == "PossibleValues" )
                 {

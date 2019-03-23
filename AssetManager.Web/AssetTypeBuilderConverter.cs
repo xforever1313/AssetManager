@@ -87,7 +87,7 @@ namespace AssetManager.Web
 
                                     if( attrNode["Properties"] != null )
                                     {
-                                        intType.Deserialize( attrNode["Properties"] );
+                                        //intType.Deserialize( attrNode["Properties"] );
                                     }
 
                                     type = intType;

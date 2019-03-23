@@ -14,6 +14,13 @@ namespace AssetManager.Api.Attributes.Types
 {
     public class IntegerAttributeType : BaseAttributeType
     {
+        // ---------------- Fields ----------------
+
+        /// <summary>
+        /// Serialization schema version.
+        /// </summary>
+        private const int schemaVersion = 1;
+
         // ---------------- Constructor ----------------
 
         public IntegerAttributeType() :
@@ -83,72 +90,47 @@ namespace AssetManager.Api.Attributes.Types
 
             return success;
         }
-    }
 
-    /// <summary>
-    /// This converts <see cref="IntegerAttributeType"/> to/from JSON.
-    /// </summary>
-    /// <example>
-    /// {
-    ///     Key: Name,
-    ///     AttributeType: 3,
-    ///     Properties: {
-    ///         Required: False,
-    ///         PossibleValues: {
-    ///             Version: 1,
-    ///             MinValue: 3,
-    ///             MaxValue: null
-    ///         },
-    ///         DefaultValue: null
-    ///     }
-    /// }
-    /// </example>
-    public static class IntergerAttributeTypeSerializer
-    {
-        // ---------------- Fields ----------------
+        public override string SerializePossibleValues()
+        {
+            return this.SerializePossibleValuesToJson().ToString();
+        }
 
-        /// <summary>
-        /// In case our JSON schema ever changes...
-        /// </summary>
-        private const int schemaVersion = 1;
-
-        // ---------------- Properties ----------------
-
-        public static JObject SerializePossibleValues( this IntegerAttributeType attr )
+        private JObject SerializePossibleValuesToJson()
         {
             JObject possibleValues = new JObject
             {
                 ["Version"] = schemaVersion,
-                ["MinValue"] = attr.MinValue,
-                ["MaxValue"] = attr.MaxValue
+                ["MinValue"] = this.MinValue,
+                ["MaxValue"] = this.MaxValue
             };
 
             return possibleValues;
         }
 
-        public static JObject Serialize( this IntegerAttributeType attr )
+        public override string Serialize()
         {
             JObject root = new JObject
             {
-                ["Key"] = attr.Key,
-                ["AttributeType"] = Convert.ToInt32( attr.AttributeType ),
-                ["Required"] = attr.Required,
-                ["DefaultValue"] = attr.DefaultValue,
-                ["PossibleValues"] = SerializePossibleValues( attr )
+                ["Key"] = this.Key,
+                ["AttributeType"] = Convert.ToInt32( this.AttributeType ),
+                ["Required"] = this.Required,
+                ["DefaultValue"] = this.DefaultValue,
+                ["PossibleValues"] = SerializePossibleValuesToJson()
             };
 
-            return root;
+            return root.ToString();
         }
 
-        public static void Deserialize( this IntegerAttributeType attr, JToken rootNode )
+        public override void Deserialize( string data )
         {
-            // Do no validation here, that is up to the class itself.  If something is null or missing, so be it.
+            JToken rootNode = JToken.Parse( data );
 
             foreach( JProperty property in rootNode.Children<JProperty>() )
             {
                 if( property.Name == "Key" )
                 {
-                    attr.Key = property.ToObject<string>();
+                    this.Key = property.ToObject<string>();
                 }
                 else if( property.Name == "AttributeType" )
                 {
@@ -161,11 +143,11 @@ namespace AssetManager.Api.Attributes.Types
                 }
                 else if( property.Name == "Required" )
                 {
-                    attr.Required = property.ToObject<bool>();
+                    this.Required = property.ToObject<bool>();
                 }
                 else if( property.Name == "DefaultValue" )
                 {
-                    attr.DefaultValue = property.ToObject<int?>();
+                    this.DefaultValue = property.ToObject<int?>();
                 }
                 else if( property.Name == "PossibleValues" )
                 {
@@ -175,12 +157,12 @@ namespace AssetManager.Api.Attributes.Types
                         {
                             if( possibleValueProperty.Name == "MinValue" )
                             {
-                                attr.MinValue = possibleValueProperty.ToObject<int?>();
+                                this.MinValue = possibleValueProperty.ToObject<int?>();
                             }
 
                             if( possibleValueProperty.Name == "MaxValue" )
                             {
-                                attr.MaxValue = possibleValueProperty.ToObject<int?>();
+                                this.MaxValue = possibleValueProperty.ToObject<int?>();
                             }
                         }
                     }

@@ -24,5 +24,20 @@ namespace AssetManager.Api.Attributes.Types
             errors = string.Empty;
             return true;
         }
+
+        public override void Deserialize( string data )
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override string SerializePossibleValues()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override string Serialize()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

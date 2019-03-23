@@ -75,10 +75,8 @@ namespace AssetMananger.UnitTests.Api.Attributes.Types
     ""DefaultValue"": null
 }
 ";
-            JObject o = JObject.Parse( json );
-
             IntegerAttributeType uut = new IntegerAttributeType();
-            uut.Deserialize( o );
+            uut.Deserialize( json );
 
             Assert.AreEqual( "Test Attribute", uut.Key );
             Assert.AreEqual( false, uut.Required );
@@ -104,10 +102,8 @@ namespace AssetMananger.UnitTests.Api.Attributes.Types
     ""DefaultValue"": 2
 }
 ";
-            JObject o = JObject.Parse( json );
-
             IntegerAttributeType uut = new IntegerAttributeType();
-            uut.Deserialize( o );
+            uut.Deserialize( json );
 
             Assert.AreEqual( "Test Attribute", uut.Key );
             Assert.AreEqual( true, uut.Required );
@@ -131,7 +127,7 @@ namespace AssetMananger.UnitTests.Api.Attributes.Types
                 DefaultValue = 50
             };
 
-            JObject serialObjected = originalObject.Serialize();
+            string serialObjected = originalObject.Serialize();
 
             IntegerAttributeType uut = new IntegerAttributeType();
             uut.Deserialize( serialObjected );

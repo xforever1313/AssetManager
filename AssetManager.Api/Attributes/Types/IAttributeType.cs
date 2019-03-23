@@ -42,5 +42,24 @@ namespace AssetManager.Api.Attributes.Types
         /// If not, a <see cref="SethCS.Exceptions.ValidationException"/> is thrown.
         /// </summary>
         void Validate();
+
+        // -------- Serialization --------
+
+        /// <summary>
+        /// Serializes the possible values the attribute can be
+        /// into a string.
+        /// </summary>
+        string SerializePossibleValues();
+
+        /// <summary>
+        /// Serializes the entire object into a string.
+        /// </summary>
+        string Serialize();
+
+        /// <summary>
+        /// Overwrite's this object's properties based
+        /// on the serialization data passed in.
+        /// </summary>
+        void Deserialize( string data );
     }
 }
