@@ -168,6 +168,28 @@ namespace AssetManager.Api.Database
             return names;
         }
 
+        public IList<AssetTypeInfo> GetAssetTypeInfo()
+        {
+            List<AssetTypeInfo> infoList = new List<AssetTypeInfo>();
+
+            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfig ) )
+            {
+                IEnumerable<AssetType> assetTypes = conn.AssetTypes.Select( n => n );
+                foreach( AssetType type in assetTypes )
+                {
+                    IEnumerable<int> assets =
+                        conn.AssetInstances.Include( nameof( AssetInstance.AssetType ) )
+                        .Select( a => a.AssetType.Id )
+                        .Where( id => id == type.Id );
+
+                    AssetTypeInfo info = new AssetTypeInfo( type.Name, assets.Count() );
+                    infoList.Add( info );
+                }
+            }
+
+            return infoList;
+        }
+
         private AssetType GetAssetType( DatabaseConnection conn, string assetTypeName )
         {
             AssetType assetType = conn.AssetTypes.FirstOrDefault( t => t.Name == assetTypeName );

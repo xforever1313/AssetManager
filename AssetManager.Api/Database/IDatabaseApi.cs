@@ -5,9 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace AssetManager.Api.Database
 {
@@ -34,5 +32,10 @@ namespace AssetManager.Api.Database
         /// Retrieves the names of the asset types.
         /// </summary>
         IList<string> GetAssetTypeNames();
+
+        /// <summary>
+        /// Gets information about all of the asset types.
+        /// </summary>
+        IList<AssetTypeInfo> GetAssetTypeInfo();
     }
 }

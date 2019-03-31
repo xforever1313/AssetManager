@@ -1,0 +1,43 @@
+﻿@using AssetManager.Api;
+@using AssetManager.Api.Database;
+@{
+    ViewData["Title"] = "Assets";
+    Layout = "_Content";
+    @model IAssetManagerApi;
+
+    IList<AssetTypeInfo> assetTypeInfo = Model.DataBase.GetAssetTypeInfo();
+}
+
+@if( assetTypeInfo.Count == 0 )
+{
+    <div class="row">
+        <p>There are no asset types defined.  <a href="/AddAssetType">Add one.</a></p>
+    </div>
+}
+else
+{
+    for( int i = 0; i < assetTypeInfo.Count; )
+    {
+        <div class="row">
+            @for( ; i < assetTypeInfo.Count; ++i )
+            {
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            @assetTypeInfo[i].Name;
+                        </div>
+                        <div class="panel panel-body">
+                            <ul>
+                                <li><strong>Number of Assets: </strong>@assetTypeInfo[i].NumberOfAssets</li>
+                            </ul>
+                            <div class="form-group">
+                                <button class="btn btn-primary"><i class="fa fa-plus"></i> Add New</button>
+                                <button class="btn btn-success"><i class="fa fa-eye"></i> View All</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}

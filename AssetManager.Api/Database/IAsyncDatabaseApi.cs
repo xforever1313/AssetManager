@@ -5,9 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AssetManager.Api.Database
@@ -39,5 +37,10 @@ namespace AssetManager.Api.Database
         /// Retrieves the names of the asset types.
         /// </summary>
         Task<IList<string>> AsyncGetAssetTypeNames();
+
+        /// <summary>
+        /// Gets information about all of the asset types.
+        /// </summary>
+        Task<IList<AssetTypeInfo>> AsyncGetAssetTypeInfo();
     }
 }
