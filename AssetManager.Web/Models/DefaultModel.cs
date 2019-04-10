@@ -9,20 +9,20 @@ using AssetManager.Api;
 
 namespace AssetManager.Web.Models
 {
-    public class AssetListModel : IModel
+    /// <summary>
+    /// The default model most views will use.
+    /// </summary>
+    public class DefaultModel : IModel
     {
         // ---------------- Constructor ----------------
 
-        public AssetListModel( IAssetManagerApi api, string assetName )
+        public DefaultModel( IAssetManagerApi api )
         {
             this.Api = api;
-            this.AssetName = assetName;
         }
 
         // ---------------- Properties ----------------
 
         public IAssetManagerApi Api { get; private set; }
-
-        public string AssetName { get; private set; }
     }
 }

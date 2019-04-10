@@ -27,7 +27,7 @@ namespace AssetManager.Web.Controllers
 
         public IActionResult Index()
         {
-            return View( this.Api );
+            return View( new DefaultModel( this.Api ) );
         }
 
         public IActionResult Privacy()

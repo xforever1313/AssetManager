@@ -6,6 +6,7 @@
 //
 
 using AssetManager.Api;
+using AssetManager.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AssetManager.Web.Controllers
@@ -21,17 +22,17 @@ namespace AssetManager.Web.Controllers
 
         public IActionResult Index()
         {
-            return View( this.Api );
+            return View( new DefaultModel( this.Api ) );
         }
 
         public IActionResult License()
         {
-            return View( this.Api );
+            return View( new DefaultModel( this.Api ) );
         }
 
         public IActionResult Credits()
         {
-            return View( this.Api );
+            return View( new DefaultModel( this.Api ) );
         }
     }
 }

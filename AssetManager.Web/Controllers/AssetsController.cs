@@ -5,10 +5,6 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AssetManager.Api;
 using AssetManager.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +22,7 @@ namespace AssetManager.Web.Controllers
 
         public IActionResult Index()
         {
-            return View( this.Api );
+            return View( new DefaultModel( this.Api ) );
         }
 
         public IActionResult List( string id )

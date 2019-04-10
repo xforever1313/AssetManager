@@ -2,7 +2,7 @@
     @using AssetManager.Api;
     Layout = "_Layout";
 
-    @model IAssetManagerApi;
+    @model IModel;
 }
 
 @section scripts{
@@ -44,7 +44,7 @@
                         <li><a href="/Assets/"><i class="fa fa-eye"></i>View All</a></li>
                         @try
                         {
-                            @foreach( string assetName in await Model.AsyncDataBase.AsyncGetAssetTypeNames() )
+                            @foreach( string assetName in await Model.Api.AsyncDataBase.AsyncGetAssetTypeNames() )
                             {
                                 <li><a href="/Assets/List/@assetName"><i class="fa fa-circle"></i>@assetName</a></li>
                             }

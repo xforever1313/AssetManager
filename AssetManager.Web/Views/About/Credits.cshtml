@@ -1,9 +1,8 @@
-﻿@using AssetManager.Api;
-@{
+﻿@{
     ViewData["Title"] = "Credits";
     Layout = "_Content";
 
-    @model IAssetManagerApi;
+    @model IModel;
 }
 
 <p>This software is made possible by several open-source and third-party libraries.  They are listed below.</p>
@@ -12,7 +11,7 @@
     int id = 0;
 }
 
-@foreach( CreditsInfo info in Model.GetCredits() )
+@foreach( CreditsInfo info in Model.Api.GetCredits() )
 {
 
     // Need unique ID for each credits information.
