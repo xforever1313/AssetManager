@@ -1,0 +1,9 @@
+﻿@using AssetManager.Api;
+@using AssetManager.Api.Database;
+@{
+    @model AssetListModel;
+    Layout = "_Content";
+    ViewData["Title"] = Model.AssetName;
+}
+
+<h1>@Model.AssetName</h1>

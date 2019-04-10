@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AssetManager.Api;
+using AssetManager.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AssetManager.Web.Controllers
@@ -26,6 +27,12 @@ namespace AssetManager.Web.Controllers
         public IActionResult Index()
         {
             return View( this.Api );
+        }
+
+        public IActionResult List( string id )
+        {
+            AssetListModel model = new AssetListModel( this.Api, id );
+            return View( model );
         }
     }
 }
