@@ -48,12 +48,13 @@ namespace AssetManager.Api.Database
 
                 foreach( IAttributeType key in builder.AttributeTypes )
                 {
-                    AttributeNames attributeName = new AttributeNames
+                    AttributeKeys attributeKey = new AttributeKeys
                     {
-                        Name = key.Key
+                        Name = key.Key,
+                        AttributeType = key.AttributeType
                     };
 
-                    conn.AttributeNames.Add( attributeName );
+                    conn.AttributeKeys.Add( attributeKey );
 
                     AttributeProperties properties = new AttributeProperties
                     {
@@ -66,8 +67,7 @@ namespace AssetManager.Api.Database
                     AssetTypeAttributesMap map = new AssetTypeAttributesMap
                     {
                         AssetType = assetType,
-                        AttributeName = attributeName,
-                        AttributeType = key.AttributeType,
+                        AttributeKey = attributeKey,
                         AttributeProperties = properties
                     };
 
@@ -104,7 +104,7 @@ namespace AssetManager.Api.Database
 
                 foreach( AssetTypeAttributesMap map in maps )
                 {
-                    asset.AddEmptyAttribute( map.AttributeName.Name, map.AttributeType );
+                    asset.AddEmptyAttribute( map.AttributeKey.Name, map.AttributeKey.AttributeType );
                 }
 
                 return asset;
@@ -140,8 +140,8 @@ namespace AssetManager.Api.Database
                     AssetInstanceAttributeValues value = new AssetInstanceAttributeValues
                     {
                         AssetInstance = assetInstance,
-                        AttributeName = map.AttributeName,
-                        Value = asset.Attributes[map.AttributeName.Name].Serialize()
+                        AttributeKey = map.AttributeKey,
+                        Value = asset.Attributes[map.AttributeKey.Name].Serialize()
                     };
 
                     conn.AssetInstanceAttributeValues.Add( value );
@@ -151,6 +151,43 @@ namespace AssetManager.Api.Database
 
                 conn.SaveChanges();
             }
+        }
+
+        public IList<Asset> GetAssets( string assetName )
+        {
+            List<Asset> assets = new List<Asset>();
+
+            using ( DatabaseConnection conn = new DatabaseConnection( this.databaseConfig ) )
+            {
+                IEnumerable<AssetInstance> assetInstances = conn.AssetInstances.Where( a => a.AssetType.Name == assetName );
+
+                foreach ( AssetInstance assetInstance in assetInstances )
+                {
+                    IEnumerable<AssetInstanceAttributeValues> attributeValues = conn.AssetInstanceAttributeValues
+                        .Include( nameof( AssetInstanceAttributeValues.AssetInstance ) )
+                        .Include( nameof( AssetInstanceAttributeValues.AttributeKey ) )
+                        .Where( i => i.AssetInstance.Id == assetInstance.Id );
+
+                    Asset asset = new Asset
+                    {
+                        AssetType = assetName,
+                        Name = assetInstance.Name
+                    };
+
+                    foreach ( AssetInstanceAttributeValues value in attributeValues )
+                    {
+                        IAttribute attr = AttributeFactory.CreateAttribute( value.AttributeKey.AttributeType );
+                        attr.Deserialize( value.Value );
+
+                        asset.AddEmptyAttribute( value.AttributeKey.Name, attr.AttributeType );
+                        asset.SetAttribute( value.AttributeKey.Name, attr );
+                    }
+
+                    assets.Add( asset );
+                }
+            }
+
+            return assets;
         }
 
         public IList<string> GetAssetTypeNames()
@@ -204,7 +241,7 @@ namespace AssetManager.Api.Database
         private IEnumerable<AssetTypeAttributesMap> GetAttributesAssociatedWithAssetType( DatabaseConnection conn, AssetType assetType )
         {
             return conn.AssetTypeAttributesMaps
-                .Include( nameof( AssetTypeAttributesMap.AttributeName ) )
+                .Include( nameof( AssetTypeAttributesMap.AttributeKey ) )
                 .Where( m => m.AssetType.Id == assetType.Id );
         }
     }

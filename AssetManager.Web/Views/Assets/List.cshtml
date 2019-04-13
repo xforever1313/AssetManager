@@ -4,6 +4,22 @@
     @model AssetListModel;
     Layout = "_Content";
     ViewData["Title"] = Model.AssetName;
+
+    IList<Asset> assetList = await Model.Api.AsyncDataBase.GetAssets( Model.AssetName );
 }
 
 <h1>@Model.AssetName</h1>
+
+@if ( assetList.Count == 0 )
+{
+    <p>No Assets to report...</p>
+}
+else
+{
+<ul>
+    @foreach ( Asset asset in assetList )
+    {
+        <li>@asset.Name</li>
+    }
+</ul>
+}

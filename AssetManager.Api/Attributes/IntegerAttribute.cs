@@ -45,6 +45,11 @@ namespace AssetManager.Api.Attributes
 
         // ---------------- Functions ----------------
 
+        public override string ToString()
+        {
+            return this.Value.ToString();
+        }
+
         void IAttribute.Deserialize( string serialData )
         {
             this.Value = int.Parse( serialData );

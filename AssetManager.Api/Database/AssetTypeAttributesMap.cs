@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 namespace AssetManager.Api.Database
 {
     /// <summary>
-    /// This class maps which <see cref="Database.AttributeNames"/> go
+    /// This class maps which <see cref="Database.AttributeKeys"/> go
     /// with which <see cref="AssetType"/>
     /// </summary>
     internal class AssetTypeAttributesMap
@@ -21,7 +21,6 @@ namespace AssetManager.Api.Database
 
         public AssetTypeAttributesMap()
         {
-            this.AttributeType = AttributeTypes.StringAttribute;
         }
 
         // ---------------- Properties ----------------
@@ -32,15 +31,9 @@ namespace AssetManager.Api.Database
         public virtual AssetType AssetType { get; set; }
 
         [Required]
-        public virtual AttributeNames AttributeName { get; set; }
+        public virtual AttributeKeys AttributeKey { get; set; }
 
         [Required]
         public virtual AttributeProperties AttributeProperties { get; set; }
-
-        /// <summary>
-        /// The type of attribute that is used for the asset type.
-        /// Defaulted to <see cref="AttributeTypes.StringAttribute"/>
-        /// </summary>
-        public AttributeTypes AttributeType { get; set; }
     }
 }

@@ -36,6 +36,11 @@ namespace AssetManager.Api.Attributes
 
         public string Value { get; set; }
 
+        public override string ToString()
+        {
+            return this.Value;
+        }
+
         AttributeTypes IAttribute.AttributeType
         {
             get

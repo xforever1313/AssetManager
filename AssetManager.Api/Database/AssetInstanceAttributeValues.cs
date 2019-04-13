@@ -36,7 +36,7 @@ namespace AssetManager.Api.Database
         /// <summary>
         /// The associated Key that this value is tied to.
         /// </summary>
-        public virtual AttributeNames AttributeName { get; set; }
+        public virtual AttributeKeys AttributeKey { get; set; }
 
         /// <summary>
         /// The associated value.

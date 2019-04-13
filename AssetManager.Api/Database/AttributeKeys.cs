@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 namespace AssetManager.Api.Database
 {
     /// <summary>
-    /// This is nothing more than a table of attribute names.
+    /// These are the keys for the attribute values.  This incldues the attribute type.
     /// </summary>
     /// <example>
     /// If we are keeping track of video games, whose <see cref="AssetType"/>
@@ -18,13 +18,14 @@ namespace AssetManager.Api.Database
     /// (for, well, Console Games) or "Operating System" (For PC Games).
     /// The value is defined elsewhere.
     /// </example>
-    internal class AttributeNames
+    internal class AttributeKeys
     {
         // ---------------- Constructor ----------------
 
-        public AttributeNames()
+        public AttributeKeys()
         {
             this.Name = string.Empty;
+            this.AttributeType = AttributeTypes.StringAttribute;
         }
 
         // ---------------- Properties ---------------
@@ -33,5 +34,11 @@ namespace AssetManager.Api.Database
 
         [Required]
         public string Name { get; set; }
+
+        /// <summary>
+        /// The type of attribute that is used for the asset type.
+        /// Defaulted to <see cref="AttributeTypes.StringAttribute"/>
+        /// </summary>
+        public AttributeTypes AttributeType { get; set; }
     }
 }

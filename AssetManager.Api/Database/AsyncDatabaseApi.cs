@@ -40,6 +40,11 @@ namespace AssetManager.Api.Database
             return Task.Factory.StartNew( () => this.databaseApi.AddAsset( asset ) );
         }
 
+        public Task<IList<Asset>> GetAssets( string assetName )
+        {
+            return Task.Factory.StartNew( () => this.databaseApi.GetAssets( assetName ) );
+        }
+
         public Task<IList<string>> AsyncGetAssetTypeNames()
         {
             return Task.Factory.StartNew( () => this.databaseApi.GetAssetTypeNames() );

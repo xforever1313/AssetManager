@@ -1,0 +1,8 @@
+﻿@{
+    @using AssetManager.Api;
+    @model KeyValuePair<string, IAttribute>;
+}
+
+<span>
+    <strong>@Model.Key: </strong> @Model.Value.ToString()
+</span>
