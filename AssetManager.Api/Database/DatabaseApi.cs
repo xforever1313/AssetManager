@@ -270,26 +270,31 @@ namespace AssetManager.Api.Database
             );
         }
 
-        public IList<AssetTypeInfo> GetAssetTypeInfo()
+        public DatabaseQueryMultiResult<IList<AssetTypeInfo>> GetAssetTypeInfo()
         {
-            List<AssetTypeInfo> infoList = new List<AssetTypeInfo>();
-
-            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs.Values.First() ) )
-            {
-                IEnumerable<AssetType> assetTypes = conn.AssetTypes.Select( n => n );
-                foreach( AssetType type in assetTypes )
+            return this.PerformActionOnDatabases<IList<AssetTypeInfo>>(
+                delegate ( Guid databaseId )
                 {
-                    IEnumerable<int> assets =
-                        conn.AssetInstances.Include( nameof( AssetInstance.AssetType ) )
-                        .Select( a => a.AssetType.Id )
-                        .Where( id => id == type.Id );
+                    List<AssetTypeInfo> infoList = new List<AssetTypeInfo>();
 
-                    AssetTypeInfo info = new AssetTypeInfo( type.Name, assets.Count() );
-                    infoList.Add( info );
+                    using ( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs[databaseId] ) )
+                    {
+                        IEnumerable<AssetType> assetTypes = conn.AssetTypes.Select( n => n );
+                        foreach ( AssetType type in assetTypes )
+                        {
+                            IEnumerable<int> assets =
+                                conn.AssetInstances.Include( nameof( AssetInstance.AssetType ) )
+                                .Select( a => a.AssetType.Id )
+                                .Where( id => id == type.Id );
+
+                            AssetTypeInfo info = new AssetTypeInfo( type.Name, assets.Count(), this.DatabaseNames[databaseId] );
+                            infoList.Add( info );
+                        }
+                    }
+
+                    return infoList;
                 }
-            }
-
-            return infoList;
+            );
         }
 
         private AssetType GetAssetType( DatabaseConnection conn, string assetTypeName )

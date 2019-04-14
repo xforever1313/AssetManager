@@ -18,10 +18,11 @@ namespace AssetManager.Api.Database
     {
         // ---------------- Constructor ----------------
 
-        public AssetTypeInfo( string name, int numberOfAssets )
+        public AssetTypeInfo( string name, int numberOfAssets, string databaseName )
         {
             this.Name = name;
             this.NumberOfAssets = numberOfAssets;
+            this.DatabaseName = databaseName;
         }
 
         // ---------------- Properties ----------------
@@ -30,6 +31,11 @@ namespace AssetManager.Api.Database
         /// The name of the asset type.
         /// </summary>
         public string Name { get; private set; }
+
+        /// <summary>
+        /// The database name that holds the asset type.
+        /// </summary>
+        public string DatabaseName { get; private set; }
 
         /// <summary>
         /// The number of assets inside of this asset type.

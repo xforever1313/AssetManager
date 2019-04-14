@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using AssetManager.Api;
+using AssetManager.Api.Database;
 using AssetManager.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +24,9 @@ namespace AssetManager.Web.Controllers
 
         public IActionResult Index()
         {
-            return View( new DefaultModel( this.Api ) );
+            DatabaseQueryMultiResult<IList<AssetTypeInfo>> result = this.Api.DataBase.GetAssetTypeInfo();
+
+            return View( new AssetTypeInfoModel( result, this.Api ) );
         }
 
         public IActionResult List( string id )

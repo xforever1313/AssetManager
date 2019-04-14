@@ -50,6 +50,6 @@ namespace AssetManager.Api.Database
         /// <summary>
         /// Gets information about all of the asset types.
         /// </summary>
-        Task<IList<AssetTypeInfo>> AsyncGetAssetTypeInfo();
+        Task<DatabaseQueryMultiResult<IList<AssetTypeInfo>>> AsyncGetAssetTypeInfo();
     }
 }
