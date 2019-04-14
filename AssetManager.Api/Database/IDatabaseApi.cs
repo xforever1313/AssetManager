@@ -5,12 +5,18 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System;
 using System.Collections.Generic;
 
 namespace AssetManager.Api.Database
 {
     public interface IDatabaseApi
     {
+        /// <summary>
+        /// A dictionary of all the database names, whose key is the database ID.
+        /// </summary>
+        IReadOnlyDictionary<Guid, string> DatabaseNames { get; }
+
         // ---------------- Functions ----------------
 
         /// <summary>
@@ -21,7 +27,7 @@ namespace AssetManager.Api.Database
         /// <summary>
         /// Generates an empty asset based on the given type.
         /// </summary>
-        Asset GenerateEmptyAsset( string assetTypeName );
+        Asset GenerateEmptyAsset( Guid databaseId, string assetTypeName );
 
         /// <summary>
         /// Adds the given asset to the database.

@@ -5,6 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -30,9 +31,9 @@ namespace AssetManager.Api.Database
             return Task.Factory.StartNew( () => this.databaseApi.AddAssetType( builder ) );
         }
 
-        public Task<Asset> AsyncGenerateEmptyAsset( string assetTypeName )
+        public Task<Asset> AsyncGenerateEmptyAsset( Guid databaseId, string assetTypeName )
         {
-            return Task.Factory.StartNew( () => this.databaseApi.GenerateEmptyAsset( assetTypeName ) );
+            return Task.Factory.StartNew( () => this.databaseApi.GenerateEmptyAsset( databaseId, assetTypeName ) );
         }
 
         public Task AsyncAddAsset( Asset asset )

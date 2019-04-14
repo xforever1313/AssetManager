@@ -5,6 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -26,7 +27,7 @@ namespace AssetManager.Api.Database
         /// <summary>
         /// Generates an empty asset based on the given type.
         /// </summary>
-        Task<Asset> AsyncGenerateEmptyAsset( string assetTypeName );
+        Task<Asset> AsyncGenerateEmptyAsset( Guid databaseId, string assetTypeName );
 
         /// <summary>
         /// Adds the given asset to the database.

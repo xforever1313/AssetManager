@@ -24,8 +24,10 @@ namespace AssetManager.Api
 
         // ---------------- Constructor ----------------
 
-        internal Asset()
+        internal Asset( Guid databaseId )
         {
+            this.DatabaseId = databaseId;
+
             this.type = AssetTypeBuilder.UnknownType;
             this.Name = "Untitled Asset";
             this.attributes = new Dictionary<string, IAttribute>();
@@ -34,6 +36,11 @@ namespace AssetManager.Api
         }
 
         // ---------------- Properties ----------------
+
+        /// <summary>
+        /// The database this asset is associated with.
+        /// </summary>
+        public Guid DatabaseId { get; private set; }
 
         /// <summary>
         /// The type of asset this is.

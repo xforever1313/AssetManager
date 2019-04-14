@@ -124,16 +124,18 @@ namespace AssetManager.Api.Database
         /// Generates an empty asset that has all of its attributes
         /// set to null, so that a user can fill them in and add it to the database.
         /// </summary>
-        public Asset GenerateEmptyAsset( string assetTypeName )
+        public Asset GenerateEmptyAsset( Guid databaseId, string assetTypeName )
         {
             ArgumentChecker.StringIsNotNullOrEmpty( assetTypeName, nameof( assetTypeName ) );
 
-            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs.Values.First() ) )
+            this.GuidCheck( databaseId );
+
+            using ( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs[databaseId] ) )
             {
                 // First, find the type of asset.
                 AssetType assetType = this.GetAssetType( conn, assetTypeName );
 
-                Asset asset = new Asset
+                Asset asset = new Asset( databaseId )
                 {
                     AssetType = assetTypeName
                 };
@@ -157,7 +159,9 @@ namespace AssetManager.Api.Database
         {
             ArgumentChecker.IsNotNull( asset, nameof( asset ) );
 
-            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs.Values.First() ) )
+            GuidCheck( asset.DatabaseId );
+
+            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs[asset.DatabaseId] ) )
             {
                 // First, find the type of asset.
                 AssetType assetType = this.GetAssetType( conn, asset.AssetType );
@@ -197,9 +201,13 @@ namespace AssetManager.Api.Database
 
         public IList<Asset> GetAssets( string assetName )
         {
+            Guid databaseId = this.databaseConfigs.Keys.First();
+
+            this.GuidCheck( databaseId );
+
             List<Asset> assets = new List<Asset>();
 
-            using ( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs.Values.First() ) )
+            using ( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs[databaseId] ) )
             {
                 // Get all of the asset instances that match the name we want.
                 IEnumerable<AssetInstance> assetInstances = conn.AssetInstances.Where( a => a.AssetType.Name == assetName );
@@ -213,7 +221,7 @@ namespace AssetManager.Api.Database
                         .Where( i => i.AssetInstance.Id == assetInstance.Id );
 
                     // Create the asset.
-                    Asset asset = new Asset
+                    Asset asset = new Asset( databaseId )
                     {
                         AssetType = assetName,
                         Name = assetInstance.Name
@@ -288,6 +296,14 @@ namespace AssetManager.Api.Database
             return conn.AssetTypeAttributesMaps
                 .Include( nameof( AssetTypeAttributesMap.AttributeKey ) )
                 .Where( m => m.AssetType.Id == assetType.Id );
+        }
+
+        private void GuidCheck( Guid databaseId )
+        {
+            if ( this.databaseConfigs.ContainsKey( databaseId ) == false )
+            {
+                throw new ArgumentException( "Database ID " + databaseId + " does not exist!", nameof( databaseId ) );
+            }
         }
     }
 }
