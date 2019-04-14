@@ -18,9 +18,12 @@ namespace AssetManager.Sqlite
 
         public SqliteDatabaseConfig()
         {
+            this.DatabaseId = Guid.NewGuid();
         }
 
         // ---------------- Properties ----------------
+
+        public Guid DatabaseId { get; internal set; }
 
         /// <summary>
         /// The name in this case is the filename of the sqlite file.

@@ -5,6 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System;
 using Microsoft.EntityFrameworkCore;
 
 namespace AssetManager.Api.Database
@@ -20,6 +21,11 @@ namespace AssetManager.Api.Database
         /// The name of the database.
         /// </summary>
         string Name { get; }
+
+        /// <summary>
+        /// The database ID.
+        /// </summary>
+        Guid DatabaseId { get; }
 
         /// <summary>
         /// Ensures the database configuration is in a good state.

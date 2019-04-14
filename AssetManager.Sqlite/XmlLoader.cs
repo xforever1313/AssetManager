@@ -5,6 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System;
 using System.Xml;
 
 namespace AssetManager.Sqlite
@@ -37,6 +38,10 @@ namespace AssetManager.Sqlite
                 {
                     case "dblocation":
                         config.DatabaseLocation = childNode.InnerText;
+                        break;
+
+                    case "guid":
+                        config.DatabaseId = Guid.Parse( childNode.InnerText );
                         break;
                 }
             }

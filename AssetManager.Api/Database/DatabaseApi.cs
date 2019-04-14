@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using AssetManager.Api.Attributes.Types;
 using Microsoft.EntityFrameworkCore;
@@ -18,14 +19,55 @@ namespace AssetManager.Api.Database
     {
         // ---------------- Fields ----------------
 
-        private readonly IDatabaseConfig databaseConfig;
+        private readonly Dictionary<Guid, IDatabaseConfig> databaseConfigs;
 
         // ---------------- Constructor ----------------
 
-        public DatabaseApi( IDatabaseConfig databaseConfig )
+        public DatabaseApi( IList<IDatabaseConfig> databaseConfigs )
         {
-            this.databaseConfig = databaseConfig;
+            this.databaseConfigs = new Dictionary<Guid, IDatabaseConfig>();
+            Dictionary<Guid, string> databaseNames = new Dictionary<Guid, string>();
+
+            foreach ( IDatabaseConfig config in databaseConfigs )
+            {
+                if ( this.databaseConfigs.ContainsKey( config.DatabaseId ) )
+                {
+                    throw new ArgumentException( "Database ID " + config.DatabaseId + " already exists!" );
+                }
+
+                this.databaseConfigs.Add( config.DatabaseId, config );
+                databaseNames.Add( config.DatabaseId, config.Name );
+            }
+
+            // Next, if there are any duplicate database names, append the GUID at the end of them
+            // so it is easy to tell which is which.
+            HashSet<Guid> foundDups = new HashSet<Guid>();
+            foreach ( KeyValuePair<Guid, string> name in databaseNames )
+            {
+                IEnumerable<KeyValuePair<Guid, string>> matchedNames = databaseNames.Where(
+                    d => ( d.Value == name.Value ) && ( d.Key.Equals( name.Key ) == false )
+                );
+
+                if ( matchedNames.Count() > 0 )
+                {
+                    foundDups.Add( name.Key );
+                }
+            }
+
+            foreach ( Guid guid in foundDups )
+            {
+                databaseNames[guid] = databaseNames[guid] + " " + guid.ToString();
+            }
+
+            this.DatabaseNames = new ReadOnlyDictionary<Guid, string>( databaseNames );
         }
+
+        // ---------------- Properties ----------------
+
+        /// <summary>
+        /// A dictionary of all the database names, whose key is the database ID.
+        /// </summary>
+        public IReadOnlyDictionary<Guid, string> DatabaseNames { get; private set; }
 
         // ---------------- Functions ----------------
 
@@ -34,7 +76,7 @@ namespace AssetManager.Api.Database
             ArgumentChecker.IsNotNull( builder, nameof( builder ) );
             builder.Validate();
 
-            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfig ) )
+            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs.Values.First() ) )
             {
                 DateTime timestamp = DateTime.UtcNow;
                 AssetType assetType = new AssetType
@@ -86,7 +128,7 @@ namespace AssetManager.Api.Database
         {
             ArgumentChecker.StringIsNotNullOrEmpty( assetTypeName, nameof( assetTypeName ) );
 
-            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfig ) )
+            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs.Values.First() ) )
             {
                 // First, find the type of asset.
                 AssetType assetType = this.GetAssetType( conn, assetTypeName );
@@ -115,7 +157,7 @@ namespace AssetManager.Api.Database
         {
             ArgumentChecker.IsNotNull( asset, nameof( asset ) );
 
-            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfig ) )
+            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs.Values.First() ) )
             {
                 // First, find the type of asset.
                 AssetType assetType = this.GetAssetType( conn, asset.AssetType );
@@ -157,7 +199,7 @@ namespace AssetManager.Api.Database
         {
             List<Asset> assets = new List<Asset>();
 
-            using ( DatabaseConnection conn = new DatabaseConnection( this.databaseConfig ) )
+            using ( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs.Values.First() ) )
             {
                 // Get all of the asset instances that match the name we want.
                 IEnumerable<AssetInstance> assetInstances = conn.AssetInstances.Where( a => a.AssetType.Name == assetName );
@@ -197,7 +239,7 @@ namespace AssetManager.Api.Database
         {
             List<string> names;
 
-            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfig ) )
+            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs.Values.First() ) )
             {
                 names = new List<string>(
                     conn.AssetTypes.Select( a => a.Name )
@@ -212,7 +254,7 @@ namespace AssetManager.Api.Database
         {
             List<AssetTypeInfo> infoList = new List<AssetTypeInfo>();
 
-            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfig ) )
+            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs.Values.First() ) )
             {
                 IEnumerable<AssetType> assetTypes = conn.AssetTypes.Select( n => n );
                 foreach( AssetType type in assetTypes )

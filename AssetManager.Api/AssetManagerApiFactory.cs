@@ -6,9 +6,12 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using AssetManager.Api.Database;
+using SethCS.Exceptions;
 
 namespace AssetManager.Api
 {
@@ -68,12 +71,12 @@ namespace AssetManager.Api
         {
             settings.Validate();
 
-            IDatabaseConfig config = LoadDataBase( settings );
+            IList<IDatabaseConfig> dbConfigs = LoadDataBase( settings );
 
-            return new AssetManagerApi( config );
+            return new AssetManagerApi( dbConfigs );
         }
 
-        private static IDatabaseConfig LoadDataBase( AssetManagerSettings settings )
+        private static IList<IDatabaseConfig> LoadDataBase( AssetManagerSettings settings )
         {
             // Load the assembly that contains the database information.
             Assembly assembly = Assembly.LoadFrom( settings.DatabaseAssemblyPath );
@@ -95,10 +98,22 @@ namespace AssetManager.Api
                 );
             }
 
-            IDatabaseConfig databaseConfig = loader.Load( settings )[0]; // For now...
-            databaseConfig.Validate();
+            IList<IDatabaseConfig> databaseConfigs = loader.Load( settings );
+            foreach ( IDatabaseConfig databaseConfig in databaseConfigs )
+            {
+                databaseConfig.Validate();
+            }
 
-            return databaseConfig;
+            foreach ( IDatabaseConfig databaseConfig in databaseConfigs )
+            {
+                IEnumerable<Guid> ids = databaseConfigs.Select( d => d.DatabaseId ).Where( d => d.Equals( databaseConfig.DatabaseId ) );
+                if ( ids.Count() != 1 )
+                {
+                    throw new ValidationException( "More than one database has ID " + databaseConfig.DatabaseId );
+                }
+            }
+
+            return databaseConfigs;
         }
     }
 }

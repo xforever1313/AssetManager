@@ -5,6 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System.Collections.Generic;
 using AssetManager.Api.Database;
 
 namespace AssetManager.Api
@@ -16,13 +17,13 @@ namespace AssetManager.Api
         /// <summary>
         /// Creates an instance of the top-level API.
         /// </summary>
-        /// <param name="databaseConfig">
-        /// The database config to use.
+        /// <param name="databaseConfigs">
+        /// The database config(s) to use.
         /// Assumption is it was already inited.
         /// </param>
-        public AssetManagerApi( IDatabaseConfig databaseConfig )
+        public AssetManagerApi( IList<IDatabaseConfig> databaseConfigs )
         {
-            this.DataBase = new DatabaseApi( databaseConfig );
+            this.DataBase = new DatabaseApi( databaseConfigs );
             this.AsyncDataBase = new AsyncDatabaseApi( this.DataBase );
         }
 
