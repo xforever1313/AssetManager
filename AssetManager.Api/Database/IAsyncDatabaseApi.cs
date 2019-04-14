@@ -45,7 +45,7 @@ namespace AssetManager.Api.Database
         /// <summary>
         /// Retrieves the names of the asset types.
         /// </summary>
-        Task<IList<string>> AsyncGetAssetTypeNames();
+        Task<DatabaseQueryMultiResult<IList<string>>> AsyncGetAssetTypeNames();
 
         /// <summary>
         /// Gets information about all of the asset types.

@@ -45,7 +45,7 @@ namespace AssetManager.Api.Database
         /// <summary>
         /// Retrieves the names of the asset types.
         /// </summary>
-        IList<string> GetAssetTypeNames();
+        DatabaseQueryMultiResult<IList<string>> GetAssetTypeNames();
 
         /// <summary>
         /// Gets information about all of the asset types.

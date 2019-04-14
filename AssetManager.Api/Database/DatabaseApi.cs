@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using AssetManager.Api.Attributes.Types;
 using AssetManager.Api.Database.Tables;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,8 @@ namespace AssetManager.Api.Database
     public class DatabaseApi : IDatabaseApi
     {
         // ---------------- Fields ----------------
+
+        private delegate TResult DatabaseAction<TResult>( Guid databaseId );
 
         private readonly Dictionary<Guid, IDatabaseConfig> databaseConfigs;
 
@@ -247,19 +250,24 @@ namespace AssetManager.Api.Database
             return assets;
         }
 
-        public IList<string> GetAssetTypeNames()
+        public DatabaseQueryMultiResult<IList<string>> GetAssetTypeNames()
         {
-            List<string> names;
+            return this.PerformActionOnDatabases<IList<string>>(
+                delegate ( Guid databaseId )
+                {
 
-            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs.Values.First() ) )
-            {
-                names = new List<string>(
-                    conn.AssetTypes.Select( a => a.Name )
-                    .OrderBy( a => a )
-                );
-            }
+                    List<string> names;
 
-            return names;
+                    using ( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs[databaseId] ) )
+                    {
+                        names = new List<string>(
+                            conn.AssetTypes.Select( a => a.Name )
+                            .OrderBy( a => a )
+                        );
+                    }
+                    return names;
+                }
+            );
         }
 
         public IList<AssetTypeInfo> GetAssetTypeInfo()
@@ -308,6 +316,45 @@ namespace AssetManager.Api.Database
             {
                 throw new ArgumentException( "Database ID " + databaseId + " does not exist!", nameof( databaseId ) );
             }
+        }
+
+        private DatabaseQueryMultiResult<TResult> PerformActionOnDatabases<TResult>( DatabaseAction<TResult> action )
+        {
+            IEnumerable<Guid> databaseIds = this.databaseConfigs.Keys;
+            Dictionary<Guid, Task<TResult>> tasks = new Dictionary<Guid, Task<TResult>>();
+
+            Dictionary<Guid, DatabaseQueryResult<TResult>> results = new Dictionary<Guid, DatabaseQueryResult<TResult>>();
+
+            try
+            {
+                foreach ( Guid guid in databaseIds )
+                {
+                    Guid innerGuid = guid;
+                    Task<TResult> task = Task.Factory.StartNew( () => action( guid ) );
+                    tasks.Add( guid, task );
+                }
+            }
+            finally
+            {
+                foreach ( KeyValuePair<Guid, Task<TResult>> task in tasks )
+                {
+                    DatabaseQueryResult<TResult> queryResult;
+                    try
+                    {
+                        task.Value.Wait();
+                        TResult result = task.Value.Result;
+                        queryResult = new DatabaseQueryResult<TResult>( task.Key, result, null );
+                    }
+                    catch ( Exception e )
+                    {
+                        queryResult = new DatabaseQueryResult<TResult>( task.Key, default, e );
+                    }
+
+                    results[task.Key] = queryResult;
+                }
+            }
+
+            return new DatabaseQueryMultiResult<TResult>( results );
         }
     }
 }
