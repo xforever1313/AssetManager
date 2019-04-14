@@ -48,6 +48,13 @@ namespace AssetManager.Cli
                     };
                     builder.AttributeTypes.Add( retreatCostAttribute );
 
+                    StringAttributeType flavorText = new StringAttributeType
+                    {
+                        Key = "Flavor Text",
+                        Required = true
+                    };
+                    builder.AttributeTypes.Add( flavorText );
+
                     api.DataBase.AddAssetType( builder );
                 }
 
@@ -78,6 +85,15 @@ namespace AssetManager.Cli
                     asset.Name = "Politoed";
                     asset.SetAttribute( "HP", new IntegerAttribute() { Value = 100 } );
                     asset.SetAttribute( "Retreat Cost", new IntegerAttribute() { Value = 3 } );
+                    asset.SetAttribute(
+                        "Flavor Text",
+                        new StringAttribute
+                        {
+                            Value =
+@"Whenever 3 or more of these get together,
+they sing in an lound voice that sounds like bellowing."
+                        }
+                    );
 
                     api.DataBase.AddAsset( asset );
                 }

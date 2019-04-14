@@ -5,6 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System.Collections.Generic;
 using AssetManager.Api;
 using AssetManager.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +28,8 @@ namespace AssetManager.Web.Controllers
 
         public IActionResult List( string id )
         {
-            AssetListModel model = new AssetListModel( this.Api, id );
+            IList<Asset> assets = this.Api.DataBase.GetAssets( id );
+            AssetListModel model = new AssetListModel( this.Api, id, assets );
             return View( model );
         }
     }

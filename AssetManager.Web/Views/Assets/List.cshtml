@@ -5,7 +5,7 @@
     Layout = "_Content";
     ViewData["Title"] = Model.AssetName;
 
-    IList<Asset> assetList = await Model.Api.AsyncDataBase.GetAssets( Model.AssetName );
+    IList<Asset> assetList = Model.Assets;
 }
 
 @if ( assetList.Count == 0 )
@@ -24,7 +24,7 @@ else
                 <div class="col-md-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            @asset.Name
+                            <strong style="font-size:2em;">@asset.Name</strong>
                         </div>
                         <div class="panel panel-body">
                             @foreach ( string attributeKey in asset.Keys )
@@ -34,13 +34,20 @@ else
                                 switch ( attributeType )
                                 {
                                     case AttributeTypes.StringAttribute:
+                                    {
+                                        StringAttribute strAttr = asset.CloneAttributeAsType<StringAttribute>( attributeKey );
+                                        KeyValuePair<string, StringAttribute> kvPair = new KeyValuePair<string, StringAttribute>( attributeKey, strAttr );
+                                        <partial name="~/Views/ReadOnlyAssetAttributes/_StringAttribute.cshtml" model="kvPair" />
                                         break;
+                                    }
 
                                     case AttributeTypes.Integer:
+                                    {
                                         IntegerAttribute intAttr = asset.CloneAttributeAsType<IntegerAttribute>( attributeKey );
                                         KeyValuePair<string, IntegerAttribute> kvPair = new KeyValuePair<string, IntegerAttribute>( attributeKey, intAttr );
-                                            <partial name="~/Views/ReadOnlyAssetAttributes/_IntegerAttribute.cshtml" model="kvPair" />
+                                        <partial name="~/Views/ReadOnlyAssetAttributes/_IntegerAttribute.cshtml" model="kvPair" />
                                         break;
+                                    }
                                 }
                             }
                         </div>

@@ -1,0 +1,20 @@
+﻿@{
+    @using System.IO;
+    @using AssetManager.Api.Attributes;
+    @model KeyValuePair<string, StringAttribute>;
+}
+
+<div>
+    <strong><i class="fa fa-caret-right"></i> @Model.Key:</strong>
+    <blockquote>
+        @using ( StringReader reader = new StringReader( Model.Value.Value ) )
+        {
+            string line = reader.ReadLine();
+            while ( line != null )
+            {
+                <p>@line</p>
+                line = reader.ReadLine();
+            }
+        }
+    </blockquote>
+</div>

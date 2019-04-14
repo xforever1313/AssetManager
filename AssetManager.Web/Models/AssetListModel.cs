@@ -5,6 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System.Collections.Generic;
 using AssetManager.Api;
 
 namespace AssetManager.Web.Models
@@ -13,10 +14,11 @@ namespace AssetManager.Web.Models
     {
         // ---------------- Constructor ----------------
 
-        public AssetListModel( IAssetManagerApi api, string assetName )
+        public AssetListModel( IAssetManagerApi api, string assetName, IList<Asset> assets )
         {
             this.Api = api;
             this.AssetName = assetName;
+            this.Assets = assets;
         }
 
         // ---------------- Properties ----------------
@@ -24,5 +26,7 @@ namespace AssetManager.Web.Models
         public IAssetManagerApi Api { get; private set; }
 
         public string AssetName { get; private set; }
+
+        public IList<Asset> Assets { get; private set; }
     }
 }
