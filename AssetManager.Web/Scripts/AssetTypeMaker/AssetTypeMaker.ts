@@ -13,6 +13,8 @@ class AssetTypeMaker {
 
     private readonly assetTypeNameEditor: AssetTypeNameEditor;
 
+    private readonly databaseSelector: HTMLSelectElement;
+
     private readonly attrList: Array<IAttributeType>;
 
     // ---------------- Constructor ----------------
@@ -25,6 +27,8 @@ class AssetTypeMaker {
             document.getElementById("addAssetButton") as HTMLButtonElement,
             document.getElementById("addAttributeButton") as HTMLButtonElement
         );
+
+        this.databaseSelector = document.getElementById("databaseSelector") as HTMLSelectElement;
         this.attrList = new Array<IAttributeType>();
     }
 
@@ -89,6 +93,7 @@ class AssetTypeMaker {
             const dataType = "application/json; charset=utf-8";
             let data = {
                 AssetTypeName: this.assetTypeNameEditor.GetName(),
+                DatabaseId: this.databaseSelector.options[this.databaseSelector.selectedIndex].value,
                 AttributeList: new Array<object>()
             };
 

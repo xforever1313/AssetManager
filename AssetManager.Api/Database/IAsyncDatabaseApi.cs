@@ -22,7 +22,7 @@ namespace AssetManager.Api.Database
         /// <summary>
         /// Adds the given asset type to the database.
         /// </summary>
-        Task AsyncAddAssetType( Guid databaseId, AssetTypeBuilder builder );
+        Task AsyncAddAssetType( AssetTypeBuilder builder );
 
         /// <summary>
         /// Generates an empty asset based on the given type.

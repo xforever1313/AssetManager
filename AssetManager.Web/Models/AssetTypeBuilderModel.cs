@@ -21,14 +21,12 @@ namespace AssetManager.Web.Models
         {
         }
 
-        public AssetTypeBuilderModel( string name ) :
-            base( name )
+        public AssetTypeBuilderModel( string name, Guid databaseId ) :
+            base( name, databaseId )
         {
         }
 
         // ---------------- Properties ----------------
-
-        public Guid DatabaseId { get; set; }
 
         /// <summary>
         /// Did we create the asset type correctly?

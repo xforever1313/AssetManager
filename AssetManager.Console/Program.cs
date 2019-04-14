@@ -43,7 +43,7 @@ namespace AssetManager.Cli
 
             Guid databaseId = api.DataBase.DatabaseNames.First( n => n.Value == "VideoGames" ).Key;
 
-            AssetTypeBuilder builder = new AssetTypeBuilder( "PC Games" );
+            AssetTypeBuilder builder = new AssetTypeBuilder( "PC Games", databaseId );
 
             IntegerAttributeType releaseYear = new IntegerAttributeType
             {
@@ -52,7 +52,7 @@ namespace AssetManager.Cli
             };
             builder.AttributeTypes.Add( releaseYear );
 
-            api.DataBase.AddAssetType( databaseId, builder );
+            api.DataBase.AddAssetType( builder );
 
             {
                 Asset asset = api.DataBase.GenerateEmptyAsset( databaseId, "PC Games" );
@@ -72,7 +72,7 @@ namespace AssetManager.Cli
             Guid databaseId = api.DataBase.DatabaseNames.First( n => n.Value == "TradingCards" ).Key;
 
             {
-                AssetTypeBuilder builder = new AssetTypeBuilder( "Pokemon Card" );
+                AssetTypeBuilder builder = new AssetTypeBuilder( "Pokemon Card", databaseId );
 
                 IntegerAttributeType hpAttribute = new IntegerAttributeType
                 {
@@ -100,11 +100,11 @@ namespace AssetManager.Cli
                 };
                 builder.AttributeTypes.Add( flavorText );
 
-                api.DataBase.AddAssetType( databaseId, builder );
+                api.DataBase.AddAssetType( builder );
             }
 
             {
-                AssetTypeBuilder builder = new AssetTypeBuilder( "Yugioh! Card" );
+                AssetTypeBuilder builder = new AssetTypeBuilder( "Yugioh! Card", databaseId );
 
                 IntegerAttributeType attackAttribute = new IntegerAttributeType
                 {
@@ -122,7 +122,7 @@ namespace AssetManager.Cli
                 };
                 builder.AttributeTypes.Add( defenseAttribute );
 
-                api.DataBase.AddAssetType( databaseId, builder );
+                api.DataBase.AddAssetType( builder );
             }
 
             {

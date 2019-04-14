@@ -26,9 +26,9 @@ namespace AssetManager.Api.Database
 
         // ---------------- Functions ----------------
 
-        public Task AsyncAddAssetType( Guid databaseId, AssetTypeBuilder builder )
+        public Task AsyncAddAssetType( AssetTypeBuilder builder )
         {
-            return Task.Factory.StartNew( () => this.databaseApi.AddAssetType( databaseId, builder ) );
+            return Task.Factory.StartNew( () => this.databaseApi.AddAssetType( builder ) );
         }
 
         public Task<Asset> AsyncGenerateEmptyAsset( Guid databaseId, string assetTypeName )

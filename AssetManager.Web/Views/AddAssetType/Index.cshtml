@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Asset Type Editor";
     Layout = "_Content";
+    @model IModel;
 }
 
 <div class="row">
@@ -31,6 +32,15 @@
                     <label>Enter Asset Type Name:</label>
                     <input class="form-control" type="text" id="AssetTypeNameTextbox" />
                     <div id="AssetTypeNameTextBoxError"></div>
+                </div>
+                <div class="form-group">
+                    <label>Database to add to:</label>
+                    <select class="form-control" id="databaseSelector">
+                        @foreach ( KeyValuePair<Guid, string> dbName in Model.Api.DataBase.DatabaseNames )
+                        {
+                            <option value="@dbName.Key.ToString()">@dbName.Value</option>
+                        }
+                    </select>
                 </div>
                 <div class="btn-group">
                     <button id="addAssetButton" class="btn btn-success" type="button" onclick="maker.Submit()">Add Asset</button>

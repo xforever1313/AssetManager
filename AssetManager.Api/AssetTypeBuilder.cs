@@ -26,14 +26,15 @@ namespace AssetManager.Api
         // ---------------- Constructor ----------------
 
         public AssetTypeBuilder() :
-            this( UnknownType )
+            this( UnknownType, Guid.Empty )
         {
         }
 
-        public AssetTypeBuilder( string assetName )
+        public AssetTypeBuilder( string assetName, Guid databaseId )
         {
             this.Name = assetName;
             this.AttributeTypes = new List<IAttributeType>();
+            this.DatabaseId = databaseId;
         }
 
         // ---------------- Properties ----------------
@@ -44,6 +45,11 @@ namespace AssetManager.Api
         public string Name { get; set; }
 
         public IList<IAttributeType> AttributeTypes { get; protected set; }
+
+        /// <summary>
+        /// The database ID to add this asset type to.
+        /// </summary>
+        public Guid DatabaseId { get; set; }
 
         // ---------------- Functions ----------------
 
@@ -62,6 +68,12 @@ namespace AssetManager.Api
             {
                 success = false;
                 builder.AppendLine( "- Name can not be null, empty, or whitespace." );
+            }
+
+            if ( this.DatabaseId.Equals( Guid.Empty ) )
+            {
+                success = false;
+                builder.AppendLine( "- Database ID can not be empty." );
             }
 
             foreach( IAttributeType attribute in AttributeTypes )
@@ -83,31 +95,31 @@ namespace AssetManager.Api
         {
             foreach( JToken childNode in rootNode.Children() )
             {
-                if( childNode.Path == "AssetTypeName" )
+                if ( childNode.Path == "AssetTypeName" )
                 {
                     string name = childNode.ToObject<string>();
-                    if( string.IsNullOrWhiteSpace( name ) == false )
+                    if ( string.IsNullOrWhiteSpace( name ) == false )
                     {
                         this.Name = name;
                     }
                 }
-                else if( childNode.Path == "AttributeList" )
+                else if ( childNode.Path == "AttributeList" )
                 {
                     // This is the array of attributes.
-                    foreach( JArray attrNode in childNode.Children<JArray>() )
+                    foreach ( JArray attrNode in childNode.Children<JArray>() )
                     {
-                        foreach( JObject attrProperties in attrNode )
+                        foreach ( JObject attrProperties in attrNode )
                         {
                             AttributeTypes? attrType = null;
-                            foreach( JProperty attrValue in attrProperties.Children<JProperty>() )
+                            foreach ( JProperty attrValue in attrProperties.Children<JProperty>() )
                             {
-                                if( attrValue.Name == "AttributeType" )
+                                if ( attrValue.Name == "AttributeType" )
                                 {
                                     attrType = (AttributeTypes)attrValue.ToObject<long>();
                                 }
                             }
 
-                            if( attrType == null )
+                            if ( attrType == null )
                             {
                                 throw new InvalidOperationException( "Attribute Type can not be null." );
                             }
@@ -120,6 +132,12 @@ namespace AssetManager.Api
                         // There should only be one array.  Break.
                         break;
                     }
+                }
+                else if ( childNode.Path == "DatabaseId" )
+                {
+                    string guidStr = childNode.ToObject<string>();
+                    Guid guid = Guid.Parse( guidStr );
+                    this.DatabaseId = guid;
                 }
             }
         }

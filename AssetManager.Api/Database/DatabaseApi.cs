@@ -71,11 +71,12 @@ namespace AssetManager.Api.Database
 
         // ---------------- Functions ----------------
 
-        public void AddAssetType( Guid databaseId, AssetTypeBuilder builder )
+        public void AddAssetType( AssetTypeBuilder builder )
         {
             ArgumentChecker.IsNotNull( builder, nameof( builder ) );
             builder.Validate();
 
+            Guid databaseId = builder.DatabaseId;
             this.GuidCheck( databaseId );
 
             using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs[databaseId] ) )

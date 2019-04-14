@@ -38,7 +38,7 @@ namespace AssetManager.Web.Controllers
 
             try
             {
-                this.Api.DataBase.AddAssetType( maker.DatabaseId, maker );
+                this.Api.DataBase.AddAssetType( maker );
             }
             catch( Exception e )
             {
