@@ -23,7 +23,7 @@ namespace AssetManager.Cli
                 IAssetManagerApi api = AssetManagerApiFactory.CreateApiFromDefaultConfigFile();
 
                 AddTradingCards( api );
-                //AddVideoGames( api ); TODO: Comment back in when adding an asset type takes an ID.
+                AddVideoGames( api );
                 return 0;
             }
             catch( Exception e )
@@ -51,6 +51,8 @@ namespace AssetManager.Cli
                 Required = true
             };
             builder.AttributeTypes.Add( releaseYear );
+
+            api.DataBase.AddAssetType( databaseId, builder );
 
             {
                 Asset asset = api.DataBase.GenerateEmptyAsset( databaseId, "PC Games" );
@@ -98,7 +100,7 @@ namespace AssetManager.Cli
                 };
                 builder.AttributeTypes.Add( flavorText );
 
-                api.DataBase.AddAssetType( builder );
+                api.DataBase.AddAssetType( databaseId, builder );
             }
 
             {
@@ -120,7 +122,7 @@ namespace AssetManager.Cli
                 };
                 builder.AttributeTypes.Add( defenseAttribute );
 
-                api.DataBase.AddAssetType( builder );
+                api.DataBase.AddAssetType( databaseId, builder );
             }
 
             {

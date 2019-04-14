@@ -22,7 +22,7 @@ namespace AssetManager.Api.Database
         /// <summary>
         /// Adds the given asset type to the database.
         /// </summary>
-        void AddAssetType( AssetTypeBuilder builder );
+        void AddAssetType( Guid databaseId, AssetTypeBuilder builder );
 
         /// <summary>
         /// Generates an empty asset based on the given type.

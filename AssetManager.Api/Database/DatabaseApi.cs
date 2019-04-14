@@ -71,12 +71,14 @@ namespace AssetManager.Api.Database
 
         // ---------------- Functions ----------------
 
-        public void AddAssetType( AssetTypeBuilder builder )
+        public void AddAssetType( Guid databaseId, AssetTypeBuilder builder )
         {
             ArgumentChecker.IsNotNull( builder, nameof( builder ) );
             builder.Validate();
 
-            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs.Values.First() ) )
+            this.GuidCheck( databaseId );
+
+            using( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs[databaseId] ) )
             {
                 DateTime timestamp = DateTime.UtcNow;
                 AssetType assetType = new AssetType

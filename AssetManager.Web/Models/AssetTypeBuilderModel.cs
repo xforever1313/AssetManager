@@ -5,6 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System;
 using AssetManager.Api;
 using Newtonsoft.Json;
 
@@ -26,6 +27,8 @@ namespace AssetManager.Web.Models
         }
 
         // ---------------- Properties ----------------
+
+        public Guid DatabaseId { get; set; }
 
         /// <summary>
         /// Did we create the asset type correctly?
