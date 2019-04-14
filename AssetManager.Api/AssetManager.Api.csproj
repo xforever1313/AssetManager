@@ -13,4 +13,8 @@
     <ProjectReference Include="..\SethCS\SethCS\LibSethCS.Standard.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Database\Tables\" />
+  </ItemGroup>
+
 </Project>

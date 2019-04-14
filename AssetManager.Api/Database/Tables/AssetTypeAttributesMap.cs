@@ -7,7 +7,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace AssetManager.Api.Database
+namespace AssetManager.Api.Database.Tables
 {
     /// <summary>
     /// This class maps which <see cref="Database.AttributeKeys"/> go

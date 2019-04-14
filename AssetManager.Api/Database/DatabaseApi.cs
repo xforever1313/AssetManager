@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using AssetManager.Api.Attributes.Types;
+using AssetManager.Api.Database.Tables;
 using Microsoft.EntityFrameworkCore;
 using SethCS.Exceptions;
 

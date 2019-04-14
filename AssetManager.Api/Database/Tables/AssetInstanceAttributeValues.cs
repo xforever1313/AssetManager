@@ -5,7 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-namespace AssetManager.Api.Database
+namespace AssetManager.Api.Database.Tables
 {
     /// <summary>
     /// This is the actual values of the attributes

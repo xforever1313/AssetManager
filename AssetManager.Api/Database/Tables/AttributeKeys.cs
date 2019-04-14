@@ -7,7 +7,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace AssetManager.Api.Database
+namespace AssetManager.Api.Database.Tables
 {
     /// <summary>
     /// These are the keys for the attribute values.  This incldues the attribute type.

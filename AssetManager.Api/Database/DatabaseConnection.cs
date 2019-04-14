@@ -5,6 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using AssetManager.Api.Database.Tables;
 using Microsoft.EntityFrameworkCore;
 
 namespace AssetManager.Api.Database

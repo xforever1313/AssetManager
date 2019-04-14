@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AssetManager.Api.Database
+namespace AssetManager.Api.Database.Tables
 {
     /// <summary>
     /// These are properties an attribute can have,

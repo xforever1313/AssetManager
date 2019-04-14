@@ -8,21 +8,20 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace AssetManager.Api.Database
+namespace AssetManager.Api.Database.Tables
 {
     /// <summary>
-    /// This is the type of asset being use.
-    /// Can also be thought of as "Asset Categories".
+    /// This is an instance of a specific Asset.
     /// </summary>
     /// <example>
-    /// If we are keeping track of Video Games, <see cref="AssetType"/> could be
-    /// something like "PC Games" and "Console Games".
+    /// If we are keeping track of video games, this would be the specific
+    /// game, whose name would be the Title of the game.
     /// </example>
-    internal class AssetType
+    internal class AssetInstance
     {
         // ---------------- Constructor ----------------
 
-        public AssetType()
+        public AssetInstance()
         {
             this.Name = string.Empty;
         }
@@ -33,6 +32,9 @@ namespace AssetManager.Api.Database
 
         [Required]
         public string Name { get; set; }
+
+        [Required]
+        public virtual AssetType AssetType { get; set; }
 
         /// <summary>
         /// The date in UTC time that the type was put
