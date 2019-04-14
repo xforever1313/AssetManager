@@ -5,7 +5,9 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System.Collections.Generic;
 using System.IO;
+using System.Xml;
 using AssetManager.Api;
 using AssetManager.Api.Database;
 
@@ -15,6 +17,10 @@ namespace AssetManager.Sqlite
 {
     public class SqliteDatabaseConfigLoader : IDatabaseConfigLoader
     {
+        // ---------------- Fields ----------------
+
+        internal const string SettingsXmlElementName = "AssetManagerSqliteConfig";
+
         // ---------------- Constructor ----------------
 
         public SqliteDatabaseConfigLoader()
@@ -23,7 +29,7 @@ namespace AssetManager.Sqlite
 
         // ---------------- Functions ----------------
 
-        public IDatabaseConfig Load( AssetManagerSettings settings )
+        public IList<IDatabaseConfig> Load( AssetManagerSettings settings )
         {
             string filePath = Path.Combine(
                 settings.AssetManagerSettingsDirectory,
@@ -31,10 +37,31 @@ namespace AssetManager.Sqlite
                 "SqliteConfig.xml"
             );
 
-            SqliteDatabaseConfig config = new SqliteDatabaseConfig();
-            config.LoadFromXml( filePath );
+            XmlDocument doc = new XmlDocument();
+            doc.Load( filePath );
 
-            return config;
+            XmlNode rootNode = doc.DocumentElement;
+            if ( rootNode.Name != SettingsXmlElementName )
+            {
+                throw new XmlException(
+                    "Root XML node should be named \"" + SettingsXmlElementName + "\".  Got: " + rootNode.Name
+                );
+            }
+
+            List<IDatabaseConfig> databaseConfigs = new List<IDatabaseConfig>();
+
+            foreach ( XmlNode childNode in rootNode.ChildNodes )
+            {
+                switch ( childNode.Name.ToLower() )
+                {
+                    case XmlLoader.DatabaseSettingsNodeName:
+                        SqliteDatabaseConfig config = new SqliteDatabaseConfig();
+                        config.LoadFromXml( childNode );
+                        databaseConfigs.Add( config );
+                        break;
+                }
+            }
+            return databaseConfigs;
         }
     }
 }

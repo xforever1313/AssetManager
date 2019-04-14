@@ -17,6 +17,11 @@ namespace AssetManager.Api.Database
     public interface IDatabaseConfig
     {
         /// <summary>
+        /// The name of the database.
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
         /// Ensures the database configuration is in a good state.
         /// </summary>
         void Validate();

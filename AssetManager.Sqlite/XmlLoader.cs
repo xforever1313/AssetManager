@@ -13,37 +13,25 @@ namespace AssetManager.Sqlite
     {
         // ---------------- Fields ----------------
 
-        internal const string SettingsXmlElementName = "AssetManagerSqliteConfig";
+        internal const string DatabaseSettingsNodeName = "database";
 
         // ---------------- Functions ----------------
 
-        /// <summary>
-        /// Loads the given XML file and overwrites the given settings
-        /// config with the settings specified in the XML file.
-        /// </summary>
-        public static void LoadFromXml( this SqliteDatabaseConfig config, string xmlFilePath )
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load( xmlFilePath );
-
-            LoadFromXml( config, doc );
-        }
 
         /// <summary>
         /// Overwrites the given settings
         /// config with the settings specified in the passed in XML document.
         /// </summary>
-        public static void LoadFromXml( this SqliteDatabaseConfig config, XmlDocument doc )
+        public static void LoadFromXml( this SqliteDatabaseConfig config, XmlNode parentNode )
         {
-            XmlNode rootNode = doc.DocumentElement;
-            if( rootNode.Name != SettingsXmlElementName )
+            if( parentNode.Name != DatabaseSettingsNodeName )
             {
                 throw new XmlException(
-                    "Root XML node should be named \"" + SettingsXmlElementName + "\".  Got: " + rootNode.Name
+                    "Root XML node should be named \"" + DatabaseSettingsNodeName + "\".  Got: " + parentNode.Name
                 );
             }
 
-            foreach( XmlNode childNode in rootNode.ChildNodes )
+            foreach( XmlNode childNode in parentNode.ChildNodes )
             {
                 switch( childNode.Name.ToLower() )
                 {

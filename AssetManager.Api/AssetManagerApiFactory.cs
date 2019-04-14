@@ -95,7 +95,7 @@ namespace AssetManager.Api
                 );
             }
 
-            IDatabaseConfig databaseConfig = loader.Load( settings );
+            IDatabaseConfig databaseConfig = loader.Load( settings )[0]; // For now...
             databaseConfig.Validate();
 
             return databaseConfig;

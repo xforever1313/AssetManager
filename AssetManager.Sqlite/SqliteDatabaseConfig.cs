@@ -6,6 +6,7 @@
 //
 
 using System;
+using System.IO;
 using AssetManager.Api.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,17 @@ namespace AssetManager.Sqlite
         }
 
         // ---------------- Properties ----------------
+
+        /// <summary>
+        /// The name in this case is the filename of the sqlite file.
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return Path.GetFileNameWithoutExtension( this.DatabaseLocation );
+            }
+        }
 
         public string DatabaseLocation { get; set; }
 

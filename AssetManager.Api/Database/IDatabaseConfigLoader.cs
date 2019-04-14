@@ -6,6 +6,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 
 namespace AssetManager.Api.Database
 {
@@ -35,6 +36,6 @@ namespace AssetManager.Api.Database
         /// Reads in the database configuration
         /// based on the passed in settings object.
         /// </summary>
-        IDatabaseConfig Load( AssetManagerSettings settings );
+        IList<IDatabaseConfig> Load( AssetManagerSettings settings );
     }
 }
