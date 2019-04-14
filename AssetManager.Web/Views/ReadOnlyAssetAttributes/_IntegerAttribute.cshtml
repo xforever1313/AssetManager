@@ -1,8 +1,8 @@
 ﻿@{
-    @using AssetManager.Api;
-    @model KeyValuePair<string, IAttribute>;
+    @using AssetManager.Api.Attributes;
+    @model KeyValuePair<string, IntegerAttribute>;
 }
 
-<span>
-    <strong>@Model.Key: </strong> @Model.Value.ToString()
-</span>
+<div>
+    <strong><i class="fa fa-caret-right"></i> @Model.Key: </strong> @Model.Value.Value
+</div>

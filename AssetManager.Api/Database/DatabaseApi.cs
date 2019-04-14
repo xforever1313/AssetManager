@@ -159,15 +159,18 @@ namespace AssetManager.Api.Database
 
             using ( DatabaseConnection conn = new DatabaseConnection( this.databaseConfig ) )
             {
+                // Get all of the asset instances that match the name we want.
                 IEnumerable<AssetInstance> assetInstances = conn.AssetInstances.Where( a => a.AssetType.Name == assetName );
 
                 foreach ( AssetInstance assetInstance in assetInstances )
                 {
+                    // Next, get all of the attributes and their values associated with the asset instance.
                     IEnumerable<AssetInstanceAttributeValues> attributeValues = conn.AssetInstanceAttributeValues
                         .Include( nameof( AssetInstanceAttributeValues.AssetInstance ) )
                         .Include( nameof( AssetInstanceAttributeValues.AttributeKey ) )
                         .Where( i => i.AssetInstance.Id == assetInstance.Id );
 
+                    // Create the asset.
                     Asset asset = new Asset
                     {
                         AssetType = assetName,

@@ -74,37 +74,22 @@ namespace AssetManager.Api
         }
 
         /// <summary>
-        /// Gets or sets the given key in the Key-Value attribute's value.
-        /// </summary>
-        /// <exception cref="KeyNotFoundException">If the key does not exist.</exception>
-        internal IAttribute this[string key]
-        {
-            get
-            {
-                this.KeyCheck( key );
-                return this.Attributes[key];
-            }
-            set
-            {
-                this.KeyCheck( key );
-
-                if( this.attributes[key].AttributeType != value.AttributeType )
-                {
-                    throw new InvalidOperationException(
-                        "Attribute Types not compatible, need to pass in the correct attribute type for key '" + key + "'"
-                    );
-                }
-
-                this.attributes[key] = value;
-            }
-        }
-
-        /// <summary>
         /// Key-Value attributes associated with this asset.
         /// </summary>
         internal IReadOnlyDictionary<string, IAttribute> Attributes { get; private set; }
 
+        /// <summary>
+        /// All of the key names.
+        /// </summary>
+        public IEnumerable<string> Keys { get { return this.Attributes.Keys; } }
+
         // ---------------- Functions ----------------
+
+        public AttributeTypes GetAttributeTypeOfKey( string key )
+        {
+            this.KeyCheck( key );
+            return this.attributes[key].AttributeType;
+        }
 
         /// <summary>
         /// Creates a new instance of the attribute inside the given key
@@ -131,7 +116,16 @@ namespace AssetManager.Api
 
         public void SetAttribute( string key, IAttribute value )
         {
-            this[key] = value;
+            this.KeyCheck( key );
+
+            if ( this.attributes[key].AttributeType != value.AttributeType )
+            {
+                throw new InvalidOperationException(
+                    "Attribute Types not compatible, need to pass in the correct attribute type for key '" + key + "'"
+                );
+            }
+
+            this.attributes[key] = value;
         }
 
         /// <summary>

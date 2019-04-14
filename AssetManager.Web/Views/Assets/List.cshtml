@@ -1,5 +1,5 @@
 ﻿@using AssetManager.Api;
-@using AssetManager.Api.Database;
+@using AssetManager.Api.Attributes;
 @{
     @model AssetListModel;
     Layout = "_Content";
@@ -8,18 +8,45 @@
     IList<Asset> assetList = await Model.Api.AsyncDataBase.GetAssets( Model.AssetName );
 }
 
-<h1>@Model.AssetName</h1>
-
 @if ( assetList.Count == 0 )
 {
     <p>No Assets to report...</p>
 }
 else
 {
-<ul>
-    @foreach ( Asset asset in assetList )
+    @for ( int i = 0; i < assetList.Count; )
     {
-        <li>@asset.Name</li>
+        <div class="row">
+            @for ( ; i < assetList.Count; ++i )
+            {
+                Asset asset = assetList[i];
+
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            @asset.Name
+                        </div>
+                        <div class="panel panel-body">
+                            @foreach ( string attributeKey in asset.Keys )
+                            {
+                                AttributeTypes attributeType = asset.GetAttributeTypeOfKey( attributeKey );
+
+                                switch ( attributeType )
+                                {
+                                    case AttributeTypes.StringAttribute:
+                                        break;
+
+                                    case AttributeTypes.Integer:
+                                        IntegerAttribute intAttr = asset.CloneAttributeAsType<IntegerAttribute>( attributeKey );
+                                        KeyValuePair<string, IntegerAttribute> kvPair = new KeyValuePair<string, IntegerAttribute>( attributeKey, intAttr );
+                                            <partial name="~/Views/ReadOnlyAssetAttributes/_IntegerAttribute.cshtml" model="kvPair" />
+                                        break;
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
     }
-</ul>
 }
