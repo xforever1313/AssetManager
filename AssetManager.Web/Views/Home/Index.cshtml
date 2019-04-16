@@ -1,9 +1,24 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Welcome to Asset Manager!";
     Layout = "_Content";
+    @model IModel;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            Asset Manager is a way to keep track of assets.
+        </p>
+        </div>
+    </div>
+<div class="row">
+    <div class="col-md-12">
+        Currently, Asset Manager is connected for the following databases:
+        <ul>
+            @foreach ( string databaseName in Model.Api.DataBase.DatabaseNames.Values )
+            {
+                <li>@databaseName</li>
+            }
+        </ul>
+    </div>
 </div>
