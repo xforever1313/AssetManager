@@ -5,6 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System;
 using System.Collections.Generic;
 using AssetManager.Api;
 using AssetManager.Api.Database;
@@ -29,11 +30,18 @@ namespace AssetManager.Web.Controllers
             return View( new AssetTypeInfoModel( result, this.Api ) );
         }
 
-        public IActionResult List( string id )
+        public IActionResult List( string database, string assetTypeName )
         {
-            IList<Asset> assets = this.Api.DataBase.GetAssets( id );
-            AssetListModel model = new AssetListModel( this.Api, id, assets );
-            return View( model );
+            if ( Guid.TryParse( database, out Guid databaseId ) )
+            {
+                IList<Asset> assets = this.Api.DataBase.GetAssets( databaseId, assetTypeName );
+                AssetListModel model = new AssetListModel( this.Api, assetTypeName, assets );
+                return View( model );
+            }
+            else
+            {
+                return BadRequest( "Invalid database ID: " + database );
+            }
         }
     }
 }

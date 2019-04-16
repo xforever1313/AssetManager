@@ -6,8 +6,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AssetManager.Api.Database
 {
@@ -18,9 +16,10 @@ namespace AssetManager.Api.Database
     {
         // ---------------- Constructor ----------------
 
-        public AssetTypeInfo( string name, int numberOfAssets, string databaseName )
+        public AssetTypeInfo( string name, Guid databaseId, int numberOfAssets, string databaseName )
         {
             this.Name = name;
+            this.DatabaseId = databaseId;
             this.NumberOfAssets = numberOfAssets;
             this.DatabaseName = databaseName;
         }
@@ -31,6 +30,11 @@ namespace AssetManager.Api.Database
         /// The name of the asset type.
         /// </summary>
         public string Name { get; private set; }
+
+        /// <summary>
+        /// The ID of the database that holds the asset type.
+        /// </summary>
+        public Guid DatabaseId { get; private set; }
 
         /// <summary>
         /// The database name that holds the asset type.

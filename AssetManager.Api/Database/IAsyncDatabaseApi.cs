@@ -40,7 +40,7 @@ namespace AssetManager.Api.Database
         /// <returns>
         /// A list of assets that are of the type of the given asset name.
         /// </returns>
-        Task<IList<Asset>> GetAssets( string assetName );
+        Task<IList<Asset>> GetAssets( Guid databaseId, string assetName );
 
         /// <summary>
         /// Retrieves the names of the asset types.

@@ -53,7 +53,7 @@
                                 {
                                     @foreach ( string assetName in assetNameQueries.Result )
                                     {
-                                        <li><a href="/Assets/List/@assetName"><i class="fa fa-circle"></i>@assetName</a></li>
+                                        <li><a href="/Assets/List/@assetNameQueries.DatabaseId/@assetName"><i class="fa fa-circle"></i>@assetName</a></li>
                                     }
                                 }
                                 else

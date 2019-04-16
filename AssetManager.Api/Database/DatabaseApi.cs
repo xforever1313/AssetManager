@@ -206,10 +206,8 @@ namespace AssetManager.Api.Database
             }
         }
 
-        public IList<Asset> GetAssets( string assetName )
+        public IList<Asset> GetAssets( Guid databaseId, string assetName )
         {
-            Guid databaseId = this.databaseConfigs.Keys.First();
-
             this.GuidCheck( databaseId );
 
             List<Asset> assets = new List<Asset>();
@@ -287,7 +285,7 @@ namespace AssetManager.Api.Database
                                 .Select( a => a.AssetType.Id )
                                 .Where( id => id == type.Id );
 
-                            AssetTypeInfo info = new AssetTypeInfo( type.Name, assets.Count(), this.DatabaseNames[databaseId] );
+                            AssetTypeInfo info = new AssetTypeInfo( type.Name, databaseId, assets.Count(), this.DatabaseNames[databaseId] );
                             infoList.Add( info );
                         }
                     }
