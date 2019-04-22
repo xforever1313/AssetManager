@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using AssetManager.Api.Database.Tables;
 
 namespace AssetManager.Api.Database
 {
@@ -47,7 +48,7 @@ namespace AssetManager.Api.Database
         /// <summary>
         /// Retrieves the names of the asset types.
         /// </summary>
-        DatabaseQueryMultiResult<IList<string>> GetAssetTypeNames();
+        DatabaseQueryMultiResult<IList<AssetType>> GetAssetTypeNames();
 
         /// <summary>
         /// Gets information about all of the asset types.

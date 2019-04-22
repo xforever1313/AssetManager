@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AssetManager.Api.Database.Tables;
 
 namespace AssetManager.Api.Database
 {
@@ -47,7 +48,7 @@ namespace AssetManager.Api.Database
         /// <summary>
         /// Retrieves the names of the asset types.
         /// </summary>
-        Task<DatabaseQueryMultiResult<IList<string>>> AsyncGetAssetTypeNames();
+        Task<DatabaseQueryMultiResult<IList<AssetType>>> AsyncGetAssetTypeNames();
 
         /// <summary>
         /// Gets information about all of the asset types.

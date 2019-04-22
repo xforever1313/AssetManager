@@ -1,11 +1,11 @@
 ﻿@{
-    @using AssetManager.Api;
     @using AssetManager.Api.Database;
+    @using AssetManager.Api.Database.Tables;
     Layout = "_Layout";
 
     @model IModel;
 
-    DatabaseQueryMultiResult<IList<string>> assetTypeNames = await Model.Api.AsyncDataBase.AsyncGetAssetTypeNames();
+    DatabaseQueryMultiResult<IList<AssetType>> assetTypeNames = await Model.Api.AsyncDataBase.AsyncGetAssetTypeNames();
 }
 
 @section scripts{
@@ -47,13 +47,13 @@
                         <li><a href="/Assets/"><i class="fa fa-eye"></i>View All</a></li>
                         @try
                         {
-                            @foreach ( DatabaseQueryResult<IList<string>> assetNameQueries in assetTypeNames.Results.Values )
+                            @foreach ( DatabaseQueryResult<IList<AssetType>> assetNameQueries in assetTypeNames.Results.Values )
                             {
                                 @if ( assetNameQueries.Success )
                                 {
-                                    @foreach ( string assetName in assetNameQueries.Result )
+                                    @foreach ( AssetType assetType in assetNameQueries.Result )
                                     {
-                                        <li><a href="/Assets/List/@assetNameQueries.DatabaseId/@assetName"><i class="fa fa-circle"></i>@assetName</a></li>
+                                        <li><a href="/Assets/List/@assetNameQueries.DatabaseId/@assetType.Id"><i class="fa fa-circle"></i>@assetType.Name</a></li>
                                     }
                                 }
                                 else

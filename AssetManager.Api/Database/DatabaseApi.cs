@@ -252,22 +252,15 @@ namespace AssetManager.Api.Database
             }
         }
 
-        public DatabaseQueryMultiResult<IList<string>> GetAssetTypeNames()
+        public DatabaseQueryMultiResult<IList<AssetType>> GetAssetTypeNames()
         {
-            return this.PerformActionOnDatabases<IList<string>>(
+            return this.PerformActionOnDatabases<IList<AssetType>>(
                 delegate ( Guid databaseId )
                 {
-
-                    List<string> names;
-
                     using ( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs[databaseId] ) )
                     {
-                        names = new List<string>(
-                            conn.AssetTypes.Select( a => a.Name )
-                            .OrderBy( a => a )
-                        );
+                        return conn.AssetTypes.OrderBy( a => a.Name ).ToList();
                     }
-                    return names;
                 }
             );
         }

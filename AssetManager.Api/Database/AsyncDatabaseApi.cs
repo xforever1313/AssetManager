@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AssetManager.Api.Database.Tables;
 
 namespace AssetManager.Api.Database
 {
@@ -46,7 +47,7 @@ namespace AssetManager.Api.Database
             return Task.Factory.StartNew( () => this.databaseApi.GetAssetsOfType( databaseId, assetTypeId ) );
         }
 
-        public Task<DatabaseQueryMultiResult<IList<string>>> AsyncGetAssetTypeNames()
+        public Task<DatabaseQueryMultiResult<IList<AssetType>>> AsyncGetAssetTypeNames()
         {
             return Task.Factory.StartNew( () => this.databaseApi.GetAssetTypeNames() );
         }

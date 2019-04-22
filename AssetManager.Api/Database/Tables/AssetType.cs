@@ -18,7 +18,7 @@ namespace AssetManager.Api.Database.Tables
     /// If we are keeping track of Video Games, <see cref="AssetType"/> could be
     /// something like "PC Games" and "Console Games".
     /// </example>
-    internal class AssetType
+    public class AssetType
     {
         // ---------------- Constructor ----------------
 
