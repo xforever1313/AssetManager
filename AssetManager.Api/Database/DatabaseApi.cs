@@ -176,7 +176,6 @@ namespace AssetManager.Api.Database
                 DateTime timestamp = DateTime.UtcNow;
                 AssetInstance assetInstance = new AssetInstance
                 {
-                    Name = asset.Name,
                     AssetType = assetType,
                     CreationDate = timestamp,
                     ModifiedDate = timestamp
@@ -232,8 +231,7 @@ namespace AssetManager.Api.Database
                     // Create the asset.
                     Asset asset = new Asset( databaseId )
                     {
-                        AssetType = assetType.Name,
-                        Name = assetInstance.Name
+                        AssetType = assetType.Name
                     };
 
                     foreach ( AssetInstanceAttributeValues value in attributeValues )

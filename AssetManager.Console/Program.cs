@@ -45,6 +45,13 @@ namespace AssetManager.Cli
 
             AssetTypeBuilder builder = new AssetTypeBuilder( "PC Games", databaseId );
 
+            AssetNameAttributeType assetNameType = new AssetNameAttributeType
+            {
+                Key = "Title",
+                Required = true
+            };
+            builder.AttributeTypes.Add( assetNameType );
+
             IntegerAttributeType releaseYear = new IntegerAttributeType
             {
                 Key = "Release Year",
@@ -56,7 +63,7 @@ namespace AssetManager.Cli
 
             {
                 Asset asset = api.DataBase.GenerateEmptyAsset( databaseId, pcGameId );
-                asset.Name = "Command And Conquer";
+                asset.SetAttribute( "Title", new AssetNameAttribute( "Command and Conquer" ) );
                 asset.SetAttribute( "Release Year", new IntegerAttribute { Value = 1995 } );
                 api.DataBase.AddAsset( asset );
             }
@@ -74,6 +81,13 @@ namespace AssetManager.Cli
             int pokemonCardTypeId = -1;
             {
                 AssetTypeBuilder builder = new AssetTypeBuilder( "Pokemon Card", databaseId );
+
+                AssetNameAttributeType assetNameType = new AssetNameAttributeType
+                {
+                    Key = "Card Name",
+                    Required = true
+                };
+                builder.AttributeTypes.Add( assetNameType );
 
                 IntegerAttributeType hpAttribute = new IntegerAttributeType
                 {
@@ -108,6 +122,13 @@ namespace AssetManager.Cli
             {
                 AssetTypeBuilder builder = new AssetTypeBuilder( "Yugioh! Card", databaseId );
 
+                AssetNameAttributeType assetNameType = new AssetNameAttributeType
+                {
+                    Key = "Card Name",
+                    Required = true
+                };
+                builder.AttributeTypes.Add( assetNameType );
+
                 IntegerAttributeType attackAttribute = new IntegerAttributeType
                 {
                     Key = "Attack",
@@ -129,7 +150,7 @@ namespace AssetManager.Cli
 
             {
                 Asset asset = api.DataBase.GenerateEmptyAsset( databaseId, pokemonCardTypeId );
-                asset.Name = "Politoed";
+                asset.SetAttribute( "Card Name", new AssetNameAttribute( "Politoed" ) );
                 asset.SetAttribute( "HP", new IntegerAttribute() { Value = 100 } );
                 asset.SetAttribute( "Retreat Cost", new IntegerAttribute() { Value = 3 } );
                 asset.SetAttribute(
@@ -147,7 +168,7 @@ they sing in an lound voice that sounds like bellowing."
 
             {
                 Asset asset = api.DataBase.GenerateEmptyAsset( databaseId, yugiohCardTypeId );
-                asset.Name = "The 13th Grave";
+                asset.SetAttribute( "Card Name", new AssetNameAttribute( "The 13th Grave" ) );
 
                 IntegerAttribute attackAttr = asset.CloneAttributeAsType<IntegerAttribute>( "Attack" );
                 attackAttr.Value = 1200;
@@ -162,7 +183,7 @@ they sing in an lound voice that sounds like bellowing."
 
             {
                 Asset asset = api.DataBase.GenerateEmptyAsset( databaseId, yugiohCardTypeId );
-                asset.Name = "Overdrive";
+                asset.SetAttribute( "Card Name", new AssetNameAttribute( "Overdrive" ) );
                 asset.SetAttribute( "Attack", new IntegerAttribute( 1600 ) );
                 asset.SetAttribute( "Defense", new IntegerAttribute( 1500 ) );
 

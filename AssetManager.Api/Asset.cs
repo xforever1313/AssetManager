@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace AssetManager.Api
 {
@@ -29,7 +30,6 @@ namespace AssetManager.Api
             this.DatabaseId = databaseId;
 
             this.type = AssetTypeBuilder.UnknownType;
-            this.Name = "Untitled Asset";
             this.attributes = new Dictionary<string, IAttribute>();
 
             this.Attributes = new ReadOnlyDictionary<string, IAttribute>( this.attributes );
@@ -63,20 +63,25 @@ namespace AssetManager.Api
 
         /// <summary>
         /// The name of the specific asset instance.
+        /// This is set when an attribute of type <seealso cref="AttributeTypes.AssetName"/> is passed into
+        /// <seealso cref="SetAttribute(string, IAttribute)"/>.
+        /// 
+        /// This will return the value of the FIRST attribute of type <seealso cref="AttributeTypes.AssetName"/> in this asset.
+        /// Or "Untitled Asset"
         /// </summary>
         public string Name
         {
             get
             {
-                return this.name;
-            }
-            set
-            {
-                if( string.IsNullOrWhiteSpace( value ) )
+                IAttribute attr = this.attributes.Values.FirstOrDefault( a => a.AttributeType == AttributeTypes.AssetName );
+                if ( attr == null )
                 {
-                    throw new ArgumentException( nameof( Name ) + " can not be null, empty, or whitespace." );
+                    return "Untitled Asset";
                 }
-                this.name = value;
+                else
+                {
+                    return attr.ToString();
+                }
             }
         }
 

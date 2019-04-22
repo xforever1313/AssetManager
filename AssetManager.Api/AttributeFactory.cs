@@ -27,6 +27,9 @@ namespace AssetManager.Api
                 case AttributeTypes.Integer:
                     return new IntegerAttribute();
 
+                case AttributeTypes.AssetName:
+                    return new AssetNameAttribute();
+
                 default:
                     throw new ArgumentException( "Invalid Attribute Type: " + attributeType );
             }
