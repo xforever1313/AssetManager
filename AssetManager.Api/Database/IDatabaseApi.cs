@@ -37,12 +37,12 @@ namespace AssetManager.Api.Database
         int AddAsset( Asset asset );
 
         /// <summary>
-        /// Gets a list of assets based on the given asset name,
+        /// Gets a list of assets based on the given asset type.
         /// </summary>
         /// <returns>
         /// A list of assets that are of the type of the given asset name.
         /// </returns>
-        IList<Asset> GetAssets( Guid databaseId, string assetName );
+        AssetListInfo GetAssetsOfType( Guid databaseId, int assetTypeId );
 
         /// <summary>
         /// Retrieves the names of the asset types.

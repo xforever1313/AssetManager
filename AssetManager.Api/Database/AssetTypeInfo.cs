@@ -16,8 +16,9 @@ namespace AssetManager.Api.Database
     {
         // ---------------- Constructor ----------------
 
-        public AssetTypeInfo( string name, Guid databaseId, int numberOfAssets, string databaseName )
+        public AssetTypeInfo( int typeId, string name, Guid databaseId, int numberOfAssets, string databaseName )
         {
+            this.TypeId = typeId;
             this.Name = name;
             this.DatabaseId = databaseId;
             this.NumberOfAssets = numberOfAssets;
@@ -25,6 +26,11 @@ namespace AssetManager.Api.Database
         }
 
         // ---------------- Properties ----------------
+
+        /// <summary>
+        /// The ID of the asset type in the database.
+        /// </summary>
+        public int TypeId { get; private set; }
 
         /// <summary>
         /// The name of the asset type.

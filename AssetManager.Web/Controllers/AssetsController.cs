@@ -30,12 +30,12 @@ namespace AssetManager.Web.Controllers
             return View( new AssetTypeInfoModel( result, this.Api ) );
         }
 
-        public IActionResult List( string database, string assetTypeName )
+        public IActionResult List( string database, int assetTypeId )
         {
             if ( Guid.TryParse( database, out Guid databaseId ) )
             {
-                IList<Asset> assets = this.Api.DataBase.GetAssets( databaseId, assetTypeName );
-                AssetListModel model = new AssetListModel( this.Api, assetTypeName, assets );
+                AssetListInfo assets = this.Api.DataBase.GetAssetsOfType( databaseId, assetTypeId );
+                AssetListModel model = new AssetListModel( this.Api, assets );
                 return View( model );
             }
             else

@@ -208,7 +208,7 @@ namespace AssetManager.Api.Database
             }
         }
 
-        public IList<Asset> GetAssets( Guid databaseId, string assetName )
+        public AssetListInfo GetAssetsOfType( Guid databaseId, int assetTypeId )
         {
             this.GuidCheck( databaseId );
 
@@ -216,8 +216,10 @@ namespace AssetManager.Api.Database
 
             using ( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs[databaseId] ) )
             {
+                AssetType assetType = this.GetAssetType( conn, assetTypeId );
+
                 // Get all of the asset instances that match the name we want.
-                IEnumerable<AssetInstance> assetInstances = conn.AssetInstances.Where( a => a.AssetType.Name == assetName );
+                IEnumerable<AssetInstance> assetInstances = conn.AssetInstances.Where( a => a.AssetType.Id == assetTypeId );
 
                 foreach ( AssetInstance assetInstance in assetInstances )
                 {
@@ -230,7 +232,7 @@ namespace AssetManager.Api.Database
                     // Create the asset.
                     Asset asset = new Asset( databaseId )
                     {
-                        AssetType = assetName,
+                        AssetType = assetType.Name,
                         Name = assetInstance.Name
                     };
 
@@ -245,9 +247,9 @@ namespace AssetManager.Api.Database
 
                     assets.Add( asset );
                 }
-            }
 
-            return assets;
+                return new AssetListInfo( assets, assetType.Id, assetType.Name );
+            }
         }
 
         public DatabaseQueryMultiResult<IList<string>> GetAssetTypeNames()
@@ -287,7 +289,13 @@ namespace AssetManager.Api.Database
                                 .Select( a => a.AssetType.Id )
                                 .Where( id => id == type.Id );
 
-                            AssetTypeInfo info = new AssetTypeInfo( type.Name, databaseId, assets.Count(), this.DatabaseNames[databaseId] );
+                            AssetTypeInfo info = new AssetTypeInfo(
+                                type.Id,
+                                type.Name,
+                                databaseId,
+                                assets.Count(),
+                                this.DatabaseNames[databaseId]
+                            );
                             infoList.Add( info );
                         }
                     }

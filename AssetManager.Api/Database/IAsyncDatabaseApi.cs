@@ -37,12 +37,12 @@ namespace AssetManager.Api.Database
         Task<int> AsyncAddAsset( Asset asset );
 
         /// <summary>
-        /// Gets a list of assets based on the given asset name,
+        /// Gets a list of assets based on the given asset type.
         /// </summary>
         /// <returns>
         /// A list of assets that are of the type of the given asset name.
         /// </returns>
-        Task<IList<Asset>> GetAssets( Guid databaseId, string assetName );
+        Task<AssetListInfo> GetAssets( Guid databaseId, int assetTypeId );
 
         /// <summary>
         /// Retrieves the names of the asset types.

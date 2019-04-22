@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using AssetManager.Api;
+using AssetManager.Api.Database;
 
 namespace AssetManager.Web.Models
 {
@@ -14,11 +15,12 @@ namespace AssetManager.Web.Models
     {
         // ---------------- Constructor ----------------
 
-        public AssetListModel( IAssetManagerApi api, string assetName, IList<Asset> assets )
+        public AssetListModel( IAssetManagerApi api, AssetListInfo listInfo )
         {
             this.Api = api;
-            this.AssetName = assetName;
-            this.Assets = assets;
+            this.AssetName = listInfo.AssetTypeName;
+            this.AssetTypeID = listInfo.AssetTypeId;
+            this.Assets = listInfo.AssetList;
         }
 
         // ---------------- Properties ----------------
@@ -26,6 +28,8 @@ namespace AssetManager.Web.Models
         public IAssetManagerApi Api { get; private set; }
 
         public string AssetName { get; private set; }
+
+        public int AssetTypeID { get; private set; }
 
         public IList<Asset> Assets { get; private set; }
     }
