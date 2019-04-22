@@ -22,7 +22,8 @@ namespace AssetManager.Api.Database
         /// <summary>
         /// Adds the given asset type to the database.
         /// </summary>
-        Task AsyncAddAssetType( AssetTypeBuilder builder );
+        /// <returns>The ID of the asset type that was added in its database.</returns>
+        Task<int> AsyncAddAssetType( AssetTypeBuilder builder );
 
         /// <summary>
         /// Generates an empty asset based on the given type.
@@ -32,7 +33,8 @@ namespace AssetManager.Api.Database
         /// <summary>
         /// Adds the given asset to the database.
         /// </summary>
-        Task AsyncAddAsset( Asset asset );
+        /// <returns>The ID of the asset that was added in its database.</returns>
+        Task<int> AsyncAddAsset( Asset asset );
 
         /// <summary>
         /// Gets a list of assets based on the given asset name,

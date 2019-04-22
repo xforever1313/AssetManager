@@ -22,7 +22,8 @@ namespace AssetManager.Api.Database
         /// <summary>
         /// Adds the given asset type to the database.
         /// </summary>
-        void AddAssetType( AssetTypeBuilder builder );
+        /// <returns>The ID of the asset type just added for its database.</returns>
+        int AddAssetType( AssetTypeBuilder builder );
 
         /// <summary>
         /// Generates an empty asset based on the given type.
@@ -32,7 +33,8 @@ namespace AssetManager.Api.Database
         /// <summary>
         /// Adds the given asset to the database.
         /// </summary>
-        void AddAsset( Asset asset );
+        /// <returns>The ID of the asset just added for its database.</returns>
+        int AddAsset( Asset asset );
 
         /// <summary>
         /// Gets a list of assets based on the given asset name,

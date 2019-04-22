@@ -75,7 +75,7 @@ namespace AssetManager.Api.Database
 
         // ---------------- Functions ----------------
 
-        public void AddAssetType( AssetTypeBuilder builder )
+        public int AddAssetType( AssetTypeBuilder builder )
         {
             ArgumentChecker.IsNotNull( builder, nameof( builder ) );
             builder.Validate();
@@ -124,6 +124,8 @@ namespace AssetManager.Api.Database
                 }
 
                 conn.SaveChanges();
+
+                return assetType.Id; // Must come after SaveChanges() so the ID gets updated.
             }
         }
 
@@ -162,7 +164,7 @@ namespace AssetManager.Api.Database
             }
         }
 
-        public void AddAsset( Asset asset )
+        public int AddAsset( Asset asset )
         {
             ArgumentChecker.IsNotNull( asset, nameof( asset ) );
 
@@ -203,6 +205,8 @@ namespace AssetManager.Api.Database
                 conn.AssetInstances.Add( assetInstance );
 
                 conn.SaveChanges();
+
+                return assetInstance.Id; // Must come after SaveChanges() so the ID gets updated.
             }
         }
 

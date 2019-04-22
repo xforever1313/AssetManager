@@ -26,7 +26,7 @@ namespace AssetManager.Api.Database
 
         // ---------------- Functions ----------------
 
-        public Task AsyncAddAssetType( AssetTypeBuilder builder )
+        public Task<int> AsyncAddAssetType( AssetTypeBuilder builder )
         {
             return Task.Factory.StartNew( () => this.databaseApi.AddAssetType( builder ) );
         }
@@ -36,7 +36,7 @@ namespace AssetManager.Api.Database
             return Task.Factory.StartNew( () => this.databaseApi.GenerateEmptyAsset( databaseId, assetTypeName ) );
         }
 
-        public Task AsyncAddAsset( Asset asset )
+        public Task<int> AsyncAddAsset( Asset asset )
         {
             return Task.Factory.StartNew( () => this.databaseApi.AddAsset( asset ) );
         }
