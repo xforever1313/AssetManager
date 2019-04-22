@@ -28,8 +28,12 @@ else
                                 <li><strong>Number of Assets: </strong>@Model.AssetTypeInfo[i].NumberOfAssets</li>
                             </ul>
                             <div class="form-group">
-                                <button class="btn btn-primary"><i class="fa fa-plus"></i> Add New</button>
-                                <a href="/Assets/List/@Model.AssetTypeInfo[i].DatabaseId/@Model.AssetTypeInfo[i].TypeId" class="btn btn-success"><i class="fa fa-eye"></i> View All</a>
+                                <a href="/Assets/Add/@Model.AssetTypeInfo[i].DatabaseId/@Model.AssetTypeInfo[i].TypeId" class="btn btn-primary">
+                                    <i class="fa fa-plus"></i> Add New
+                                </a>
+                                <a href="/Assets/List/@Model.AssetTypeInfo[i].DatabaseId/@Model.AssetTypeInfo[i].TypeId" class="btn btn-success">
+                                    <i class="fa fa-eye"></i> View All
+                                </a>
                             </div>
                         </div>
                     </div>

@@ -43,5 +43,19 @@ namespace AssetManager.Web.Controllers
                 return BadRequest( "Invalid database ID: " + database );
             }
         }
+
+        public IActionResult Add( string database, int assetTypeId )
+        {
+            if ( Guid.TryParse( database, out Guid databaseId ) )
+            {
+                Asset emptyAsset = this.Api.DataBase.GenerateEmptyAsset( databaseId, assetTypeId );
+                AssetModel assetModel = new AssetModel( this.Api, emptyAsset );
+                return View( assetModel );
+            }
+            else
+            {
+                return BadRequest( "Invalid database ID: " + database );
+            }
+        }
     }
 }
