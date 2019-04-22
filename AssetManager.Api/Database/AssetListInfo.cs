@@ -19,14 +19,17 @@ namespace AssetManager.Api.Database
     {
         // ---------------- Constructor ----------------
 
-        public AssetListInfo( IList<Asset> assetList, int assetTypeId, string assetTypeName )
+        public AssetListInfo( Guid databaseId, IList<Asset> assetList, int assetTypeId, string assetTypeName )
         {
+            this.DatabaseId = databaseId;
             this.AssetList = assetList;
             this.AssetTypeId = assetTypeId;
             this.AssetTypeName = assetTypeName;
         }
 
         // ---------------- Properties ----------------
+
+        public Guid DatabaseId { get; private set; }
 
         /// <summary>
         /// A list of the assets that fall under the specified type.

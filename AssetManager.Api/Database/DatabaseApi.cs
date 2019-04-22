@@ -248,7 +248,7 @@ namespace AssetManager.Api.Database
                     assets.Add( asset );
                 }
 
-                return new AssetListInfo( assets, assetType.Id, assetType.Name );
+                return new AssetListInfo( databaseId, assets, assetType.Id, assetType.Name );
             }
         }
 

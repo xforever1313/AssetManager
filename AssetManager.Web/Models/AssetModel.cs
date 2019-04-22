@@ -16,10 +16,11 @@ namespace AssetManager.Web.Models
     {
         // ---------------- Constructor ----------------
 
-        public AssetModel( IAssetManagerApi api, Asset asset )
+        public AssetModel( IAssetManagerApi api, Asset asset, int assetTypeId )
         {
             this.Api = api;
             this.Asset = asset;
+            this.AssetTypeId = assetTypeId;
         }
 
         // ---------------- Properties ----------------
@@ -27,5 +28,7 @@ namespace AssetManager.Web.Models
         public IAssetManagerApi Api { get; private set; }
 
         public Asset Asset { get; private set; }
+
+        public int AssetTypeId { get; private set; }
     }
 }

@@ -49,7 +49,7 @@ namespace AssetManager.Web.Controllers
             if ( Guid.TryParse( database, out Guid databaseId ) )
             {
                 Asset emptyAsset = this.Api.DataBase.GenerateEmptyAsset( databaseId, assetTypeId );
-                AssetModel assetModel = new AssetModel( this.Api, emptyAsset );
+                AssetModel assetModel = new AssetModel( this.Api, emptyAsset, assetTypeId );
                 return View( assetModel );
             }
             else

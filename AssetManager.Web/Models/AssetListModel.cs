@@ -5,6 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System;
 using System.Collections.Generic;
 using AssetManager.Api;
 using AssetManager.Api.Database;
@@ -17,6 +18,7 @@ namespace AssetManager.Web.Models
 
         public AssetListModel( IAssetManagerApi api, AssetListInfo listInfo )
         {
+            this.DatabaseId = listInfo.DatabaseId;
             this.Api = api;
             this.AssetName = listInfo.AssetTypeName;
             this.AssetTypeID = listInfo.AssetTypeId;
@@ -24,6 +26,8 @@ namespace AssetManager.Web.Models
         }
 
         // ---------------- Properties ----------------
+
+        public Guid DatabaseId { get; private set; }
 
         public IAssetManagerApi Api { get; private set; }
 
