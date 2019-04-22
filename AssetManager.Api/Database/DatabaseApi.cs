@@ -133,20 +133,18 @@ namespace AssetManager.Api.Database
         /// Generates an empty asset that has all of its attributes
         /// set to null, so that a user can fill them in and add it to the database.
         /// </summary>
-        public Asset GenerateEmptyAsset( Guid databaseId, string assetTypeName )
+        public Asset GenerateEmptyAsset( Guid databaseId, int assetTypeId )
         {
-            ArgumentChecker.StringIsNotNullOrEmpty( assetTypeName, nameof( assetTypeName ) );
-
             this.GuidCheck( databaseId );
 
             using ( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs[databaseId] ) )
             {
                 // First, find the type of asset.
-                AssetType assetType = this.GetAssetType( conn, assetTypeName );
+                AssetType assetType = this.GetAssetType( conn, assetTypeId );
 
                 Asset asset = new Asset( databaseId )
                 {
-                    AssetType = assetTypeName
+                    AssetType = assetType.Name
                 };
 
                 // Next, get all of the attributes that are associated with the asset type.
@@ -297,6 +295,17 @@ namespace AssetManager.Api.Database
                     return infoList;
                 }
             );
+        }
+
+        private AssetType GetAssetType( DatabaseConnection conn, int assetTypeId )
+        {
+            AssetType assetType = conn.AssetTypes.SingleOrDefault( t => t.Id == assetTypeId );
+            if ( assetType == null )
+            {
+                throw new InvalidOperationException( "Can not find Asset Type with ID '" + assetTypeId + '"' );
+            }
+
+            return assetType;
         }
 
         private AssetType GetAssetType( DatabaseConnection conn, string assetTypeName )

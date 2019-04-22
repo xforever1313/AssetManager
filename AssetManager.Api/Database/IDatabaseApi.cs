@@ -28,7 +28,7 @@ namespace AssetManager.Api.Database
         /// <summary>
         /// Generates an empty asset based on the given type.
         /// </summary>
-        Asset GenerateEmptyAsset( Guid databaseId, string assetTypeName );
+        Asset GenerateEmptyAsset( Guid databaseId, int assetTypeId );
 
         /// <summary>
         /// Adds the given asset to the database.

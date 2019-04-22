@@ -52,10 +52,10 @@ namespace AssetManager.Cli
             };
             builder.AttributeTypes.Add( releaseYear );
 
-            api.DataBase.AddAssetType( builder );
+            int pcGameId = api.DataBase.AddAssetType( builder );
 
             {
-                Asset asset = api.DataBase.GenerateEmptyAsset( databaseId, "PC Games" );
+                Asset asset = api.DataBase.GenerateEmptyAsset( databaseId, pcGameId );
                 asset.Name = "Command And Conquer";
                 asset.SetAttribute( "Release Year", new IntegerAttribute { Value = 1995 } );
                 api.DataBase.AddAsset( asset );
@@ -71,6 +71,7 @@ namespace AssetManager.Cli
 
             Guid databaseId = api.DataBase.DatabaseNames.First( n => n.Value == "TradingCards" ).Key;
 
+            int pokemonCardTypeId = -1;
             {
                 AssetTypeBuilder builder = new AssetTypeBuilder( "Pokemon Card", databaseId );
 
@@ -100,9 +101,10 @@ namespace AssetManager.Cli
                 };
                 builder.AttributeTypes.Add( flavorText );
 
-                api.DataBase.AddAssetType( builder );
+                pokemonCardTypeId = api.DataBase.AddAssetType( builder );
             }
 
+            int yugiohCardTypeId = -1;
             {
                 AssetTypeBuilder builder = new AssetTypeBuilder( "Yugioh! Card", databaseId );
 
@@ -122,11 +124,11 @@ namespace AssetManager.Cli
                 };
                 builder.AttributeTypes.Add( defenseAttribute );
 
-                api.DataBase.AddAssetType( builder );
+                yugiohCardTypeId = api.DataBase.AddAssetType( builder );
             }
 
             {
-                Asset asset = api.DataBase.GenerateEmptyAsset( databaseId, "Pokemon Card" );
+                Asset asset = api.DataBase.GenerateEmptyAsset( databaseId, pokemonCardTypeId );
                 asset.Name = "Politoed";
                 asset.SetAttribute( "HP", new IntegerAttribute() { Value = 100 } );
                 asset.SetAttribute( "Retreat Cost", new IntegerAttribute() { Value = 3 } );
@@ -144,7 +146,7 @@ they sing in an lound voice that sounds like bellowing."
             }
 
             {
-                Asset asset = api.DataBase.GenerateEmptyAsset( databaseId, "Yugioh! Card" );
+                Asset asset = api.DataBase.GenerateEmptyAsset( databaseId, yugiohCardTypeId );
                 asset.Name = "The 13th Grave";
 
                 IntegerAttribute attackAttr = asset.CloneAttributeAsType<IntegerAttribute>( "Attack" );
@@ -159,7 +161,7 @@ they sing in an lound voice that sounds like bellowing."
             }
 
             {
-                Asset asset = api.DataBase.GenerateEmptyAsset( databaseId, "Yugioh! Card" );
+                Asset asset = api.DataBase.GenerateEmptyAsset( databaseId, yugiohCardTypeId );
                 asset.Name = "Overdrive";
                 asset.SetAttribute( "Attack", new IntegerAttribute( 1600 ) );
                 asset.SetAttribute( "Defense", new IntegerAttribute( 1500 ) );
