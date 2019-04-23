@@ -42,6 +42,7 @@
 
 
   <ItemGroup>
+    <Folder Include="Views\ReadWriteAssetAttributes\" />
     <Folder Include="wwwroot\static\compiled_ts\" />
   </ItemGroup>
 

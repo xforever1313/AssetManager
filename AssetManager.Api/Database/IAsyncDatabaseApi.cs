@@ -27,6 +27,12 @@ namespace AssetManager.Api.Database
         Task<int> AsyncAddAssetType( AssetTypeBuilder builder );
 
         /// <summary>
+        /// Gets information about the asset type for the specified database.
+        /// This is the full information, including all of the attributes.
+        /// </summary>
+        Task<IAssetType> GetAssetType( Guid databaseId, int assetTypeId );
+
+        /// <summary>
         /// Generates an empty asset based on the given type.
         /// </summary>
         Task<Asset> AsyncGenerateEmptyAsset( Guid databaseId, int assetTypeId );

@@ -129,6 +129,41 @@ namespace AssetManager.Api.Database
             }
         }
 
+        public IAssetType GetAssetType( Guid databaseId, int assetTypeId )
+        {
+            this.GuidCheck( databaseId );
+
+            IEnumerable<AssetTypeAttributesMap> maps;
+            string assetTypeName;
+
+            using ( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs[databaseId] ) )
+            {
+                // First, find the type of asset.
+                AssetType assetType = this.GetAssetType( conn, assetTypeId );
+                assetTypeName = assetType.Name;
+
+                maps = conn.AssetTypeAttributesMaps
+                    .Include( nameof( AssetTypeAttributesMap.AttributeKey ) )
+                    .Include( nameof( AssetTypeAttributesMap.AttributeProperties ) )
+                    .Where( m => m.AssetType.Id == assetType.Id );
+            }
+
+            AssetTypeBuilder assetTypeBuilder = new AssetTypeBuilder( assetTypeName, databaseId );
+
+            foreach ( AssetTypeAttributesMap map in maps )
+            {
+                IAttributeType attributeType = AttributeTypeFactory.CreateAttributeType( map.AttributeKey.AttributeType );
+                attributeType.DeserializeDefaultValue( map.AttributeProperties.DefaultValue );
+                attributeType.Key = map.AttributeKey.Name;
+                attributeType.Required = map.AttributeProperties.Required;
+                // TODO: Add possible values
+
+                assetTypeBuilder.AttributeTypes.Add( attributeType );
+            }
+
+            return assetTypeBuilder;
+        }
+
         /// <summary>
         /// Generates an empty asset that has all of its attributes
         /// set to null, so that a user can fill them in and add it to the database.

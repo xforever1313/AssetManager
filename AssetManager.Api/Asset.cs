@@ -20,7 +20,6 @@ namespace AssetManager.Api
         // ---------------- Fields ----------------
 
         private string type;
-        private string name;
         private readonly Dictionary<string, IAttribute> attributes;
 
         // ---------------- Constructor ----------------

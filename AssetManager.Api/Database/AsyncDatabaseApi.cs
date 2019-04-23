@@ -32,6 +32,11 @@ namespace AssetManager.Api.Database
             return Task.Factory.StartNew( () => this.databaseApi.AddAssetType( builder ) );
         }
 
+        public Task<IAssetType> GetAssetType( Guid databaseId, int assetTypeId )
+        {
+            return Task.Factory.StartNew( () => this.databaseApi.GetAssetType( databaseId, assetTypeId ) );
+        }
+
         public Task<Asset> AsyncGenerateEmptyAsset( Guid databaseId, int assetTypeId )
         {
             return Task.Factory.StartNew( () => this.databaseApi.GenerateEmptyAsset( databaseId, assetTypeId ) );

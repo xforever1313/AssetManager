@@ -17,9 +17,12 @@ namespace AssetManager.Api
     /// <summary>
     /// This class aides in building an Asset Type.
     /// </summary>
-    public class AssetTypeBuilder
+    public class AssetTypeBuilder : IAssetType
     {
         // ---------------- Fields ----------------
+
+        private readonly List<IAttributeType> attributeTypes;
+        private readonly IReadOnlyList<IAttributeType> readOnlyAttributeTypes;
 
         internal const string UnknownType = "Unknown Asset";
 
@@ -33,23 +36,36 @@ namespace AssetManager.Api
         public AssetTypeBuilder( string assetName, Guid databaseId )
         {
             this.Name = assetName;
-            this.AttributeTypes = new List<IAttributeType>();
+            this.attributeTypes = new List<IAttributeType>();
+            this.readOnlyAttributeTypes = this.attributeTypes.AsReadOnly();
             this.DatabaseId = databaseId;
         }
 
         // ---------------- Properties ----------------
 
-        /// <summary>
-        /// The name of the specific asset instance.
-        /// </summary>
         public string Name { get; set; }
 
-        public IList<IAttributeType> AttributeTypes { get; protected set; }
+        public IList<IAttributeType> AttributeTypes
+        {
+            get
+            {
+                return this.attributeTypes;
+            }
+        }
 
         /// <summary>
         /// The database ID to add this asset type to.
         /// </summary>
         public Guid DatabaseId { get; set; }
+
+
+        IReadOnlyList<IAttributeType> IAssetType.AttributeTypes
+        {
+            get
+            {
+                return this.readOnlyAttributeTypes;
+            }
+        }
 
         // ---------------- Functions ----------------
 
