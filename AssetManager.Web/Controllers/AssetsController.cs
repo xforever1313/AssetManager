@@ -49,7 +49,10 @@ namespace AssetManager.Web.Controllers
             if ( Guid.TryParse( database, out Guid databaseId ) )
             {
                 Asset emptyAsset = this.Api.DataBase.GenerateEmptyAsset( databaseId, assetTypeId );
-                AssetModel assetModel = new AssetModel( this.Api, emptyAsset, assetTypeId );
+
+                // TODO: Should we make this one query instead of 2?
+                IAssetType assetType = this.Api.DataBase.GetAssetType( databaseId, assetTypeId );
+                AssetModel assetModel = new AssetModel( this.Api, emptyAsset, assetTypeId, assetType );
                 return View( assetModel );
             }
             else

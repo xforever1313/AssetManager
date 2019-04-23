@@ -146,22 +146,22 @@ namespace AssetManager.Api.Database
                     .Include( nameof( AssetTypeAttributesMap.AttributeKey ) )
                     .Include( nameof( AssetTypeAttributesMap.AttributeProperties ) )
                     .Where( m => m.AssetType.Id == assetType.Id );
+
+                AssetTypeBuilder assetTypeBuilder = new AssetTypeBuilder( assetTypeName, databaseId );
+
+                foreach ( AssetTypeAttributesMap map in maps )
+                {
+                    IAttributeType attributeType = AttributeTypeFactory.CreateAttributeType( map.AttributeKey.AttributeType );
+                    attributeType.DeserializeDefaultValue( map.AttributeProperties.DefaultValue );
+                    attributeType.Key = map.AttributeKey.Name;
+                    attributeType.Required = map.AttributeProperties.Required;
+                    // TODO: Add possible values
+
+                    assetTypeBuilder.AttributeTypes.Add( attributeType );
+                }
+
+                return assetTypeBuilder;
             }
-
-            AssetTypeBuilder assetTypeBuilder = new AssetTypeBuilder( assetTypeName, databaseId );
-
-            foreach ( AssetTypeAttributesMap map in maps )
-            {
-                IAttributeType attributeType = AttributeTypeFactory.CreateAttributeType( map.AttributeKey.AttributeType );
-                attributeType.DeserializeDefaultValue( map.AttributeProperties.DefaultValue );
-                attributeType.Key = map.AttributeKey.Name;
-                attributeType.Required = map.AttributeProperties.Required;
-                // TODO: Add possible values
-
-                assetTypeBuilder.AttributeTypes.Add( attributeType );
-            }
-
-            return assetTypeBuilder;
         }
 
         /// <summary>
