@@ -7,6 +7,10 @@
 
 interface IAttribute {
 
+    // ---------------- Properties -----------------
+
+    readonly AttributeType: AttributeType;
+
     // ---------------- Functions -----------------
 
     EnableForm(): void;
@@ -15,8 +19,9 @@ interface IAttribute {
 
     /**
      * Ensures the attribute is in a valid state.
+     * Return a list of errors, or null if there are none.
      **/
-    Validate(): boolean;
+    Validate(): Array<string>;
 
     ToJson(): object;
 }

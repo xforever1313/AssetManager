@@ -18,7 +18,13 @@ class StringAttributeTypeInfo {
     constructor(){
         this.defaultValue = null;
         this.required = false;
+
+        this.AttributeType = AttributeType.StringAttribute;
     }
+
+    // ---------------- Properties ----------------
+
+    public readonly AttributeType: AttributeType;
 
     // ---------------- Functions ----------------
 

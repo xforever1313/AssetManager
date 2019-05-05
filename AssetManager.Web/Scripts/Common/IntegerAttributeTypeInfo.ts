@@ -24,7 +24,13 @@ class IntegerAttributeTypeInfo {
         this.SetMax(null);
         this.SetDefault(null);
         this.required = false;
+
+        this.AttributeType = AttributeType.IntegerAttribute;
     }
+
+    // ---------------- Properties ----------------
+
+    public readonly AttributeType: AttributeType;
 
     // ---------------- Functions ----------------
 

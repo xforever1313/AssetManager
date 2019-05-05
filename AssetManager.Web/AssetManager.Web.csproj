@@ -8,7 +8,10 @@
 
   <ItemGroup>
     <None Remove="Scripts\AssetAdder\AssetAdder.ts" />
+    <None Remove="Scripts\AssetAdder\BaseAttribute.ts" />
     <None Remove="Scripts\AssetAdder\IAttribute.ts" />
+    <None Remove="Scripts\AssetAdder\IntegerAttribute.ts" />
+    <None Remove="Scripts\AssetAdder\StringAttribute.ts" />
     <None Remove="Scripts\AssetTypeMaker.ts" />
     <None Remove="Scripts\AssetTypeMaker\AssetTypeNameEditor.ts" />
     <None Remove="Scripts\AssetTypeMaker\BaseAttribute.ts" />
@@ -36,7 +39,10 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\AssetAdder\AssetAdder.ts" />
+    <TypeScriptCompile Include="Scripts\AssetAdder\BaseAttribute.ts" />
     <TypeScriptCompile Include="Scripts\AssetAdder\IAttribute.ts" />
+    <TypeScriptCompile Include="Scripts\AssetAdder\IntegerAttribute.ts" />
+    <TypeScriptCompile Include="Scripts\AssetAdder\StringAttribute.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\AssetNameAttributeType.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\AssetTypeMaker.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\AssetTypeNameEditor.ts" />
