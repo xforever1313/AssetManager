@@ -17,29 +17,26 @@ class IntegerAttributeType extends BaseAttributeType {
     private requiredBox: HTMLInputElement;
     private id: Number;
 
+    private readonly info: IntegerAttributeTypeInfo;
+
     // ---------------- Constructor ----------------
 
     constructor() {
         super("Integer Attribute", AttributeType.IntegerAttribute);
 
         this.id = IntegerAttributeType.idCount++;
-
-        this.MinValue = null;
-        this.MaxValue = null;
-        this.DefaultValue = null;
+        this.info = new IntegerAttributeTypeInfo();
 
         let attr = this;
 
-        this.Required = false;
-
         this.minTextBox = <HTMLInputElement>(document.createElement("input"));
-        this.CreateTextBox("Minimum Value", this.minTextBox, this.SetMin.bind(this));
+        this.CreateTextBox("Minimum Value", this.minTextBox, this.info.SetMin.bind(this));
 
         this.maxTextBox = <HTMLInputElement>(document.createElement("input"));
-        this.CreateTextBox("Maximum Value", this.maxTextBox, this.SetMax.bind(this));
+        this.CreateTextBox("Maximum Value", this.maxTextBox, this.info.SetMax.bind(this));
 
         this.defaultTextBox = <HTMLInputElement>(document.createElement("input"));
-        this.CreateTextBox("Default Value", this.defaultTextBox, this.SetDefault.bind(this));
+        this.CreateTextBox("Default Value", this.defaultTextBox, this.info.SetDefault.bind(this));
 
         {
             let requiredDiv = <HTMLDivElement>(document.createElement("div"));
@@ -53,9 +50,9 @@ class IntegerAttributeType extends BaseAttributeType {
             this.requiredBox = <HTMLInputElement>(document.createElement("input"));
             this.requiredBox.type = "checkbox";
             this.requiredBox.id = requiredLabel.htmlFor;
-            this.requiredBox.checked = this.Required;
+            this.requiredBox.checked = this.info.Required;
             this.requiredBox.onclick = function () {
-                attr.Required = attr.requiredBox.checked;
+                attr.info.Required = attr.requiredBox.checked;
             }.bind(this);
 
             requiredDiv.appendChild(this.requiredBox);
@@ -99,56 +96,26 @@ class IntegerAttributeType extends BaseAttributeType {
 
     // ---------------- Properties ----------------
 
-    public MinValue: Number;
-
-    public MaxValue: Number;
-
-    public DefaultValue: Number;
-
-    public Required: boolean;
-
     // ---------------- Functions ----------------
 
     public ToJson(): object {
         let data = {
             "Key": this.GetKey(),
             "AttributeType": this.AttributeType,
-            "Required": this.Required,
+            "Required": this.info.Required,
             "PossibleValues": {
                 "Version": 1,
-                "MinValue": this.MinValue,
-                "MaxValue": this.MaxValue
+                "MinValue": this.info.MinValue,
+                "MaxValue": this.info.MaxValue
             },
-            "DefaultValue": this.DefaultValue
+            "DefaultValue": this.info.DefaultValue
         };
 
         return data;
     }
 
     public ValidateChild(): Array<string> {
-        let errors: Array<string> = new Array<string>();
-
-        if (Helpers.IsNotNullOrUndefined(this.MinValue) && Helpers.IsNotNullOrUndefined(this.MaxValue)) {
-            if (this.MinValue > this.MaxValue) {
-                errors.push("Min Value can not be greater than the maximum value.");
-            }
-        }
-
-        if (Helpers.IsNotNullOrUndefined(this.DefaultValue)) {
-            if (Helpers.IsNotNullOrUndefined(this.MinValue)) {
-                if (this.MinValue > this.DefaultValue) {
-                    errors.push("The default value can not be less than the minimum value.")
-                }
-            }
-
-            if (Helpers.IsNotNullOrUndefined(this.MaxValue)) {
-                if (this.MaxValue < this.DefaultValue) {
-                    errors.push("The default value can not be greater than the maximum value.")
-                }
-            }
-        }
-
-        return errors;
+        return this.info.Validate();
     }
 
     protected EnableFormInternal(): void {
@@ -165,32 +132,5 @@ class IntegerAttributeType extends BaseAttributeType {
         this.defaultTextBox.readOnly = true;
         this.requiredBox.readOnly = true;
         this.requiredBox.disabled = true;
-    }
-
-    private SetMax(max: number): void {
-        if (isNaN(max)) {
-            this.MaxValue = null;
-        }
-        else {
-            this.MaxValue = max;
-        }
-    }
-
-    private SetMin(min: number): void {
-        if (isNaN(min)) {
-            this.MinValue = null;
-        }
-        else {
-            this.MinValue = min;
-        }
-    }
-
-    private SetDefault(def: number): void {
-        if (isNaN(def)) {
-            this.DefaultValue = null;
-        }
-        else {
-            this.DefaultValue = def;
-        }
     }
 }

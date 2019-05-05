@@ -13,7 +13,8 @@
     "BaseAttributeType.ts"
   ],
   "include": [
-    "*.ts"
+    "*.ts",
+    "../Common/*.ts"
   ],
   "compileOnSave": true
 }

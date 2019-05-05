@@ -15,19 +15,20 @@ class StringAttributeType extends BaseAttributeType {
     private requiredBox: HTMLInputElement;
     private id: Number;
 
+    private readonly info: StringAttributeTypeInfo;
+
     // ---------------- Constructor ----------------
 
     constructor() {
         super("String Attribute", AttributeType.StringAttribute);
 
         this.id = StringAttributeType.idCount++;
-        this.DefaultValue = null;
-        this.Required = false;
+        this.info = new StringAttributeTypeInfo();
 
         let attr = this;
 
         this.defaultTextBox = <HTMLInputElement>(document.createElement("input"));
-        this.CreateTextBox("Default Value", this.defaultTextBox, this.SetDefault.bind(this));
+        this.CreateTextBox("Default Value", this.defaultTextBox, this.info.SetDefault.bind(this));
 
         let helpDiv = <HTMLDivElement>(document.createElement("div"));
         helpDiv.className = "form-group";
@@ -45,9 +46,9 @@ class StringAttributeType extends BaseAttributeType {
             this.requiredBox = <HTMLInputElement>(document.createElement("input"));
             this.requiredBox.type = "checkbox";
             this.requiredBox.id = requiredLabel.htmlFor;
-            this.requiredBox.checked = this.Required;
+            this.requiredBox.checked = this.info.Required;
             this.requiredBox.onclick = function () {
-                attr.Required = attr.requiredBox.checked;
+                attr.info.Required = attr.requiredBox.checked;
             }.bind(this);
 
             requiredDiv.appendChild(this.requiredBox);
@@ -82,12 +83,6 @@ class StringAttributeType extends BaseAttributeType {
         this.AppendChild(parentDiv);
     }
 
-    // ---------------- Properties ----------------
-
-    public DefaultValue: string;
-
-    public Required: boolean;
-
     // ---------------- Functions ----------------
 
     public ToJson(): object {
@@ -96,17 +91,16 @@ class StringAttributeType extends BaseAttributeType {
         let data = {
             "Key": this.GetKey(),
             "AttributeType": this.AttributeType,
-            "Required": this.Required,
+            "Required": this.info.Required,
             "PossibleValues": possibleValues,
-            "DefaultValue": this.DefaultValue
+            "DefaultValue": this.info.DefaultValue
         };
 
         return data;
     }
 
     public ValidateChild(): Array<string> {
-        // Nothing to validate.
-        return null;
+        return this.info.Validate();
     }
 
     protected EnableFormInternal(): void {
@@ -121,15 +115,5 @@ class StringAttributeType extends BaseAttributeType {
         this.defaultTextBox.readOnly = true;
         this.requiredBox.disabled = true;
         this.requiredBox.readOnly = true;
-    }
-
-    private SetDefault(def: string): void {
-        // Empty string will be null.
-        if (def === "") {
-            this.DefaultValue = null;
-        }
-        else {
-            this.DefaultValue = def;
-        }
     }
 }
