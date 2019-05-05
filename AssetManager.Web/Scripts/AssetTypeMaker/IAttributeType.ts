@@ -5,12 +5,6 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-enum AttributeType {
-    AssetNameAttribute = 1,
-    StringAttribute = 2,
-    IntegerAttribute = 3,
-}
-
 interface IAttributeType {
 
     // ---------------- Events ----------------
@@ -23,7 +17,7 @@ interface IAttributeType {
 
     // ---------------- Properties -----------------
 
-    AttributeType: AttributeType;
+    readonly AttributeType: AttributeType;
 
     // ---------------- Functions -----------------
 

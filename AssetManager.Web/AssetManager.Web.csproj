@@ -15,6 +15,7 @@
     <None Remove="Scripts\AssetTypeMaker\Helpers.ts" />
     <None Remove="Scripts\AssetTypeMaker\IAttribute.ts" />
     <None Remove="Scripts\AssetTypeMaker\StringAttribute.ts" />
+    <None Remove="Scripts\Common\Enums.ts" />
     <None Remove="Scripts\Common\IntegerAttributeTypeInfo.ts" />
     <None Remove="Scripts\Common\StringAttributeTypeInfo.ts" />
   </ItemGroup>
@@ -43,6 +44,7 @@
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\IAttributeType.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\IntegerAttributeType.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\StringAttributeType.ts" />
+    <TypeScriptCompile Include="Scripts\Common\Enums.ts" />
     <TypeScriptCompile Include="Scripts\Common\IntegerAttributeTypeInfo.ts" />
     <TypeScriptCompile Include="Scripts\Common\StringAttributeTypeInfo.ts" />
   </ItemGroup>
