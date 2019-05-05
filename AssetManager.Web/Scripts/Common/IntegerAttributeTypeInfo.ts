@@ -9,45 +9,43 @@ class IntegerAttributeTypeInfo {
 
     // ---------------- Fields ----------------
 
+    private minValue: Number;
+
+    private maxValue: Number;
+
+    private defaultValue: Number;
+
+    private required: boolean;
+
     // ---------------- Constructor ----------------
 
     constructor() {
         this.SetMin(null);
         this.SetMax(null);
         this.SetDefault(null);
-        this.Required = false;
+        this.required = false;
     }
-
-    // ---------------- Properties ----------------
-
-    public MinValue: Number;
-
-    public MaxValue: Number;
-
-    public DefaultValue: Number;
-
-    public Required: boolean;
 
     // ---------------- Functions ----------------
 
     public Validate(): Array<string> {
         let errors: Array<string> = new Array<string>();
 
-        if (Helpers.IsNotNullOrUndefined(this.MinValue) && Helpers.IsNotNullOrUndefined(this.MaxValue)) {
-            if (this.MinValue > this.MaxValue) {
+        if (Helpers.IsNotNullOrUndefined(this.minValue) && Helpers.IsNotNullOrUndefined(this.maxValue)) {
+            if (this.minValue > this.maxValue) {
                 errors.push("Min Value can not be greater than the maximum value.");
             }
         }
 
-        if (Helpers.IsNotNullOrUndefined(this.DefaultValue)) {
-            if (Helpers.IsNotNullOrUndefined(this.MinValue)) {
-                if (this.MinValue > this.DefaultValue) {
+        if (Helpers.IsNotNullOrUndefined(this.defaultValue)) {
+            if (Helpers.IsNotNullOrUndefined(this.minValue)) {
+                if (this.minValue > this.defaultValue) {
                     errors.push("The default value can not be less than the minimum value.")
                 }
             }
 
-            if (Helpers.IsNotNullOrUndefined(this.MaxValue)) {
-                if (this.MaxValue < this.DefaultValue) {
+            if (Helpers.IsNotNullOrUndefined(this.maxValue)) {
+                if (this.maxValue < this.defaultValue) {
                     errors.push("The default value can not be greater than the maximum value.")
                 }
             }
@@ -56,30 +54,61 @@ class IntegerAttributeTypeInfo {
         return errors;
     }
 
-    public SetMax(max: number): void {
+    // -------- Setters --------
+
+    public SetMax(max: number): IntegerAttributeTypeInfo {
         if (isNaN(max)) {
-            this.MaxValue = null;
+            this.maxValue = null;
         }
         else {
-            this.MaxValue = max;
+            this.maxValue = max;
         }
+
+        return this;
     }
 
-    public SetMin(min: number): void {
+    public SetMin(min: number): IntegerAttributeTypeInfo {
         if (isNaN(min)) {
-            this.MinValue = null;
+            this.minValue = null;
         }
         else {
-            this.MinValue = min;
+            this.minValue = min;
         }
+
+        return this;
     }
 
-    public SetDefault(def: number): void {
+    public SetDefault(def: number): IntegerAttributeTypeInfo {
         if (isNaN(def)) {
-            this.DefaultValue = null;
+            this.defaultValue = null;
         }
         else {
-            this.DefaultValue = def;
+            this.defaultValue = def;
         }
+
+        return this;
+    }
+
+    public SetRequired(newValue: boolean): IntegerAttributeTypeInfo {
+        this.required = newValue;
+        return this;
+    }
+
+    // -------- Getters --------
+
+    public GetMax(): Number {
+        return this.maxValue;
+    }
+
+    public GetMin(): Number {
+        return this.minValue;
+    }
+
+    public GetDefault(): Number {
+        return this.defaultValue;
+    }
+
+    public GetRequired(): boolean {
+        return this.required;
     }
 }

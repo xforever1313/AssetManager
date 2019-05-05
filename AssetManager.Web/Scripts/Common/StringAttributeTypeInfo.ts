@@ -7,18 +7,18 @@
 
 class StringAttributeTypeInfo {
 
+    // ---------------- Fields ----------------
+
+    private defaultValue: string;
+
+    private required: boolean;
+
     // ---------------- Constructor ----------------
 
     constructor(){
-        this.DefaultValue = null;
-        this.Required = false;
+        this.defaultValue = null;
+        this.required = false;
     }
-
-    // ---------------- Properties ----------------
-
-    public DefaultValue: string;
-
-    public Required: boolean;
 
     // ---------------- Functions ----------------
 
@@ -27,13 +27,32 @@ class StringAttributeTypeInfo {
         return null;
     }
 
-    public SetDefault(def: string): void {
+    // -------- Setters --------
+
+    public SetDefault(def: string): StringAttributeTypeInfo {
         // Empty string will be null.
         if (def === "") {
-            this.DefaultValue = null;
+            this.defaultValue = null;
         }
         else {
-            this.DefaultValue = def;
+            this.defaultValue = def;
         }
+
+        return this;
+    }
+
+    public SetRequired(newValue: boolean): StringAttributeTypeInfo {
+        this.required = newValue;
+        return this;
+    }
+
+    // -------- Getters--------
+
+    public GetDefaultValue(): string {
+        return this.defaultValue;
+    }
+
+    public GetRequired(): boolean {
+        return this.required;
     }
 }

@@ -30,13 +30,13 @@ class IntegerAttributeType extends BaseAttributeType {
         let attr = this;
 
         this.minTextBox = <HTMLInputElement>(document.createElement("input"));
-        this.CreateTextBox("Minimum Value", this.minTextBox, this.info.SetMin.bind(this));
+        this.CreateTextBox("Minimum Value", this.minTextBox, this.info.SetMin.bind(this.info));
 
         this.maxTextBox = <HTMLInputElement>(document.createElement("input"));
-        this.CreateTextBox("Maximum Value", this.maxTextBox, this.info.SetMax.bind(this));
+        this.CreateTextBox("Maximum Value", this.maxTextBox, this.info.SetMax.bind(this.info));
 
         this.defaultTextBox = <HTMLInputElement>(document.createElement("input"));
-        this.CreateTextBox("Default Value", this.defaultTextBox, this.info.SetDefault.bind(this));
+        this.CreateTextBox("Default Value", this.defaultTextBox, this.info.SetDefault.bind(this.info));
 
         {
             let requiredDiv = <HTMLDivElement>(document.createElement("div"));
@@ -50,9 +50,9 @@ class IntegerAttributeType extends BaseAttributeType {
             this.requiredBox = <HTMLInputElement>(document.createElement("input"));
             this.requiredBox.type = "checkbox";
             this.requiredBox.id = requiredLabel.htmlFor;
-            this.requiredBox.checked = this.info.Required;
+            this.requiredBox.checked = this.info.GetRequired();
             this.requiredBox.onclick = function () {
-                attr.info.Required = attr.requiredBox.checked;
+                attr.info.SetRequired( attr.requiredBox.checked );
             }.bind(this);
 
             requiredDiv.appendChild(this.requiredBox);
@@ -102,13 +102,13 @@ class IntegerAttributeType extends BaseAttributeType {
         let data = {
             "Key": this.GetKey(),
             "AttributeType": this.AttributeType,
-            "Required": this.info.Required,
+            "Required": this.info.GetRequired(),
             "PossibleValues": {
                 "Version": 1,
-                "MinValue": this.info.MinValue,
-                "MaxValue": this.info.MaxValue
+                "MinValue": this.info.GetMin(),
+                "MaxValue": this.info.GetMax()
             },
-            "DefaultValue": this.info.DefaultValue
+            "DefaultValue": this.info.GetDefault()
         };
 
         return data;

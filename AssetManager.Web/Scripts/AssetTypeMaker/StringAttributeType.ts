@@ -28,7 +28,7 @@ class StringAttributeType extends BaseAttributeType {
         let attr = this;
 
         this.defaultTextBox = <HTMLInputElement>(document.createElement("input"));
-        this.CreateTextBox("Default Value", this.defaultTextBox, this.info.SetDefault.bind(this));
+        this.CreateTextBox("Default Value", this.defaultTextBox, this.info.SetDefault.bind(this.info));
 
         let helpDiv = <HTMLDivElement>(document.createElement("div"));
         helpDiv.className = "form-group";
@@ -46,9 +46,9 @@ class StringAttributeType extends BaseAttributeType {
             this.requiredBox = <HTMLInputElement>(document.createElement("input"));
             this.requiredBox.type = "checkbox";
             this.requiredBox.id = requiredLabel.htmlFor;
-            this.requiredBox.checked = this.info.Required;
+            this.requiredBox.checked = this.info.GetRequired();
             this.requiredBox.onclick = function () {
-                attr.info.Required = attr.requiredBox.checked;
+                attr.info.SetRequired( attr.requiredBox.checked );
             }.bind(this);
 
             requiredDiv.appendChild(this.requiredBox);
@@ -91,9 +91,9 @@ class StringAttributeType extends BaseAttributeType {
         let data = {
             "Key": this.GetKey(),
             "AttributeType": this.AttributeType,
-            "Required": this.info.Required,
+            "Required": this.info.GetRequired(),
             "PossibleValues": possibleValues,
-            "DefaultValue": this.info.DefaultValue
+            "DefaultValue": this.info.GetDefaultValue()
         };
 
         return data;
