@@ -5,8 +5,22 @@
 
     StringAttributeType typeInfo = @Model.Item1;
     StringAttribute attributeInfo = @Model.Item2;
+
+    string escapedKey = typeInfo.EscapeKey();
 }
 
-<div>
-    <strong><i class="fa fa-caret-right"></i> @typeInfo.Key: </strong> @attributeInfo.Value
-</div>
+<script>
+    let strAttributeType_@(escapedKey) = new StringAttributeTypeInfo();
+    strAttributeType_@(escapedKey).SetDefault(@((string.IsNullOrWhiteSpace( typeInfo.DefaultValue )? typeInfo.DefaultValue : "null" ))
+    .SetRequired(@typeInfo.Required.ToString().ToLower());
+
+    let strAttribute_@(escapedKey) = new StringAttribute(strAttributeType_@(escapedKey));
+    adder.AddAttribute(strAttribute_@(escapedKey));
+</script>
+
+    <div>
+        <strong><i class="fa fa-caret-right"></i> @typeInfo.Key: </strong>
+        <input id="str_@escapedKey"
+               value="@attributeInfo.Value"
+               onchange="strAttribute_@(escapedKey).SetValue(this.value)" />
+    </div>

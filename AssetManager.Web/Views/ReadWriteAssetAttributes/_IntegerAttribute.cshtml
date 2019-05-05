@@ -5,8 +5,33 @@
 
     IntegerAttributeType typeInfo = @Model.Item1;
     IntegerAttribute attributeInfo = @Model.Item2;
+
+    string escapedKey = typeInfo.EscapeKey();
 }
 
+<script>
+    let intAttributeType_@escapedKey = new IntegerAttributeTypeInfo();
+    intAttributeType_@(escapedKey).SetMin(@(typeInfo.MinValue.HasValue ? typeInfo.MinValue.ToString() : "null"))
+    .SetMax(@(typeInfo.MaxValue.HasValue ? typeInfo.MaxValue.ToString() : "null"))
+    .SetDefault(@(typeInfo.DefaultValue.HasValue ? typeInfo.DefaultValue.ToString() : "null" ))
+    .SetRequired(@typeInfo.Required.ToString().ToLower());
+
+    let intAttribute_@(escapedKey) = new IntegerAttribute(intAttributeType_@(escapedKey));
+    adder.AddAttribute(intAttribute_@(escapedKey));
+</script>
+
 <div>
-    <strong><i class="fa fa-caret-right"></i> @typeInfo.Key: </strong> @attributeInfo.Value
+    <strong><i class="fa fa-caret-right"></i> @typeInfo.Key: </strong>
+    <input id="number_@escapedKey"
+           type="number"
+           @if ( typeInfo.MinValue.HasValue )
+           {
+               @:min="@typeInfo.MinValue.Value"
+           }
+           @if ( typeInfo.MaxValue.HasValue )
+           {
+               @:max="@typeInfo.MaxValue.Value"
+           }
+           value="@attributeInfo.Value"
+           onchange="intAttribute_@(escapedKey).SetValue(Number.parseInt(this.value))" />
 </div>

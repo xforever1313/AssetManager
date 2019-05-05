@@ -8,6 +8,11 @@
     ViewData["Title"] = "Add new " + @Model.Asset.AssetType + " asset";
 }
 
+<script src="~/static/compiled_ts/AssetAdder.js"></script>
+<script>
+    let adder = new AssetAdder();
+</script>
+
 @foreach ( IAttributeType attrType in @Model.AssetType.AttributeTypes )
 {
     switch ( attrType.AttributeType )
@@ -42,12 +47,4 @@
         default:
             throw new NotImplementedException( attrType.AttributeType + " not implemented yet." );
     }
-}
-
-@section scripts
-{
-    <script src="~/static/compiled_ts/AssetAdder.js"></script>
-    <script>
-        let adder = new AssetAdder();
-    </script>
 }
