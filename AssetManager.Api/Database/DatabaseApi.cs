@@ -153,9 +153,9 @@ namespace AssetManager.Api.Database
                 {
                     IAttributeType attributeType = AttributeTypeFactory.CreateAttributeType( map.AttributeKey.AttributeType );
                     attributeType.DeserializeDefaultValue( map.AttributeProperties.DefaultValue );
+                    attributeType.DeserializePossibleValues( map.AttributeProperties.PossibleValues );
                     attributeType.Key = map.AttributeKey.Name;
                     attributeType.Required = map.AttributeProperties.Required;
-                    // TODO: Add possible values
 
                     assetTypeBuilder.AttributeTypes.Add( attributeType );
                 }

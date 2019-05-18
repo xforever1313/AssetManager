@@ -61,6 +61,11 @@ namespace AssetManager.Api.Attributes.Types
             return null;
         }
 
+        public override void DeserializePossibleValues( string data )
+        {
+            // Ignored, there are no limitations.
+        }
+
         public override void DeserializeDefaultValue( string data )
         {
             // Ignored, there are no default values.

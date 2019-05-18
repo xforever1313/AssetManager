@@ -72,6 +72,12 @@ namespace AssetManager.Api.Attributes.Types
         void Deserialize( string data );
 
         /// <summary>
+        /// Converts the given string of the possible values
+        /// and sets them inside of this class.
+        /// </summary>
+        void DeserializePossibleValues( string data );
+
+        /// <summary>
         /// Converts the given string of the default value and sets
         /// it to the attribute's default value.
         /// </summary>

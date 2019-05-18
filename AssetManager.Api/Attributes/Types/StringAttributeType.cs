@@ -43,6 +43,11 @@ namespace AssetManager.Api.Attributes.Types
             return this.DefaultValue;
         }
 
+        public override void DeserializePossibleValues( string data )
+        {
+            // Nothing to do.
+        }
+
         public override void DeserializeDefaultValue( string data )
         {
             this.DefaultValue = data;

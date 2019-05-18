@@ -108,6 +108,28 @@ namespace AssetManager.Api.Attributes.Types
             return possibleValues;
         }
 
+        public override void DeserializePossibleValues( string data )
+        {
+            JObject token = JObject.Parse( data );
+            DeserializePossibleValuesJson( token );
+        }
+
+        private void DeserializePossibleValuesJson( JObject possibleValuesObject )
+        {
+            foreach ( JProperty possibleValueProperty in possibleValuesObject.Children<JProperty>() )
+            {
+                if ( possibleValueProperty.Name == "MinValue" )
+                {
+                    this.MinValue = possibleValueProperty.ToObject<int?>();
+                }
+
+                if ( possibleValueProperty.Name == "MaxValue" )
+                {
+                    this.MaxValue = possibleValueProperty.ToObject<int?>();
+                }
+            }
+        }
+
         public override void DeserializeDefaultValue( string data )
         {
             if( data == null )
@@ -168,18 +190,7 @@ namespace AssetManager.Api.Attributes.Types
                 {
                     if( property.First is JObject possibleValuesObject )
                     {
-                        foreach( JProperty possibleValueProperty in possibleValuesObject.Children<JProperty>() )
-                        {
-                            if( possibleValueProperty.Name == "MinValue" )
-                            {
-                                this.MinValue = possibleValueProperty.ToObject<int?>();
-                            }
-
-                            if( possibleValueProperty.Name == "MaxValue" )
-                            {
-                                this.MaxValue = possibleValueProperty.ToObject<int?>();
-                            }
-                        }
+                        DeserializePossibleValuesJson( possibleValuesObject );
                     }
                 }
             }

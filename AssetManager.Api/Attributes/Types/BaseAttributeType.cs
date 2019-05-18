@@ -74,6 +74,8 @@ namespace AssetManager.Api.Attributes.Types
 
         public abstract string SerializeDefaultValue();
 
+        public abstract void DeserializePossibleValues( string data );
+
         public abstract void DeserializeDefaultValue( string data );
 
         public abstract string Serialize();
