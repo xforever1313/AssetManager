@@ -20,18 +20,19 @@
     adder.AddAttribute(intAttribute_@(escapedKey));
 </script>
 
-<div>
-    <strong><i class="fa fa-caret-right"></i> @typeInfo.Key: </strong>
-    <input id="number_@escapedKey"
-           type="number"
-           @if ( typeInfo.MinValue.HasValue )
-           {
-               @:min="@typeInfo.MinValue.Value"
-           }
-           @if ( typeInfo.MaxValue.HasValue )
-           {
-               @:max="@typeInfo.MaxValue.Value"
-           }
-           value="@attributeInfo.Value"
-           onchange="intAttribute_@(escapedKey).SetValue(Number.parseInt(this.value))" />
-</div>
+
+<label><i class="fa fa-caret-right"></i> @typeInfo.Key: </label>
+<input id="number_@escapedKey"
+       class="form-control"
+       type="number"
+       @if ( typeInfo.MinValue.HasValue )
+       {
+           @:min="@typeInfo.MinValue.Value"
+       }
+       @if ( typeInfo.MaxValue.HasValue )
+       {
+           @:max="@typeInfo.MaxValue.Value"
+       }
+       value="@attributeInfo.Value"
+       onchange="intAttribute_@(escapedKey).SetValue(Number.parseInt(this.value))"
+/>

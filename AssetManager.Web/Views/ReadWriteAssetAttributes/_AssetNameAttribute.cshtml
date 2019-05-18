@@ -5,8 +5,15 @@
 
     AssetNameAttributeType typeInfo = @Model.Item1;
     AssetNameAttribute attributeInfo = @Model.Item2;
+
+    string escapedKey = typeInfo.EscapeKey();
 }
 
-<div>
-    <strong><i class="fa fa-caret-right"></i> @typeInfo.Key: </strong> @attributeInfo.Value
-</div>
+<label><i class="fa fa-caret-right"></i> @typeInfo.Key: </label>
+
+<input 
+       id="assetName_@escapedKey"
+       class="form-control"
+       value="@attributeInfo.Value"
+       type="text"
+       onchange=""/>

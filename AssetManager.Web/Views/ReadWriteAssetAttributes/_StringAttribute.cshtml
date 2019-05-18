@@ -18,9 +18,9 @@
     adder.AddAttribute(strAttribute_@(escapedKey));
 </script>
 
-    <div>
-        <strong><i class="fa fa-caret-right"></i> @typeInfo.Key: </strong>
-        <input id="str_@escapedKey"
-               value="@attributeInfo.Value"
-               onchange="strAttribute_@(escapedKey).SetValue(this.value)" />
-    </div>
+<label><i class="fa fa-caret-right"></i> @typeInfo.Key: </label>
+<input id="str_@escapedKey"
+        class="form-control"
+        value="@attributeInfo.Value"
+        type="text"
+        onchange="strAttribute_@(escapedKey).SetValue(this.value)" />
