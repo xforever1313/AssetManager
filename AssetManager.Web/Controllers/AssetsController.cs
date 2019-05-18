@@ -60,5 +60,11 @@ namespace AssetManager.Web.Controllers
                 return BadRequest( "Invalid database ID: " + database );
             }
         }
+
+        [HttpPost]
+        public IActionResult Add( string database, int assetTypeId, [FromForm] object o )
+        {
+            return Redirect( "/Assets" );
+        }
     }
 }

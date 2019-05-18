@@ -9,10 +9,6 @@
 }
 
 <script src="~/static/compiled_ts/AssetAdder.js"></script>
-<script>
-    let adder = new AssetAdder();
-</script>
-
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -25,7 +21,11 @@
                     While you can edit the form, no validation will occur,
                     which means if there are errors, your changes are erased.
                 </noscript>
-                <form>
+                <form action="/Assets/Add/@Model.Asset.DatabaseId/@Model.AssetTypeId" method="post" id="addForm" enctype="application/x-www-form-urlencoded">
+                    <script>
+                        let adder = new AssetAdder();
+                    </script>
+
                     @foreach ( IAttributeType attrType in @Model.AssetType.AttributeTypes )
                     {
                         <div class="form-group">
@@ -73,8 +73,13 @@
                         </div>
                     }
                     <div class="btn-group">
-                        <button id="addAssetButton" class="btn btn-success" type="button" onclick="maker.Submit()"><i class="fa fa-plus"></i> Add Asset</button>
+                        <button id="addAssetButton" class="btn btn-success" type="button" onclick="adder.Submit()"><i class="fa fa-plus"></i> Add Asset</button>
                     </div>
+                    <noscript>
+                        <div class="btn-group">
+                            <input class="btn btn-default" type="submit" value="Submit"/>
+                        </div>
+                    </noscript>
                 </form>
             </div>
         </div>
