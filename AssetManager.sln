@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.136
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssetManager.Api", "AssetManager.Api\AssetManager.Api.csproj", "{B12D60FC-C119-4052-9344-97B7E86A5634}"
 EndProject
@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssetManager.Web", "AssetMa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibSethCS.Standard", "SethCS\SethCS\LibSethCS.Standard.csproj", "{71285C41-AD05-46D8-AAA6-B9B8EEAAD556}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetMananger.UnitTests", "AssetMananger.UnitTests\AssetMananger.UnitTests.csproj", "{B955F0D4-089D-40F7-A978-8F852ED3E568}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssetMananger.UnitTests", "AssetMananger.UnitTests\AssetMananger.UnitTests.csproj", "{B955F0D4-089D-40F7-A978-8F852ED3E568}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetManager.Gui", "AssetManager.Gui\AssetManager.Gui.csproj", "{4B7E78B3-4E62-455C-92D3-D83194102C42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{B955F0D4-089D-40F7-A978-8F852ED3E568}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B955F0D4-089D-40F7-A978-8F852ED3E568}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B955F0D4-089D-40F7-A978-8F852ED3E568}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B7E78B3-4E62-455C-92D3-D83194102C42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B7E78B3-4E62-455C-92D3-D83194102C42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B7E78B3-4E62-455C-92D3-D83194102C42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B7E78B3-4E62-455C-92D3-D83194102C42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
