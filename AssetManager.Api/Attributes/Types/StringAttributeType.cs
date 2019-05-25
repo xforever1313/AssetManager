@@ -6,12 +6,13 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json.Linq;
 
 namespace AssetManager.Api.Attributes.Types
 {
-    public class StringAttributeType : BaseAttributeType
+    public class StringAttributeType : BaseAttributeType<StringAttribute>
     {
         // ---------------- Constructor ----------------
 
@@ -25,6 +26,18 @@ namespace AssetManager.Api.Attributes.Types
         public string DefaultValue { get; set; }
 
         // ---------------- Functions ----------------
+
+        public override IEnumerable<string> TryValidateAttribute( StringAttribute attr )
+        {
+            List<string> errors = new List<string>();
+
+            if ( this.Required && string.IsNullOrWhiteSpace( attr.Value ) )
+            {
+                errors.Add( "Attribute is marked as required, but value is null, empty, or whitespace" );
+            }
+
+            return errors;
+        }
 
         protected override bool ValidateInternal( out string errors )
         {

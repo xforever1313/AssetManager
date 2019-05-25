@@ -5,10 +5,27 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
 namespace AssetManager.Api.Attributes.Types
 {
+    public interface IAttributeType<TAttribute> where TAttribute: IAttribute
+    {
+        /// <summary>
+        /// Validates the given attribute against the attribute type.
+        /// </summary>
+        /// <param name="attr">The attribute to try to validate against the type info.</param>
+        /// <returns>An empty enum if there is nothing wrong, else a collection of strings that contain validation errors.</returns>
+        IEnumerable<string> TryValidateAttribute( TAttribute attr );
+
+        /// <summary>
+        /// Validates the attribute against the attribute type.  If it fails,
+        /// a <see cref="SethCS.Exceptions.ListedValidationException"/> is thrown.
+        /// </summary>
+        void ValidateAttribute( TAttribute attr );
+    }
+
     public interface IAttributeType
     {
         // ---------------- Properties ----------------
@@ -44,6 +61,19 @@ namespace AssetManager.Api.Attributes.Types
         /// If not, a <see cref="SethCS.Exceptions.ValidationException"/> is thrown.
         /// </summary>
         void Validate();
+
+        /// <summary>
+        /// Validates the given attribute against the attribute type.
+        /// </summary>
+        /// <param name="attr">The attribute to try to validate against the type info.</param>
+        /// <returns>An empty enum if there is nothing wrong, else a collection of strings that contain validation errors.</returns>
+        IEnumerable<string> TryValidateAttribute( IAttribute attr );
+
+        /// <summary>
+        /// Validates the attribute against the attribute type.  If it fails,
+        /// a <see cref="SethCS.Exceptions.ListedValidationException"/> is thrown.
+        /// </summary>
+        void ValidateAttribute( IAttribute attr );
 
         // -------- Serialization --------
 

@@ -6,13 +6,14 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Newtonsoft.Json.Linq;
 
 namespace AssetManager.Api.Attributes.Types
 {
-    public class AssetNameAttributeType : BaseAttributeType
+    public class AssetNameAttributeType : BaseAttributeType<AssetNameAttribute>
     {
         // ---------------- Constructor ----------------
 
@@ -48,6 +49,18 @@ namespace AssetManager.Api.Attributes.Types
             }
 
             return success;
+        }
+
+        public override IEnumerable<string> TryValidateAttribute( AssetNameAttribute attr )
+        {
+            List<string> errors = new List<string>();
+
+            if ( string.IsNullOrWhiteSpace( attr.Value ) )
+            {
+                errors.Add( "Asset Name Value can not be null, empty, or whitespace." );
+            }
+
+            return errors;
         }
 
         public override string SerializePossibleValues()

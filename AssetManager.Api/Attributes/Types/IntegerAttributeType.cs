@@ -6,13 +6,14 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json.Linq;
 using SethCS.Exceptions;
 
 namespace AssetManager.Api.Attributes.Types
 {
-    public class IntegerAttributeType : BaseAttributeType
+    public class IntegerAttributeType : BaseAttributeType<IntegerAttribute>
     {
         // ---------------- Fields ----------------
 
@@ -89,6 +90,27 @@ namespace AssetManager.Api.Attributes.Types
             }
 
             return success;
+        }
+
+        public override IEnumerable<string> TryValidateAttribute( IntegerAttribute attr )
+        {
+            List<string> errors = new List<string>();
+
+            if ( this.MinValue.HasValue && ( this.MinValue.Value > attr.Value ) )
+            {
+                errors.Add(
+                    string.Format( "Value is less than the minimum of {0}, got {1}", this.MinValue, attr.Value )
+                );
+            }
+
+            if ( this.MaxValue.HasValue && ( this.MaxValue.Value < attr.Value ) )
+            {
+                errors.Add(
+                    string.Format( "Value is greater than the value of {0}, got {1}", this.MaxValue, attr.Value )
+                );
+            }
+
+            return errors;
         }
 
         public override string SerializePossibleValues()

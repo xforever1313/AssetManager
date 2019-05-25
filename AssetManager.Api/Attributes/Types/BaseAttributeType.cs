@@ -5,13 +5,16 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Newtonsoft.Json.Linq;
 using SethCS.Exceptions;
 
 namespace AssetManager.Api.Attributes.Types
 {
-    public abstract class BaseAttributeType : IAttributeType
+    public abstract class BaseAttributeType<TAttribute> : IAttributeType, IAttributeType<TAttribute> where TAttribute : IAttribute
     {
         // ---------------- Constructor ----------------
 
@@ -67,6 +70,62 @@ namespace AssetManager.Api.Attributes.Types
             if( this.TryValidate( out string errors ) == false )
             {
                 throw new ValidationException( errors );
+            }
+        }
+
+        /// <summary>
+        /// Ensures the given attribute follows all of the rules defined
+        /// in this attribute type.
+        /// </summary>
+        /// <exception cref="ArgumentException">If the attribute type is not the same as this one's</exception>
+        /// <returns>List of errors that are wrong, the list ie empty if there are none.</returns>
+        public IEnumerable<string> TryValidateAttribute( IAttribute attr )
+        {
+            if ( this.AttributeType != attr.AttributeType )
+            {
+                throw new ArgumentException(
+                    "Passed in attribute is of type " + attr.AttributeType + ", must be of type " + this.AttributeType,
+                    nameof( attr )
+                );
+            }
+
+            return TryValidateAttribute( (TAttribute)attr );
+        }
+
+        /// <summary>
+        /// Ensures the given attribute follows all of the rules defined
+        /// in this attribute type.
+        /// </summary>
+        /// <exception cref="ListedValidationException">If the given attribute breaks any rules.</exception>
+        public void ValidateAttribute( IAttribute attr )
+        {
+            IEnumerable<string> errors = TryValidateAttribute( attr );
+            if ( errors.Count() > 0 )
+            {
+                throw new ListedValidationException( "Attribute is incompatible with Attribute Type " + this.Key, errors );
+            }
+        }
+
+        /// <summary>
+        /// Ensures the given attribute follows all of the rules defined
+        /// in this attribute type.
+        /// </summary>
+        /// <exception cref="ArgumentException">If the attribute type is not the same as this one's</exception>
+        /// <returns>List of errors that are wrong, the list ie empty if there are none.</returns>
+
+        public abstract IEnumerable<string> TryValidateAttribute( TAttribute attr );
+
+        /// <summary>
+        /// Ensures the given attribute follows all of the rules defined
+        /// in this attribute type.
+        /// </summary>
+        /// <exception cref="ListedValidationException">If the given attribute breaks any rules.</exception>
+        public void ValidateAttribute( TAttribute attr )
+        {
+            IEnumerable<string> errors = TryValidateAttribute( attr );
+            if ( errors.Count() > 0 )
+            {
+                throw new ListedValidationException( "Attribute is incompatible with Attribute Type " + this.Key, errors );
             }
         }
 
