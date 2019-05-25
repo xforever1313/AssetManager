@@ -64,20 +64,34 @@ namespace AssetManager.Web.Controllers
         [HttpPost]
         public IActionResult Add( string database, int assetTypeId, [FromBody] AssetBuilderModel assetBuilder )
         {
-            if ( Guid.TryParse( database, out Guid databaseId ) )
+            try
             {
-                if ( assetBuilder.Success )
+                if ( Guid.TryParse( database, out Guid databaseId ) )
                 {
-                    return Ok();
+                    if ( assetBuilder.Success )
+                    {
+                        Asset asset = this.Api.DataBase.GenerateEmptyAsset( databaseId, assetTypeId );
+                        foreach ( KeyValuePair<string, IAttribute> attribute in assetBuilder.Attributes )
+                        {
+                            asset.SetAttribute( attribute.Key, attribute.Value );
+                        }
+                        this.Api.DataBase.AddAsset( asset );
+
+                        return Ok();
+                    }
+                    else
+                    {
+                        return BadRequest( assetBuilder.ErrorMessage );
+                    }
                 }
                 else
                 {
-                    return BadRequest( assetBuilder.ErrorMessage );
+                    return BadRequest( "Invalid database ID: " + database );
                 }
             }
-            else
+            catch ( Exception e )
             {
-                return BadRequest( "Invalid database ID: " + database );
+                return BadRequest( e.Message );
             }
         }
     }

@@ -23,6 +23,7 @@ namespace AssetManager.Web.Models
         {
             this.Attributes = new List<KeyValuePair<string, IAttribute>>();
             this.ErrorMessage = string.Empty;
+            this.AssetName = "Unknown Asset";
         }
 
         // ---------------- Properties ----------------
@@ -30,7 +31,14 @@ namespace AssetManager.Web.Models
         /// <summary>
         /// The attributes to add to the Asset.
         /// </summary>
+        /// <remarks>
+        /// For some dumb reason, we can not make this a dictionary, since otherwise ASP.NET gets angry and reports
+        /// Cannot deserialize the current JSON array (e.g. [1,2,3]) into type 'System.Collections.Generic.IDictionary'
+        /// even though we use our own JSON converter *shrug*.
+        /// </remarks>
         public IList<KeyValuePair<string, IAttribute>> Attributes { get; private set; }
+
+        public string AssetName { get; set; }
 
         /// <summary>
         /// Did we get the information correctly?
