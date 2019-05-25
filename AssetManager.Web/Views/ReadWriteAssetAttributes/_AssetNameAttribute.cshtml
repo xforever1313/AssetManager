@@ -9,6 +9,13 @@
     string escapedKey = typeInfo.EscapeKey();
 }
 
+<script>
+    let assetNameAttributeType_@(escapedKey) = new AssetNameAttributeTypeInfo();
+
+    let assetNameAttribute_@(escapedKey) = new AssetNameAttribute(assetNameAttributeType_@(escapedKey), "@typeInfo.Key");
+    adder.AddAttribute(assetNameAttribute_@(escapedKey));
+</script>
+
 <label><i class="fa fa-caret-right"></i> @typeInfo.Key: </label>
 
 <input 
@@ -16,5 +23,6 @@
        class="form-control"
        value="@attributeInfo.Value"
        type="text"
-       onchange=""
+       dirname="@typeInfo.Key"
+       onchange="assetNameAttribute_@(escapedKey).SetValue(this.value)"
        name="@typeInfo.Key"/>

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="Scripts\AssetAdder\AssetAdder.ts" />
+    <None Remove="Scripts\AssetAdder\AssetNameAttribute.ts" />
     <None Remove="Scripts\AssetAdder\BaseAttribute.ts" />
     <None Remove="Scripts\AssetAdder\IAttribute.ts" />
     <None Remove="Scripts\AssetAdder\IntegerAttribute.ts" />
@@ -18,6 +19,7 @@
     <None Remove="Scripts\AssetTypeMaker\Helpers.ts" />
     <None Remove="Scripts\AssetTypeMaker\IAttribute.ts" />
     <None Remove="Scripts\AssetTypeMaker\StringAttribute.ts" />
+    <None Remove="Scripts\Common\AssetNameAttributeTypeInfo.ts" />
     <None Remove="Scripts\Common\Enums.ts" />
     <None Remove="Scripts\Common\IntegerAttributeTypeInfo.ts" />
     <None Remove="Scripts\Common\StringAttributeTypeInfo.ts" />
@@ -39,6 +41,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\AssetAdder\AssetAdder.ts" />
+    <TypeScriptCompile Include="Scripts\AssetAdder\AssetNameAttribute.ts" />
     <TypeScriptCompile Include="Scripts\AssetAdder\BaseAttribute.ts" />
     <TypeScriptCompile Include="Scripts\AssetAdder\IAttribute.ts" />
     <TypeScriptCompile Include="Scripts\AssetAdder\IntegerAttribute.ts" />
@@ -50,6 +53,7 @@
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\IAttributeType.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\IntegerAttributeType.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\StringAttributeType.ts" />
+    <TypeScriptCompile Include="Scripts\Common\AssetNameAttributeTypeInfo.ts" />
     <TypeScriptCompile Include="Scripts\Common\Enums.ts" />
     <TypeScriptCompile Include="Scripts\Common\IntegerAttributeTypeInfo.ts" />
     <TypeScriptCompile Include="Scripts\Common\StringAttributeTypeInfo.ts" />
