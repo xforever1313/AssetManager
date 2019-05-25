@@ -18,7 +18,7 @@
     adder.AddAttribute(strAttribute_@(escapedKey));
 </script>
 
-<label><i class="fa fa-caret-right"></i> @typeInfo.Key: </label>
+<label><i class="fa fa-caret-right"></i> @typeInfo.Key@if ( typeInfo.Required ){<span style="color:darkred;"> *</span>}</label>
 <input id="str_@escapedKey"
         class="form-control"
         value="@attributeInfo.Value"

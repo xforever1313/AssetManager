@@ -21,7 +21,7 @@
 </script>
 
 
-<label><i class="fa fa-caret-right"></i> @typeInfo.Key: </label>
+<label><i class="fa fa-caret-right"></i> @typeInfo.Key@if ( typeInfo.Required ) {<span style="color:darkred;"> *</span>}</label>
 <input id="number_@escapedKey"
        class="form-control"
        type="number"
