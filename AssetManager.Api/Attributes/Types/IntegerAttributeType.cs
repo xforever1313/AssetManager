@@ -49,19 +49,15 @@ namespace AssetManager.Api.Attributes.Types
 
         // ---------------- Functions ----------------
 
-        protected override bool ValidateInternal( out string errors )
+        protected override IEnumerable<string> ValidateInternal()
         {
-            bool success = true;
-
-            StringBuilder builder = new StringBuilder();
-            builder.AppendLine( "Errors when validating " + nameof( IntegerAttributeType ) );
+            List<string> errors = new List<string>();
 
             if( this.MinValue.HasValue && this.MaxValue.HasValue )
             {
                 if( this.MinValue.Value > this.MaxValue )
                 {
-                    success = false;
-                    builder.AppendLine( "- Min value can not be greater than the maximum value." );
+                    errors.Add( "Min value can not be greater than the maximum value." );
                 }
             }
 
@@ -69,27 +65,16 @@ namespace AssetManager.Api.Attributes.Types
             {
                 if( this.MinValue.HasValue && ( this.MinValue.Value > this.DefaultValue.Value ) )
                 {
-                    success = false;
-                    builder.AppendLine( "- The default value can not be less than the minimum value." );
+                    errors.Add( "The default value can not be less than the minimum value." );
                 }
 
                 if( this.MaxValue.HasValue && ( this.MaxValue.Value < this.DefaultValue.Value ) )
                 {
-                    success = false;
-                    builder.AppendLine( "- The default value can not be greater than the maximum value." );
+                    errors.Add( "The default value can not be greater than the maximum value." );
                 }
             }
 
-            if( success )
-            {
-                errors = string.Empty;
-            }
-            else
-            {
-                errors = builder.ToString();
-            }
-
-            return success;
+            return errors;
         }
 
         public override IEnumerable<string> TryValidateAttribute( IntegerAttribute attr )

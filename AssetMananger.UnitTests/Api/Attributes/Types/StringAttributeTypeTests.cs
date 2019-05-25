@@ -5,8 +5,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System.Linq;
 using AssetManager.Api.Attributes.Types;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SethCS.Exceptions;
 
@@ -36,7 +36,8 @@ namespace AssetMananger.UnitTests.Api.Attributes.Types
 
             // Null key is not okay
             uut.Key = null;
-            Assert.Throws<ValidationException>( () => uut.Validate() );
+            ListedValidationException e = Assert.Throws<ListedValidationException>( () => uut.Validate() );
+            Assert.AreEqual( 1, e.Errors.Count() );
         }
 
         [Test]

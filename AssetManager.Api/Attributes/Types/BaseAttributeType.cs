@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Newtonsoft.Json.Linq;
 using SethCS.Exceptions;
 
@@ -36,40 +35,29 @@ namespace AssetManager.Api.Attributes.Types
 
         // ---------------- Functions ----------------
 
-        public bool TryValidate( out string errors )
+        public IEnumerable<string> TryValidate()
         {
-            bool success = true;
-            StringBuilder builder = new StringBuilder();
+            List<string> errors = new List<string>();
 
-            builder.AppendLine( "Can not validate " + this.AttributeType.ToString() + ":" );
             if( string.IsNullOrWhiteSpace( this.Key ) )
             {
-                success = false;
-                builder.AppendLine( "- Key can not be null, empty, whitespace." );
-            }
-            if( this.ValidateInternal( out string internalErrors ) == false )
-            {
-                success = false;
-                builder.AppendLine( internalErrors );
+                errors.Add( "Key can not be null, empty, whitespace." );
             }
 
-            if( success )
-            {
-                errors = string.Empty;
-            }
-            else
-            {
-                errors = builder.ToString();
-            }
+            errors.AddRange( this.ValidateInternal() );
 
-            return success;
+            return errors;
         }
 
         public void Validate()
         {
-            if( this.TryValidate( out string errors ) == false )
+            IEnumerable<string> errors = this.TryValidate();
+            if ( errors.Count() > 0 )
             {
-                throw new ValidationException( errors );
+                throw new ListedValidationException(
+                    "Can not validate " + this.AttributeType.ToString() + ":",
+                    errors
+                );
             }
         }
 
@@ -144,7 +132,7 @@ namespace AssetManager.Api.Attributes.Types
             this.Deserialize( JToken.Parse( data ) );
         }
 
-        protected abstract bool ValidateInternal( out string errors );
+        protected abstract IEnumerable<string> ValidateInternal();
 
         public abstract void Deserialize( JToken data );
     }

@@ -25,30 +25,16 @@ namespace AssetManager.Api.Attributes.Types
 
         // ---------------- Functions ----------------
 
-        protected override bool ValidateInternal( out string errors )
+        protected override IEnumerable<string> ValidateInternal()
         {
-            bool success = true;
-
-            StringBuilder builder = new StringBuilder();
-            builder.AppendLine( "Errors while validating " + nameof( AssetNameAttributeType ) + ":" );
+            List<string> errors = new List<string>();
 
             if( this.Required == false )
             {
-                success = false;
-                builder.AppendLine( "-This is always required, " + nameof( this.Required ) + " can not be false." );
+                errors.Add( "Asset Name is always required, " + nameof( this.Required ) + " can not be false." );
             }
 
-            // Nothing to validate.
-            if( success )
-            {
-                errors = string.Empty;
-            }
-            else
-            {
-                errors = builder.ToString();
-            }
-
-            return success;
+            return errors;
         }
 
         public override IEnumerable<string> TryValidateAttribute( AssetNameAttribute attr )

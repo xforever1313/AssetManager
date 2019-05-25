@@ -49,16 +49,13 @@ namespace AssetManager.Api.Attributes.Types
 
         /// <summary>
         /// Trys to validate the attribute.
-        /// If the attribute is not valid, this returns false,
-        /// and the errors get outtputted.
         /// </summary>
-        /// <param name="errors">The errors.  Empty string if there are none.</param>
-        /// <returns>True if the object is valid, else false.</returns>
-        bool TryValidate( out string errors );
+        /// <returns>The errors.  Will be empty if there are none.</returns>
+        IEnumerable<string> TryValidate();
 
         /// <summary>
         /// Ensures the attribute is in an okay state.
-        /// If not, a <see cref="SethCS.Exceptions.ValidationException"/> is thrown.
+        /// If not, a <see cref="SethCS.Exceptions.ListedValidationException"/> is thrown.
         /// </summary>
         void Validate();
 

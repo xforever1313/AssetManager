@@ -5,6 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System.Linq;
 using AssetManager.Api.Attributes.Types;
 using NUnit.Framework;
 using SethCS.Exceptions;
@@ -36,7 +37,8 @@ namespace AssetMananger.UnitTests.Api.Attributes.Types
 
             // Having a default value outside of the range should throw an exception.
             uut.DefaultValue = -1;
-            Assert.Throws<ValidationException>( () => uut.Validate() );
+            ListedValidationException e = Assert.Throws<ListedValidationException>( () => uut.Validate() );
+            Assert.AreEqual( 1, e.Errors.Count() );
             uut.DefaultValue = null;
 
             // Not having a default value with a min/max should work okay.
@@ -44,7 +46,8 @@ namespace AssetMananger.UnitTests.Api.Attributes.Types
 
             // Having a max < min should throw.
             uut.MinValue = 101;
-            Assert.Throws<ValidationException>( () => uut.Validate() );
+            e = Assert.Throws<ListedValidationException>( () => uut.Validate() );
+            Assert.AreEqual( 1, e.Errors.Count() );
 
             // Just having a default value should be okay.
             uut.MinValue = null;
@@ -54,7 +57,8 @@ namespace AssetMananger.UnitTests.Api.Attributes.Types
 
             // Null key is not okay
             uut.Key = null;
-            Assert.Throws<ValidationException>( () => uut.Validate() );
+            e = Assert.Throws<ListedValidationException>( () => uut.Validate() );
+            Assert.AreEqual( 1, e.Errors.Count() );
         }
 
         [Test]

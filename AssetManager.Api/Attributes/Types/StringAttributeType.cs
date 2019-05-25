@@ -39,11 +39,10 @@ namespace AssetManager.Api.Attributes.Types
             return errors;
         }
 
-        protected override bool ValidateInternal( out string errors )
+        protected override IEnumerable<string> ValidateInternal()
         {
             // Nothing to validate; Default value is okay to be null.
-            errors = string.Empty;
-            return true;
+            return new List<string>();
         }
 
         public override string SerializePossibleValues()

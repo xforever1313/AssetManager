@@ -11,6 +11,7 @@ using System.Text;
 using AssetManager.Api.Attributes.Types;
 using Newtonsoft.Json.Linq;
 using SethCS.Exceptions;
+using SethCS.Extensions;
 
 namespace AssetManager.Api
 {
@@ -76,34 +77,29 @@ namespace AssetManager.Api
         /// </summary>
         public void Validate()
         {
-            bool success = true;
-            StringBuilder builder = new StringBuilder();
-            builder.AppendLine( "Errors when validating the Asset Type Builder:" );
+            List<string> errors = new List<string>();
 
             if( string.IsNullOrWhiteSpace( this.Name ) )
             {
-                success = false;
-                builder.AppendLine( "- Name can not be null, empty, or whitespace." );
+                errors.Add( "Name can not be null, empty, or whitespace." );
             }
 
             if ( this.DatabaseId.Equals( Guid.Empty ) )
             {
-                success = false;
-                builder.AppendLine( "- Database ID can not be empty." );
+                errors.Add( "Database ID can not be empty." );
             }
 
             foreach( IAttributeType attribute in AttributeTypes )
             {
-                if( attribute.TryValidate( out string attrErrors ) == false )
-                {
-                    success = false;
-                    builder.AppendLine( attrErrors );
-                }
+                errors.AddRange( attribute.TryValidate() );
             }
 
-            if( success == false )
+            if( errors.IsEmpty() == false )
             {
-                throw new ValidationException( builder.ToString() );
+                throw new ListedValidationException(
+                    "Errors when validating the Asset Type Builder:",
+                    errors
+                );
             }
         }
 
