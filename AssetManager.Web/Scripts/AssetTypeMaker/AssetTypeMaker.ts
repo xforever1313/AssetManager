@@ -101,7 +101,8 @@ class AssetTypeMaker {
                 data.AttributeList.push(this.attrList[i].ToJson());
             }
 
-            console.log(JSON.stringify(data));
+            let jsonString: string = JSON.stringify(data);
+            console.log(jsonString);
 
             let maker = this;
             let xhr = new XMLHttpRequest();
@@ -120,7 +121,7 @@ class AssetTypeMaker {
             };
 
             xhr.setRequestHeader("Content-Type", dataType);
-            xhr.send(JSON.stringify(data));
+            xhr.send(jsonString);
         }
     }
 

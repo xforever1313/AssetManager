@@ -62,9 +62,23 @@ namespace AssetManager.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add( string database, int assetTypeId, [FromForm] object o )
+        public IActionResult Add( string database, int assetTypeId, [FromBody] AssetBuilderModel assetBuilder )
         {
-            return Redirect( "/Assets" );
+            if ( Guid.TryParse( database, out Guid databaseId ) )
+            {
+                if ( assetBuilder.Success )
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest( assetBuilder.ErrorMessage );
+                }
+            }
+            else
+            {
+                return BadRequest( "Invalid database ID: " + database );
+            }
         }
     }
 }

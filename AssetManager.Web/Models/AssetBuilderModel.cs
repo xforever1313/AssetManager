@@ -5,31 +5,35 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-using System;
+using System.Collections.Generic;
 using AssetManager.Api;
 using Newtonsoft.Json;
 
 namespace AssetManager.Web.Models
 {
-    [JsonConverter( typeof( AssetTypeBuilderConverter ) )]
-    public class AssetTypeBuilderModel : AssetTypeBuilder
+    /// <summary>
+    /// This is the model of an asset that comes from the webpage.
+    /// </summary>
+    [JsonConverter( typeof( AssetBuilderConverter ) )]
+    public class AssetBuilderModel
     {
         // ---------------- Constructor ----------------
 
-        public AssetTypeBuilderModel() :
-            base()
+        public AssetBuilderModel()
         {
-        }
-
-        public AssetTypeBuilderModel( string name, Guid databaseId ) :
-            base( name, databaseId )
-        {
+            this.Attributes = new List<KeyValuePair<string, IAttribute>>();
+            this.ErrorMessage = string.Empty;
         }
 
         // ---------------- Properties ----------------
 
         /// <summary>
-        /// Did we create the asset type correctly?
+        /// The attributes to add to the Asset.
+        /// </summary>
+        public IList<KeyValuePair<string, IAttribute>> Attributes { get; private set; }
+
+        /// <summary>
+        /// Did we get the information correctly?
         /// </summary>
         public bool Success { get; set; }
 

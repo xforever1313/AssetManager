@@ -17,70 +17,61 @@
             </div>
             <div class="panel-body">
                 <noscript class="alert alert-danger">
-                    JavaScript required to run client side validation.
-                    While you can edit the form, no validation will occur,
-                    which means if there are errors, your changes are erased.
+                    JavaScript required to add Assets.
                 </noscript>
-                <form action="/Assets/Add/@Model.Asset.DatabaseId/@Model.AssetTypeId" method="post" id="addForm" enctype="application/x-www-form-urlencoded">
-                    <script>
-                        let adder = new AssetAdder();
-                    </script>
+                <script>
+                    let adder = new AssetAdder("@Model.AssetType.DatabaseId", @Model.AssetTypeId);
+                </script>
 
-                    @foreach ( IAttributeType attrType in @Model.AssetType.AttributeTypes )
-                    {
-                        <div class="form-group">
-                            @switch ( attrType.AttributeType )
+                @foreach ( IAttributeType attrType in @Model.AssetType.AttributeTypes )
+                {
+                    <div class="form-group">
+                        @switch ( attrType.AttributeType )
+                        {
+                            case AttributeTypes.AssetName:
                             {
-                                case AttributeTypes.AssetName:
-                                {
-                                    AssetNameAttributeType type = (AssetNameAttributeType)attrType;
-                                    AssetNameAttribute attr = Model.Asset.CloneAttributeAsType<AssetNameAttribute>
-                                        ( type.Key );
-                                    Tuple<AssetNameAttributeType, AssetNameAttribute>
-                                        model = new Tuple<AssetNameAttributeType, AssetNameAttribute>
-                                            ( type, attr );
-                                    <partial name="~/Views/ReadWriteAssetAttributes/_AssetNameAttribute.cshtml" model="model" />
-                                    break;
-                                }
-
-                                case AttributeTypes.Integer:
-                                {
-                                    IntegerAttributeType type = (IntegerAttributeType)attrType;
-                                    IntegerAttribute attr = Model.Asset.CloneAttributeAsType<IntegerAttribute>
-                                        ( type.Key );
-                                    Tuple<IntegerAttributeType, IntegerAttribute>
-                                        model = new Tuple<IntegerAttributeType, IntegerAttribute>
-                                            ( type, attr );
-                                    <partial name="~/Views/ReadWriteAssetAttributes/_IntegerAttribute.cshtml" model="model" />
-                                    break;
-                                }
-
-                                case AttributeTypes.StringAttribute:
-                                {
-                                    StringAttributeType type = (StringAttributeType)attrType;
-                                    StringAttribute attr = Model.Asset.CloneAttributeAsType<StringAttribute>
-                                        ( type.Key );
-                                    Tuple<StringAttributeType, StringAttribute>
-                                        model = new Tuple<StringAttributeType, StringAttribute>
-                                            ( type, attr );
-                                    <partial name="~/Views/ReadWriteAssetAttributes/_StringAttribute.cshtml" model="model" />
-                                    break;
-                                }
-
-                                default:
-                                    throw new NotImplementedException( attrType.AttributeType + " not implemented yet." );
+                                AssetNameAttributeType type = (AssetNameAttributeType)attrType;
+                                AssetNameAttribute attr = Model.Asset.CloneAttributeAsType<AssetNameAttribute>
+                                    ( type.Key );
+                                Tuple<AssetNameAttributeType, AssetNameAttribute>
+                                    model = new Tuple<AssetNameAttributeType, AssetNameAttribute>
+                                        ( type, attr );
+                                <partial name="~/Views/ReadWriteAssetAttributes/_AssetNameAttribute.cshtml" model="model" />
+                                break;
                             }
-                        </div>
-                    }
-                    <div class="btn-group">
-                        <button id="addAssetButton" class="btn btn-success" type="button" onclick="adder.Submit()"><i class="fa fa-plus"></i> Add Asset</button>
+
+                            case AttributeTypes.Integer:
+                            {
+                                IntegerAttributeType type = (IntegerAttributeType)attrType;
+                                IntegerAttribute attr = Model.Asset.CloneAttributeAsType<IntegerAttribute>
+                                    ( type.Key );
+                                Tuple<IntegerAttributeType, IntegerAttribute>
+                                    model = new Tuple<IntegerAttributeType, IntegerAttribute>
+                                        ( type, attr );
+                                <partial name="~/Views/ReadWriteAssetAttributes/_IntegerAttribute.cshtml" model="model" />
+                                break;
+                            }
+
+                            case AttributeTypes.StringAttribute:
+                            {
+                                StringAttributeType type = (StringAttributeType)attrType;
+                                StringAttribute attr = Model.Asset.CloneAttributeAsType<StringAttribute>
+                                    ( type.Key );
+                                Tuple<StringAttributeType, StringAttribute>
+                                    model = new Tuple<StringAttributeType, StringAttribute>
+                                        ( type, attr );
+                                <partial name="~/Views/ReadWriteAssetAttributes/_StringAttribute.cshtml" model="model" />
+                                break;
+                            }
+
+                            default:
+                                throw new NotImplementedException( attrType.AttributeType + " not implemented yet." );
+                        }
                     </div>
-                    <noscript>
-                        <div class="btn-group">
-                            <input class="btn btn-default" type="submit" value="Submit"/>
-                        </div>
-                    </noscript>
-                </form>
+                }
+                <div class="btn-group">
+                    <button id="addAssetButton" class="btn btn-success" type="button" onclick="adder.Submit()"><i class="fa fa-plus"></i> Add Asset</button>
+                </div>
             </div>
         </div>
     </div>

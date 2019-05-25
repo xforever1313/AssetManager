@@ -15,8 +15,8 @@ class IntegerAttribute extends BaseAttribute {
 
     // ---------------- Constructor ----------------
 
-    constructor(info: IntegerAttributeTypeInfo) {
-        super(info.AttributeType)
+    constructor(info: IntegerAttributeTypeInfo, key: string) {
+        super(info.AttributeType, key)
         this.info = info;
 
         this.value = info.GetDefault();
@@ -52,7 +52,13 @@ class IntegerAttribute extends BaseAttribute {
     }
 
     public ToJson(): object {
-        return null; // For now.
+        let data = {
+            "Key": this.Key,
+            "AttributeType": this.AttributeType,
+            "Value": this.GetValue()
+        };
+
+        return data;
     }
 
     // -------- Setters --------

@@ -11,10 +11,10 @@
 
 <script>
     let strAttributeType_@(escapedKey) = new StringAttributeTypeInfo();
-    strAttributeType_@(escapedKey).SetDefault(@((string.IsNullOrWhiteSpace( typeInfo.DefaultValue )? typeInfo.DefaultValue : "null" ))
+    strAttributeType_@(escapedKey).SetDefault(@((string.IsNullOrWhiteSpace( typeInfo.DefaultValue )? typeInfo.DefaultValue : "null" )))
     .SetRequired(@typeInfo.Required.ToString().ToLower());
 
-    let strAttribute_@(escapedKey) = new StringAttribute(strAttributeType_@(escapedKey));
+    let strAttribute_@(escapedKey) = new StringAttribute(strAttributeType_@(escapedKey), "@typeInfo.Key");
     adder.AddAttribute(strAttribute_@(escapedKey));
 </script>
 

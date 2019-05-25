@@ -16,7 +16,7 @@
     .SetDefault(@(typeInfo.DefaultValue.HasValue ? typeInfo.DefaultValue.ToString() : "null" ))
     .SetRequired(@typeInfo.Required.ToString().ToLower());
 
-    let intAttribute_@(escapedKey) = new IntegerAttribute(intAttributeType_@(escapedKey));
+    let intAttribute_@(escapedKey) = new IntegerAttribute(intAttributeType_@(escapedKey), "@typeInfo.Key");
     adder.AddAttribute(intAttribute_@(escapedKey));
 </script>
 

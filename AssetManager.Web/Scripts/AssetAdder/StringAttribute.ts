@@ -15,8 +15,8 @@ class StringAttribute extends BaseAttribute {
 
     // ---------------- Constructor ----------------
 
-    constructor(info: StringAttributeTypeInfo) {
-        super(info.AttributeType)
+    constructor(info: StringAttributeTypeInfo, key: string) {
+        super(info.AttributeType, key)
         this.info = info;
 
         this.value = this.info.GetDefaultValue();
@@ -37,7 +37,13 @@ class StringAttribute extends BaseAttribute {
     }
 
     public ToJson(): object {
-        return null; // For now.
+        let data = {
+            "Key": this.Key,
+            "AttributeType": this.AttributeType,
+            "Value": this.GetValue()
+        };
+
+        return data;
     }
 
     // -------- Setters --------

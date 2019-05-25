@@ -11,13 +11,16 @@ abstract class BaseAttribute implements IAttribute {
 
     // ---------------- Constructor ----------------
 
-    constructor(attrType: AttributeType) {
+    constructor(attrType: AttributeType, key: string) {
         this.AttributeType = attrType;
+        this.Key = key;
     }
 
     // ---------------- Properties ----------------
 
     readonly AttributeType: AttributeType;
+
+    readonly Key: string;
 
     // ---------------- Functions ----------------
 

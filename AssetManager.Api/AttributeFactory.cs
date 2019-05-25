@@ -10,14 +10,14 @@ using AssetManager.Api.Attributes;
 
 namespace AssetManager.Api
 {
-    internal static class AttributeFactory
+    public static class AttributeFactory
     {
         public static TAttr CreateAttribute<TAttr>() where TAttr : IAttribute
         {
             return Activator.CreateInstance<TAttr>();
         }
 
-        internal static IAttribute CreateAttribute( AttributeTypes attributeType )
+        public static IAttribute CreateAttribute( AttributeTypes attributeType )
         {
             switch( attributeType )
             {

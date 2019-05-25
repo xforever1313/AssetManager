@@ -11,13 +11,15 @@ class AssetAdder {
 
     readonly attributes: Array<IAttribute>;
 
-    readonly form: HTMLFormElement;
+    readonly databaseId: string;
+    readonly assetTypeId: number;
 
     // ---------------- Constructor ----------------
 
-    constructor() {
+    constructor(databaseId: string, assetTypeId: number) {
         this.attributes = new Array<IAttribute>();
-        this.form = document.getElementById("addForm") as HTMLFormElement;
+        this.databaseId = databaseId;
+        this.assetTypeId = assetTypeId;
     }
 
     // ---------------- Properties ----------------
@@ -46,7 +48,37 @@ class AssetAdder {
         else {
             this.DisableForm();
 
-            this.form.submit();
+            const dataType = "application/json; charset=utf-8";
+            let data = {
+                AttributeList: new Array<object>()
+            };
+
+            for (let i = 0; i < this.attributes.length; ++i) {
+                data.AttributeList.push(this.attributes[i].ToJson());
+            }
+
+            let jsonString: string = JSON.stringify(data);
+            console.log(jsonString);
+
+            let adder = this;
+            let xhr = new XMLHttpRequest();
+            let url = "/Assets/Add/" + adder.databaseId + "/" + adder.assetTypeId;
+            xhr.open("POST", url);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    // If we are successful, return to the asset screen.
+                    if (xhr.status === 200) {
+                        window.location.href = "/Assets/List/" + adder.databaseId + "/" + adder.assetTypeId;
+                    }
+                    else {
+                        alert(xhr.responseText);
+                        adder.EnableForm();
+                    }
+                }
+            };
+
+            xhr.setRequestHeader("Content-Type", dataType);
+            xhr.send(jsonString);
         }
     }
 
