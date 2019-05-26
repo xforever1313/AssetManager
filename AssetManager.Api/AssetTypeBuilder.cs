@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using AssetManager.Api.Attributes.Types;
 using Newtonsoft.Json.Linq;
 using SethCS.Exceptions;
@@ -98,6 +98,51 @@ namespace AssetManager.Api
             {
                 throw new ListedValidationException(
                     "Errors when validating the Asset Type Builder:",
+                    errors
+                );
+            }
+        }
+
+        public IEnumerable<string> TryValidateAsset( Asset asset )
+        {
+            List<string> errors = new List<string>();
+            if ( asset.AssetType != this.Name )
+            {
+                errors.Add( "Passed in asset is of type '" + asset.Name + "', expected type " + this.Name );
+            }
+            else if ( asset.DatabaseId != this.DatabaseId )
+            {
+                errors.Add( "Asset is meant for a different database." );
+            }
+            else if ( asset.Keys.Count() != this.AttributeTypes.Count )
+            {
+                errors.Add( "Number of keys between asset and asset type do not match." );
+            }
+            else
+            {
+                foreach ( IAttributeType attributeType in this.AttributeTypes )
+                {
+                    if ( asset.Attributes.ContainsKey( attributeType.Key ) == false )
+                    {
+                        errors.Add( "Asset does not contain key '" + attributeType.Key + "'" );
+                    }
+                    else
+                    {
+                        errors.AddRange( attributeType.TryValidateAttribute( asset.Attributes[attributeType.Key] ) );
+                    }
+                }
+            }
+
+            return errors;
+        }
+
+        public void ValidateAsset( Asset asset )
+        {
+            IEnumerable<string> errors = TryValidateAsset( asset );
+            if ( errors.Count() > 0 )
+            {
+                throw new ListedValidationException(
+                    "Errors when validating asset against the asset type " + this.Name,
                     errors
                 );
             }

@@ -32,5 +32,24 @@ namespace AssetManager.Api
         /// Read-only list of the attribute types associated with this asset type.
         /// </summary>
         IReadOnlyList<IAttributeType> AttributeTypes { get; }
+
+        // ---------------- Functions ----------------
+
+        /// <summary>
+        /// Validates the given asset to ensure it follows all of the rules
+        /// called out in this asset type.
+        /// </summary>
+        /// <returns>
+        /// List of errors that specify what is wrong with the asset.
+        /// Empty if there are no errors.
+        /// </returns>
+        IEnumerable<string> TryValidateAsset( Asset asset );
+
+        /// <summary>
+        /// Validates the given asset to ensure it follows all of the rules
+        /// called out in this asset type.
+        /// </summary>
+        /// <exception cref="SethCS.Exceptions.ListedValidationException">If the asset does not validate.</exception>
+        void ValidateAsset( Asset asset );
     }
 }
