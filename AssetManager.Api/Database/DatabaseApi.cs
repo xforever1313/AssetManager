@@ -133,35 +133,37 @@ namespace AssetManager.Api.Database
         {
             this.GuidCheck( databaseId );
 
-            IEnumerable<AssetTypeAttributesMap> maps;
-            string assetTypeName;
-
             using ( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs[databaseId] ) )
             {
-                // First, find the type of asset.
-                AssetType assetType = this.GetAssetType( conn, assetTypeId );
-                assetTypeName = assetType.Name;
-
-                maps = conn.AssetTypeAttributesMaps
-                    .Include( nameof( AssetTypeAttributesMap.AttributeKey ) )
-                    .Include( nameof( AssetTypeAttributesMap.AttributeProperties ) )
-                    .Where( m => m.AssetType.Id == assetType.Id );
-
-                AssetTypeBuilder assetTypeBuilder = new AssetTypeBuilder( assetTypeName, databaseId );
-
-                foreach ( AssetTypeAttributesMap map in maps )
-                {
-                    IAttributeType attributeType = AttributeTypeFactory.CreateAttributeType( map.AttributeKey.AttributeType );
-                    attributeType.DeserializeDefaultValue( map.AttributeProperties.DefaultValue );
-                    attributeType.DeserializePossibleValues( map.AttributeProperties.PossibleValues );
-                    attributeType.Key = map.AttributeKey.Name;
-                    attributeType.Required = map.AttributeProperties.Required;
-
-                    assetTypeBuilder.AttributeTypes.Add( attributeType );
-                }
-
-                return assetTypeBuilder;
+                return GetAssetType( conn, databaseId, assetTypeId );
             }
+        }
+
+        private IAssetType GetAssetType( DatabaseConnection conn, Guid databaseId, int assetTypeId )
+        {
+            // First, find the type of asset.
+            AssetType assetType = this.GetAssetType( conn, assetTypeId );
+            string assetTypeName = assetType.Name;
+
+            IEnumerable<AssetTypeAttributesMap> maps = conn.AssetTypeAttributesMaps
+                .Include( nameof( AssetTypeAttributesMap.AttributeKey ) )
+                .Include( nameof( AssetTypeAttributesMap.AttributeProperties ) )
+                .Where( m => m.AssetType.Id == assetType.Id );
+
+            AssetTypeBuilder assetTypeBuilder = new AssetTypeBuilder( assetTypeName, databaseId );
+
+            foreach ( AssetTypeAttributesMap map in maps )
+            {
+                IAttributeType attributeType = AttributeTypeFactory.CreateAttributeType( map.AttributeKey.AttributeType );
+                attributeType.DeserializeDefaultValue( map.AttributeProperties.DefaultValue );
+                attributeType.DeserializePossibleValues( map.AttributeProperties.PossibleValues );
+                attributeType.Key = map.AttributeKey.Name;
+                attributeType.Required = map.AttributeProperties.Required;
+
+                assetTypeBuilder.AttributeTypes.Add( attributeType );
+            }
+
+            return assetTypeBuilder;
         }
 
         /// <summary>
@@ -207,6 +209,10 @@ namespace AssetManager.Api.Database
             {
                 // First, find the type of asset.
                 AssetType assetType = this.GetAssetType( conn, asset.AssetType );
+
+                // Ensure our asset is compatiable with our type.
+                IAssetType fullAssetType = this.GetAssetType( conn, asset.DatabaseId, assetType.Id );
+                fullAssetType.ValidateAsset( asset );
 
                 DateTime timestamp = DateTime.UtcNow;
                 AssetInstance assetInstance = new AssetInstance
