@@ -6,6 +6,8 @@
 //
 
 using System.Linq;
+using AssetManager.Api;
+using AssetManager.Api.Attributes;
 using AssetManager.Api.Attributes.Types;
 using NUnit.Framework;
 using SethCS.Exceptions;
@@ -37,6 +39,33 @@ namespace AssetMananger.UnitTests.Api.Attributes.Types
             uut.Key = null;
             e = Assert.Throws<ListedValidationException>( () => uut.Validate() );
             Assert.AreEqual( 1, e.Errors.Count() );
+        }
+
+        [Test]
+        public void ValidateAttributeTest()
+        {
+            AssetNameAttribute attr = new AssetNameAttribute
+            {
+                Value = null
+            };
+
+            AssetNameAttributeType uut = new AssetNameAttributeType
+            {
+                Key = "Some Asset"
+            };
+
+            // Null should throw an exception.
+            ListedValidationException e;
+
+            e = Assert.Throws<ListedValidationException>( () => uut.ValidateAttribute( attr ) );
+            Assert.AreEqual( 1, e.Errors.Count() );
+
+            e = Assert.Throws<ListedValidationException>( () => uut.ValidateAttribute( (IAttribute)attr ) );
+            Assert.AreEqual( 1, e.Errors.Count() );
+
+            attr.Value = "Name";
+            Assert.DoesNotThrow( () => uut.ValidateAttribute( attr ) );
+            Assert.DoesNotThrow( () => uut.ValidateAttribute( (IAttribute)attr ) );
         }
 
         [Test]

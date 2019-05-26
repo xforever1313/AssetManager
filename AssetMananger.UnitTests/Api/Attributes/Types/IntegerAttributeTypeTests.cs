@@ -6,6 +6,8 @@
 //
 
 using System.Linq;
+using AssetManager.Api;
+using AssetManager.Api.Attributes;
 using AssetManager.Api.Attributes.Types;
 using NUnit.Framework;
 using SethCS.Exceptions;
@@ -59,6 +61,64 @@ namespace AssetMananger.UnitTests.Api.Attributes.Types
             uut.Key = null;
             e = Assert.Throws<ListedValidationException>( () => uut.Validate() );
             Assert.AreEqual( 1, e.Errors.Count() );
+        }
+
+        [Test]
+        public void ValidateAttributeTest()
+        {
+            IntegerAttribute attr = new IntegerAttribute
+            {
+                Value = 1
+            };
+
+            IntegerAttributeType uut = new IntegerAttributeType
+            {
+                Key = "Some Asset",
+                MaxValue = null,
+                MinValue = null,
+                Required = false
+            };
+
+            // Having min and max not specified should not result in an exception.
+            {
+                Assert.DoesNotThrow( () => uut.ValidateAttribute( attr ) );
+                Assert.DoesNotThrow( () => uut.ValidateAttribute( (IAttribute)attr ) );
+            }
+
+            // Still within range, should not blow up.
+            {
+                uut.MinValue = attr.Value;
+                uut.MaxValue = attr.Value;
+
+                Assert.DoesNotThrow( () => uut.ValidateAttribute( attr ) );
+                Assert.DoesNotThrow( () => uut.ValidateAttribute( (IAttribute)attr ) );
+            }
+
+            // Below min should result in an exception.
+            {
+                uut.MinValue = attr.Value + 1;
+                uut.MaxValue = null;
+
+                ListedValidationException e;
+                e = Assert.Throws<ListedValidationException>( () => uut.ValidateAttribute( attr ) );
+                Assert.AreEqual( 1, e.Errors.Count() );
+
+                e = Assert.Throws<ListedValidationException>( () => uut.ValidateAttribute( (IAttribute)attr ) );
+                Assert.AreEqual( 1, e.Errors.Count() );
+            }
+
+            // Above max should result in an exception.
+            {
+                uut.MinValue = null;
+                uut.MaxValue = attr.Value - 1;
+
+                ListedValidationException e;
+                e = Assert.Throws<ListedValidationException>( () => uut.ValidateAttribute( attr ) );
+                Assert.AreEqual( 1, e.Errors.Count() );
+
+                e = Assert.Throws<ListedValidationException>( () => uut.ValidateAttribute( (IAttribute)attr ) );
+                Assert.AreEqual( 1, e.Errors.Count() );
+            }
         }
 
         [Test]

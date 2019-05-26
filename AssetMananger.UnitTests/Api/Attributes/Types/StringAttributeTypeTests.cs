@@ -6,6 +6,8 @@
 //
 
 using System.Linq;
+using AssetManager.Api;
+using AssetManager.Api.Attributes;
 using AssetManager.Api.Attributes.Types;
 using NUnit.Framework;
 using SethCS.Exceptions;
@@ -38,6 +40,56 @@ namespace AssetMananger.UnitTests.Api.Attributes.Types
             uut.Key = null;
             ListedValidationException e = Assert.Throws<ListedValidationException>( () => uut.Validate() );
             Assert.AreEqual( 1, e.Errors.Count() );
+        }
+
+        [Test]
+        public void ValidateAttributeTest()
+        {
+            StringAttribute attr = new StringAttribute
+            {
+                Value = null
+            };
+
+            StringAttributeType uut = new StringAttributeType
+            {
+                Key = "Some Asset",
+                Required = true
+            };
+
+            // Null should throw an exception, if required is set to true.
+            {
+                uut.Required = true;
+                ListedValidationException e;
+
+                e = Assert.Throws<ListedValidationException>( () => uut.ValidateAttribute( attr ) );
+                Assert.AreEqual( 1, e.Errors.Count() );
+
+                e = Assert.Throws<ListedValidationException>( () => uut.ValidateAttribute( (IAttribute)attr ) );
+                Assert.AreEqual( 1, e.Errors.Count() );
+            }
+
+            // Null should not throw an exception if required is set to false.
+            {
+                uut.Required = false;
+                Assert.DoesNotThrow( () => uut.ValidateAttribute( attr ) );
+                Assert.DoesNotThrow( () => uut.ValidateAttribute( (IAttribute)attr ) );
+            }
+
+            // No exceptions should be thrown if required is false and a value is set.
+            {
+                uut.Required = false;
+                attr.Value = "Some value";
+                Assert.DoesNotThrow( () => uut.ValidateAttribute( attr ) );
+                Assert.DoesNotThrow( () => uut.ValidateAttribute( (IAttribute)attr ) );
+            }
+
+            // No exceptions should be thrown if required is true and a value is set.
+            {
+                uut.Required = true;
+                attr.Value = "Some value";
+                Assert.DoesNotThrow( () => uut.ValidateAttribute( attr ) );
+                Assert.DoesNotThrow( () => uut.ValidateAttribute( (IAttribute)attr ) );
+            }
         }
 
         [Test]
