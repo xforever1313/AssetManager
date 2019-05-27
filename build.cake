@@ -78,6 +78,17 @@ Task( "publish_linux" )
 .IsDependentOn( "release" )
 .Description( "Publishes the app for Linux.");
 
+Task( "publish_rasp_pi" )
+.Does(
+    () =>
+    {
+        const string runTime = "linux-arm";
+        DoPublish( runTime );
+    }
+)
+.IsDependentOn( "release" )
+.Description( "Publishes the app for the Raspberry Pi (Linux-arm).");
+
 void DoPublish( string runtime )
 {
     PublishProject( runtime, "AssetManager.Sqlite", "./AssetManager.Sqlite/AssetManager.Sqlite.csproj" );
@@ -110,6 +121,7 @@ Task( "publish_all" )
 )
 .IsDependentOn( "publish_windows" )
 .IsDependentOn( "publish_linux" )
+.IsDependentOn( "publish_rasp_pi" )
 .Description( "Packages the app for all platforms.");
 
 RunTarget( target );
