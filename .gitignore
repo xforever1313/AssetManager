@@ -54,3 +54,4 @@ OpenCover/
 .vs
 
 /AssetManager.Web/wwwroot/static/compiled_ts
+/dist
