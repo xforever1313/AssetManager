@@ -13,6 +13,8 @@ namespace AssetManager.Api
     {
         // ---------------- Properties ----------------
 
+        string ApiVersion { get; }
+
         IDatabaseApi DataBase { get; }
 
         IAsyncDatabaseApi AsyncDataBase { get; }

@@ -25,9 +25,13 @@ namespace AssetManager.Api
         {
             this.DataBase = new DatabaseApi( databaseConfigs );
             this.AsyncDataBase = new AsyncDatabaseApi( this.DataBase );
+
+            this.ApiVersion = typeof( AssetManagerApi ).Assembly.GetName().Version.ToString();
         }
 
         // ---------------- Properties ----------------
+
+        public string ApiVersion { get; private set; }
 
         public IDatabaseApi DataBase { get; private set; }
 

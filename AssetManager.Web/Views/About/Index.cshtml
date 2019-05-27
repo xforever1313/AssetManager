@@ -1,11 +1,13 @@
-﻿@using System.Reflection;
+﻿@using AssetManager.Api;
 
 @{
     ViewData["Title"] = "About Asset Manager";
     Layout = "_Content";
+    @model IModel;
 }
 
-<p><strong>Version:</strong> @Assembly.GetExecutingAssembly().GetName().Version</p>
+<p><strong>API Version:</strong> @Model.Api.ApiVersion</p>
+<p><strong>Website Version:</strong> @Model.Api.GetWebVersion()</p>
 
 <p>
     Asset Manager is a free and open source project released under the <a href="https://www.boost.org/users/license.html">Boost Software License.</a>

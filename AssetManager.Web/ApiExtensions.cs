@@ -19,5 +19,10 @@ namespace AssetManager.Web
         {
             return CreditsInfo.AllCredits;
         }
+
+        public static string GetWebVersion( this IAssetManagerApi api )
+        {
+            return typeof( ApiExtensions ).Assembly.GetName().Version.ToString();
+        }
     }
 }
