@@ -9,13 +9,6 @@
     string escapedKey = typeInfo.EscapeKey();
 }
 
-<script>
-    let assetNameAttributeType_@(escapedKey) = new AssetNameAttributeTypeInfo();
-
-    let assetNameAttribute_@(escapedKey) = new AssetNameAttribute(assetNameAttributeType_@(escapedKey), "@typeInfo.Key");
-    adder.AddAttribute(assetNameAttribute_@(escapedKey));
-</script>
-
 <label><i class="fa fa-caret-right"></i> @typeInfo.Key<span style="color:darkred;"> *</span></label>
 
 <input 
@@ -24,5 +17,21 @@
        value="@attributeInfo.Value"
        type="text"
        dirname="@typeInfo.Key"
-       oninput="assetNameAttribute_@(escapedKey).SetValue(this.value)"
        name="@typeInfo.Key"/>
+
+<div id="assetName_@(escapedKey)_error"></div>
+
+<script>
+    let assetNameAttributeType_@(escapedKey) = new AssetNameAttributeTypeInfo();
+
+    let assetNameAttribute_@(escapedKey) = new AssetNameAttribute(assetNameAttributeType_@(escapedKey), "@typeInfo.Key");
+
+    let assetNameForm_@(escapedKey) = new TextboxWrapper(
+        document.getElementById("assetName_@escapedKey"),
+        document.getElementById("assetName_@(escapedKey)_error")
+    );
+
+    assetNameForm_@(escapedKey).OnSyncValue = function (value) { assetNameAttribute_@(escapedKey).SetValue(value); };
+
+    adder.AddAttribute(assetNameAttribute_@(escapedKey), assetNameForm_@(escapedKey));
+</script>

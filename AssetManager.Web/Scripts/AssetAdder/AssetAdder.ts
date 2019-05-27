@@ -10,6 +10,7 @@ class AssetAdder {
     // ---------------- Fields ----------------
 
     readonly attributes: Array<IAttribute>;
+    readonly inputs: Array<IInputWrapper>;
 
     readonly databaseId: string;
     readonly assetTypeId: number;
@@ -18,6 +19,7 @@ class AssetAdder {
 
     constructor(databaseId: string, assetTypeId: number) {
         this.attributes = new Array<IAttribute>();
+        this.inputs = new Array<IInputWrapper>();
         this.databaseId = databaseId;
         this.assetTypeId = assetTypeId;
     }
@@ -26,14 +28,23 @@ class AssetAdder {
 
     // ---------------- Functions ----------------
 
-    public AddAttribute(attribute: IAttribute) {
+    public AddAttribute(attribute: IAttribute, input: IInputWrapper) {
         this.attributes.push(attribute);
+        this.inputs.push(input);
     }
 
     public Validate(): boolean {
         let success: boolean = true;
-        for (let attr of this.attributes) {
-            if (attr.Validate().length !== 0) {
+        for (let i = 0; i < this.attributes.length; ++i) {
+
+            // First, sync all values
+            this.inputs[i].SyncValue();
+
+            // Then validate, and display any errors.
+            let errors: Array<string> = this.attributes[i].Validate();
+
+            this.inputs[i].DisplayErrors(errors);
+            if (errors.length !== 0) {
                 success = false;
             }
         }
@@ -43,7 +54,7 @@ class AssetAdder {
 
     public Submit(): void {
         if (this.Validate() === false) {
-
+            this.EnableForm();
         }
         else {
             this.DisableForm();
@@ -83,14 +94,14 @@ class AssetAdder {
     }
 
     private EnableForm(): void {
-        for (let attr of this.attributes) {
-            attr.EnableForm();
+        for (let input of this.inputs) {
+            input.Enable();
         }
     }
 
     private DisableForm(): void {
-        for (let attr of this.attributes) {
-            attr.DisableForm();
+        for (let input of this.inputs) {
+            input.Disable();
         }
     }
 }

@@ -13,10 +13,6 @@ interface IAttribute {
 
     // ---------------- Functions -----------------
 
-    EnableForm(): void;
-
-    DisableForm(): void;
-
     /**
      * Ensures the attribute is in a valid state.
      * Return a list of errors, or null if there are none.

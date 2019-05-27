@@ -10,7 +10,8 @@
     "outFile": "../../wwwroot/static/compiled_ts/AssetTypeMaker.js"
   },
   "files": [
-    "BaseAttributeType.ts"
+    "BaseAttributeType.ts",
+    "../Common/BaseInputWrapper.ts"
   ],
   "include": [
     "*.ts",

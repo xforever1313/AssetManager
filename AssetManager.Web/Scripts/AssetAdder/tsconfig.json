@@ -4,13 +4,15 @@
   "compilerOptions": {
     "noImplicitAny": true,
     "noEmitOnError": true,
-    "removeComments": false,
+    "removeComments": true,
     "sourceMap": true,
     "target": "es5",
     "outFile": "../../wwwroot/static/compiled_ts/AssetAdder.js"
   },
   "files": [
-    "BaseAttribute.ts"
+    "BaseAttribute.ts",
+    "../Common/BaseInputWrapper.ts",
+    "../Common/TextBoxWrapper.ts"
   ],
   "include": [
     "*.ts",

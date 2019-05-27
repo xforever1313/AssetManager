@@ -20,9 +20,12 @@
     <None Remove="Scripts\AssetTypeMaker\IAttribute.ts" />
     <None Remove="Scripts\AssetTypeMaker\StringAttribute.ts" />
     <None Remove="Scripts\Common\AssetNameAttributeTypeInfo.ts" />
+    <None Remove="Scripts\Common\BaseInputWrapper.ts" />
     <None Remove="Scripts\Common\Enums.ts" />
+    <None Remove="Scripts\Common\IInputWrapper.ts" />
     <None Remove="Scripts\Common\IntegerAttributeTypeInfo.ts" />
     <None Remove="Scripts\Common\StringAttributeTypeInfo.ts" />
+    <None Remove="Scripts\Common\TextBoxWrapper.ts" />
   </ItemGroup>
 
 
@@ -54,9 +57,12 @@
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\IntegerAttributeType.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\StringAttributeType.ts" />
     <TypeScriptCompile Include="Scripts\Common\AssetNameAttributeTypeInfo.ts" />
+    <TypeScriptCompile Include="Scripts\Common\BaseInputWrapper.ts" />
     <TypeScriptCompile Include="Scripts\Common\Enums.ts" />
+    <TypeScriptCompile Include="Scripts\Common\IInputWrapper.ts" />
     <TypeScriptCompile Include="Scripts\Common\IntegerAttributeTypeInfo.ts" />
     <TypeScriptCompile Include="Scripts\Common\StringAttributeTypeInfo.ts" />
+    <TypeScriptCompile Include="Scripts\Common\TextBoxWrapper.ts" />
   </ItemGroup>
 
 

@@ -9,20 +9,8 @@
     string escapedKey = typeInfo.EscapeKey();
 }
 
-<script>
-    let intAttributeType_@escapedKey = new IntegerAttributeTypeInfo();
-    intAttributeType_@(escapedKey).SetMin(@(typeInfo.MinValue.HasValue ? typeInfo.MinValue.ToString() : "null"))
-    .SetMax(@(typeInfo.MaxValue.HasValue ? typeInfo.MaxValue.ToString() : "null"))
-    .SetDefault(@(typeInfo.DefaultValue.HasValue ? typeInfo.DefaultValue.ToString() : "null" ))
-    .SetRequired(@typeInfo.Required.ToString().ToLower());
-
-    let intAttribute_@(escapedKey) = new IntegerAttribute(intAttributeType_@(escapedKey), "@typeInfo.Key");
-    adder.AddAttribute(intAttribute_@(escapedKey));
-</script>
-
-
 <label><i class="fa fa-caret-right"></i> @typeInfo.Key@if ( typeInfo.Required ) {<span style="color:darkred;"> *</span>}</label>
-<input id="number_@escapedKey"
+<input id="integer_@escapedKey"
        class="form-control"
        type="number"
        @if ( typeInfo.MinValue.HasValue )
@@ -35,5 +23,25 @@
        }
        value="@attributeInfo.Value"
        name="@typeInfo.Key"
-       oninput="intAttribute_@(escapedKey).SetValue(Number.parseInt(this.value))"
 />
+
+<div id="integer_@(escapedKey)_error"></div>
+
+<script>
+    let intAttributeType_@escapedKey = new IntegerAttributeTypeInfo();
+    intAttributeType_@(escapedKey).SetMin(@(typeInfo.MinValue.HasValue ? typeInfo.MinValue.ToString() : "null"))
+    .SetMax(@(typeInfo.MaxValue.HasValue ? typeInfo.MaxValue.ToString() : "null"))
+    .SetDefault(@(typeInfo.DefaultValue.HasValue ? typeInfo.DefaultValue.ToString() : "null" ))
+    .SetRequired(@typeInfo.Required.ToString().ToLower());
+
+    let intAttribute_@(escapedKey) = new IntegerAttribute(intAttributeType_@(escapedKey), "@typeInfo.Key");
+
+    let intForm_@(escapedKey) = new TextboxWrapper(
+        document.getElementById("integer_@escapedKey"),
+        document.getElementById("integer_@(escapedKey)_error")
+    );
+
+    intForm_@(escapedKey).OnSyncValue = function (value) { intAttribute_@(escapedKey).SetValue(parseInt(value)); };
+
+    adder.AddAttribute(intAttribute_@(escapedKey), intForm_@(escapedKey));
+</script>

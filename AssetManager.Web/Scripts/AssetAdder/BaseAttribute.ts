@@ -24,14 +24,6 @@ abstract class BaseAttribute implements IAttribute {
 
     // ---------------- Functions ----------------
 
-    public EnableForm(): void {
-
-    }
-
-    public DisableForm(): void {
-
-    }
-
     public abstract Validate(): Array<string>;
 
     public abstract ToJson(): object;
