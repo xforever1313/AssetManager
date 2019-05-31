@@ -20,6 +20,12 @@ Features
  * Able to connect to multiple database sources.
  * Able to connect to multiple database types (e.g. can do both SqLite and MS SqlServer).
 
+Screenshots
+--------
+Here's a screenshot of the "Asset View" Window, the window that displays all of the assets: [Click](https://files.shendrick.net/projects/assetmanager/media/assetview.png).
+
+Here's a screenshot of the "Asset Type Adder" Window, the window that allows the user to define an asset type that can then have assets added to it: [Click](https://files.shendrick.net/projects/assetmanager/media/addassettype.png).
+
 Configuration
 --------
 TODO
