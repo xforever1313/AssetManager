@@ -55,3 +55,4 @@ OpenCover/
 
 /AssetManager.Web/wwwroot/static/compiled_ts
 /dist
+node_modules

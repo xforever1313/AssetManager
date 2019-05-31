@@ -17,4 +17,9 @@
     <ProjectReference Include="..\AssetManager.Api\AssetManager.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Web\Scripts\Tests\AssetAdderTests\" />
+    <Folder Include="Web\Scripts\Tests\AssetTypeMakerTests\" />
+  </ItemGroup>
+
 </Project>
