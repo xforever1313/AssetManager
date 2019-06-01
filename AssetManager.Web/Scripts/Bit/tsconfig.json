@@ -10,6 +10,7 @@
     "outFile": "../../wwwroot/static/compiled_ts/Bit.js"
   },
   "files": [
+    "../../../SethCS/TypescriptBit/Bit.ts",
     "../AssetAdder/BaseAttribute.ts",
     "../AssetTypeMaker/BaseAttributeType.ts"
   ],
@@ -18,7 +19,7 @@
     "../AssetAdder/*.ts",
     "../AssetTypeMaker/*.ts",
     "*.ts",
-    "./*/*/*.ts"
+    "./*/*.ts"
   ],
   "compileOnSave": true
 }

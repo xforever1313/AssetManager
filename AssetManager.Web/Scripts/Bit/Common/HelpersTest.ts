@@ -5,10 +5,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-/// <reference path="../../../Common/Helpers.ts"/>
-/// <reference path="../../ITestFixture.ts"/>
-/// <reference path="../../Test.ts"/>
-/// <reference path="../../Assert.ts"/>
+/// <reference path="../../Common/Helpers.ts"/>
+/// <reference path="../../../../SethCS/TypescriptBit/Bit.ts"/>
 
 class HelpersTest implements ITestFixture {
 

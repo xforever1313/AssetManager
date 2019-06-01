@@ -5,7 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-/// <reference path="./Tests/Common/HelpersTest.ts"/>
+/// <reference path="../../../SethCS/TypescriptBit/Bit.ts"/>
 
 class Main {
     constructor() {
