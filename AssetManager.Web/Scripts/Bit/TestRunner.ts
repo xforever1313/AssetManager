@@ -51,7 +51,7 @@ class TestRunner {
                         results.AddPass(test.Name);
                     }
                     catch(e){
-                        results.AddFail(test.Name + e);
+                        results.AddFail(test.Name + ": " + e);
                     }
                     finally{
                         fix.DoTestTeardown();

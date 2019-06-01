@@ -10,11 +10,11 @@ class Helpers {
         return (str === null) || (str === undefined) || (str === "");
     }
 
-    public static IsNullOrUndefined(o: object): boolean {
+    public static IsNullOrUndefined(o: any): boolean {
         return (o === undefined) || (o === null);
     }
 
-    public static IsNotNullOrUndefined(o: object): boolean {
+    public static IsNotNullOrUndefined(o: any): boolean {
         return (o !== undefined) && (o !== null);
     }
 }

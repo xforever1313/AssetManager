@@ -13,8 +13,8 @@ class Main {
     }
 
     Run(messageDiv: HTMLDivElement, overallDiv: HTMLDivElement): void {
-        let instance = TestRunner.Instance();
-        new HelpersTest();
+        let instance: TestRunner = TestRunner.Instance();
+        instance.AddTestFixture(new HelpersTest());
 
         let results: TestResults = instance.Execute();
 

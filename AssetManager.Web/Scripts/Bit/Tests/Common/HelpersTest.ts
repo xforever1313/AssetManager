@@ -8,7 +8,6 @@
 /// <reference path="../../../Common/Helpers.ts"/>
 /// <reference path="../../ITestFixture.ts"/>
 /// <reference path="../../Test.ts"/>
-/// <reference path="../../TestRunner.ts"/>
 /// <reference path="../../Assert.ts"/>
 
 class HelpersTest implements ITestFixture {
@@ -24,10 +23,16 @@ class HelpersTest implements ITestFixture {
         this.tests = new Array<Test>();
 
         this.tests.push(
-            new Test("DoStringIsNullOrEmptyTest", this.DoStringIsNullOrEmptyTest.bind(fixture))
+            new Test("StringIsNullOrEmpty Test", this.DoStringIsNullOrEmptyTest.bind(fixture))
         );
 
-        TestRunner.Instance().AddTestFixture(this);
+        this.tests.push(
+            new Test("IsNullOrUndefined Test", this.DoIsNullOrUndefinedTest.bind(fixture))
+        );
+
+        this.tests.push(
+            new Test("IsNotNullOrUndefined Test", this.DoIsNotNullOrUndefinedTest.bind(fixture))
+        );
     }
 
     // ---------------- Properties ----------------
@@ -63,5 +68,19 @@ class HelpersTest implements ITestFixture {
         Assert.IsTrue(Helpers.StringIsNullOrEmpty(undefined));
         Assert.IsTrue(Helpers.StringIsNullOrEmpty(""));
         Assert.IsFalse(Helpers.StringIsNullOrEmpty("Hello"));
+    }
+
+    public DoIsNullOrUndefinedTest(): void {
+        let str = "";
+        Assert.IsTrue(Helpers.IsNullOrUndefined(null));
+        Assert.IsTrue(Helpers.IsNullOrUndefined(undefined));
+        Assert.IsFalse(Helpers.IsNullOrUndefined(str));
+    }
+
+    public DoIsNotNullOrUndefinedTest(): void {
+        let str = "";
+        Assert.IsFalse(Helpers.IsNotNullOrUndefined(null));
+        Assert.IsFalse(Helpers.IsNotNullOrUndefined(undefined));
+        Assert.IsTrue(Helpers.IsNotNullOrUndefined(str));
     }
 }
