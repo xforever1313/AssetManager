@@ -6,6 +6,7 @@
 //
 
 /// <reference path="../../../SethCS/TypescriptBit/Bit.ts"/>
+/// <reference path="Common/HelpersTest.ts"/>
 
 class Main {
     constructor() {
