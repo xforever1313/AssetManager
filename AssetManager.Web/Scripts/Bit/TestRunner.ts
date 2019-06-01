@@ -9,7 +9,7 @@ class TestRunner {
 
     // ---------------- Fields ----------------
 
-    private instance: TestRunner;
+    private static instance: TestRunner;
 
     private readonly testFixtures: Array<ITestFixture>;
 
@@ -19,7 +19,7 @@ class TestRunner {
         this.testFixtures = new Array<ITestFixture>();
     }
 
-    Instance(): TestRunner{
+    public static Instance(): TestRunner{
         if(this.instance === undefined){
             this.instance = new TestRunner();
         }
@@ -27,17 +27,17 @@ class TestRunner {
         return this.instance;
     }
 
-    AddTestFixture(fixture: ITestFixture): void{
+    public AddTestFixture(fixture: ITestFixture): void{
         this.testFixtures.push(fixture);
     }
 
-    AddTestFixtures(fixtures: Array<ITestFixture>): void {
+    public AddTestFixtures(fixtures: Array<ITestFixture>): void {
         for(let fix of fixtures){
             this.AddTestFixture(fix);
         }
     }
 
-    Execute(): TestResults {
+    public Execute(): TestResults {
         let results: TestResults = new TestResults();
 
         for(let fix of this.testFixtures){
@@ -76,25 +76,25 @@ class TestRunner {
 
 class TestResults{
 
-    // ---------------- Fields ----------------
-
-    passes: Array<string>;
-    fails: Array<string>;
-
     // ---------------- Constructor ----------------
 
     public constructor() {
-        this.passes = new Array<string>();
-        this.fails = new Array<string>();
+        this.Passes = new Array<string>();
+        this.Fails = new Array<string>();
     }
+
+    // ---------------- Properties ----------------
+
+    public Passes: Array<string>;
+    public Fails: Array<string>;
 
     // ---------------- Functions ----------------
 
-    AddPass(message: string): void {
-        this.passes.push(message);
+    public AddPass(message: string): void {
+        this.Passes.push(message);
     }
 
-    AddFail(message: string): void {
-        this.fails.push(message);
+    public AddFail(message: string): void {
+        this.Fails.push(message);
     }
 }

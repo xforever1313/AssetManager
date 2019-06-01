@@ -1,0 +1,20 @@
+﻿@using AssetManager.Api;
+
+@{
+    ViewData["Title"] = "Built In Test";
+    Layout = "_Content";
+    @model IModel;
+}
+
+<div id="messages"></div>
+
+<div id="overall"></div>
+
+@section scripts
+{
+    <script src="~/static/compiled_ts/Bit.js"></script>
+    <script>
+        let main = new Main();
+        main.Run(document.getElementById("messages"), document.getElementById("overall"));
+    </script>
+}
