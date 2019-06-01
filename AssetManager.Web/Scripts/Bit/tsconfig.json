@@ -1,0 +1,19 @@
+{
+  // Taken from here: https://www.typescriptlang.org/docs/handbook/asp-net-core.html
+  // ...and here: https://www.mithunvp.com/typescript-in-asp-net-5-using-visual-studio-2015/
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es5",
+    "outFile": "../../wwwroot/static/compiled_ts/Bit.js"
+  },
+  "include": [
+    "../Common/*.ts",
+    "../AssetAdder/*.ts",
+    "../AssetTypeMaker/*.ts",
+    "*.ts"
+  ],
+  "compileOnSave": true
+}
