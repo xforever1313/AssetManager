@@ -5,6 +5,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+/// <reference path="./BaseAttributeType.ts"/>
+
 class StringAttributeType extends BaseAttributeType {
 
     // ---------------- Fields ----------------

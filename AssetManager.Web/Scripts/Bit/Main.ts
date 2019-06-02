@@ -7,6 +7,8 @@
 
 /// <reference path="../../../SethCS/TypescriptBit/Bit.ts"/>
 /// <reference path="Common/HelpersTest.ts"/>
+/// <reference path="Common/StringAttributeTypeInfoTests.ts"/>
+/// <reference path="Common/IntegerAttributeTypeInfoTests.ts"/>
 
 class Main {
     constructor() {
@@ -16,6 +18,8 @@ class Main {
     Run(messageDiv: HTMLDivElement, overallDiv: HTMLDivElement): void {
         let instance: TestRunner = TestRunner.Instance();
         instance.AddTestFixture(new HelpersTest());
+        instance.AddTestFixture(new StringAttributeTypeInfoTests());
+        instance.AddTestFixture(new IntegerAttributeTypeInfoTests());
 
         let results: TestResults = instance.Execute();
 

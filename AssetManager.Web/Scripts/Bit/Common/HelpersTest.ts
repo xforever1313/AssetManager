@@ -31,6 +31,8 @@ class HelpersTest implements ITestFixture {
         this.tests.push(
             new Test("IsNotNullOrUndefined Test", this.DoIsNotNullOrUndefinedTest.bind(fixture))
         );
+
+        this.FixtureName = "Helpers Tests";
     }
 
     // ---------------- Properties ----------------

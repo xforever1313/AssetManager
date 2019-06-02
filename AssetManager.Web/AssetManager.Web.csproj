@@ -19,6 +19,8 @@
     <None Remove="Scripts\AssetTypeMaker\Helpers.ts" />
     <None Remove="Scripts\AssetTypeMaker\IAttribute.ts" />
     <None Remove="Scripts\AssetTypeMaker\StringAttribute.ts" />
+    <None Remove="Scripts\Bit\Common\IntegerAttributeTypeInfoTests.ts" />
+    <None Remove="Scripts\Bit\Common\StringAttributeTypeInfoTests.ts" />
     <None Remove="Scripts\Bit\Main.ts" />
     <None Remove="Scripts\Bit\Common\HelpersTest.ts" />
     <None Remove="Scripts\Common\AssetNameAttributeTypeInfo.ts" />
@@ -58,6 +60,8 @@
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\IAttributeType.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\IntegerAttributeType.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\StringAttributeType.ts" />
+    <TypeScriptCompile Include="Scripts\Bit\Common\IntegerAttributeTypeInfoTests.ts" />
+    <TypeScriptCompile Include="Scripts\Bit\Common\StringAttributeTypeInfoTests.ts" />
     <TypeScriptCompile Include="Scripts\Bit\Main.ts" />
     <TypeScriptCompile Include="Scripts\Bit\Common\HelpersTest.ts" />
     <TypeScriptCompile Include="Scripts\Common\AssetNameAttributeTypeInfo.ts" />

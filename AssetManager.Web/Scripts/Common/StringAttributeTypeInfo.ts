@@ -40,6 +40,9 @@ class StringAttributeTypeInfo {
         if (def === "") {
             this.defaultValue = null;
         }
+        else if (def === undefined) {
+            this.defaultValue = null;
+        }
         else {
             this.defaultValue = def;
         }
