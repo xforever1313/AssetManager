@@ -18,5 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AssetManager.Api\AssetManager.Api.csproj" />
+    <ProjectReference Include="..\AssetManager.Sqlite\AssetManager.Sqlite.csproj" />
   </ItemGroup>
 </Project>

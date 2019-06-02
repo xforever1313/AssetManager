@@ -8,6 +8,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using NUnit.Framework;
 
 namespace AssetMananger.UnitTests.Web.Selenium
@@ -16,10 +17,14 @@ namespace AssetMananger.UnitTests.Web.Selenium
     {
         // ---------------- Fields ----------------
 
-        private readonly Process process;
+        private Process process;
         private readonly ushort port;
 
-        private static readonly string webProject;
+        private readonly Thread readerThread;
+        private readonly ManualResetEvent applicationStartedEvent;
+
+        private static readonly string webDll;
+        private static readonly string workingDirectory;
 
         // ---------------- Constructor ----------------
 
@@ -31,23 +36,43 @@ namespace AssetMananger.UnitTests.Web.Selenium
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
                 FileName = "dotnet",
-                Arguments = "run -- --urls=http://localhost:" + this.port,
-                UseShellExecute = true,
-                WorkingDirectory = webProject
+                Arguments = "exec " + webDll + " --urls=http://localhost:" + this.port,
+                UseShellExecute = false,
+                WorkingDirectory = workingDirectory,
+                RedirectStandardOutput = true,
+                RedirectStandardInput = true,
+                CreateNoWindow = false
             };
 
             this.process.StartInfo = startInfo;
+            this.readerThread = new Thread( this.ReaderThreadEntry );
+            this.applicationStartedEvent = new ManualResetEvent( false );
         }
 
         static WebLauncher()
         {
-            webProject = Path.Combine(
+            string runTime = Path.GetFileName( TestContext.CurrentContext.WorkDirectory );
+            string configuration = Path.GetFileName(
+                Path.GetFullPath(
+                    Path.Combine( TestContext.CurrentContext.WorkDirectory, ".." )
+                )
+            );
+
+            workingDirectory = Path.Combine(
                 TestContext.CurrentContext.WorkDirectory, // netcoreapp2.2
                 "..", // Debug Folder
                 "..", // Bin
                 "..", // Unit Tests
                 "..", // Project Root
                 "AssetManager.Web"
+            );
+
+            webDll = Path.Combine(
+                workingDirectory,
+                "bin",
+                configuration,
+                runTime,
+                "AssetManager.Web.dll"
             );
 
             FirefoxDriverDirectory = TestContext.CurrentContext.WorkDirectory;
@@ -63,13 +88,44 @@ namespace AssetMananger.UnitTests.Web.Selenium
         public void StartProcess()
         {
             this.process.Start();
+            this.readerThread.Start();
+            if ( this.applicationStartedEvent.WaitOne( 10 * 1000 ) == false )
+            {
+                this.Dispose();
+                throw new TimeoutException( "Application did not start in 10 seconds, abandon test" );
+            }
         }
 
         public void Dispose()
         {
-            this.process?.Kill();
-            this.process?.WaitForExit();
+            this.process?.StandardInput.WriteLine( "\x3" );
+            this.process?.StandardInput.Close();
+            if ( this.process?.WaitForExit( 5 * 1000 ) == false )
+            {
+                Console.WriteLine( "Killing process" );
+                this.process?.Kill();
+            }
             this.process?.Dispose();
+            this.readerThread.Join();
+            this.process = null;
+        }
+
+        private void ReaderThreadEntry()
+        {
+            string line;
+            do
+            {
+                line = this.process.StandardOutput.ReadLine();
+                if ( line != null )
+                {
+                    Console.WriteLine( line );
+                    if ( line.Contains( "Application started" ) )
+                    {
+                        this.applicationStartedEvent.Set();
+                    }
+                }
+            }
+            while ( line != null );
         }
     }
 }

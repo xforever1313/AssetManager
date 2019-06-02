@@ -5,7 +5,9 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
+using System;
 using System.Linq;
+using System.Reflection;
 using AssetManager.Api;
 using AssetManager.Api.Attributes;
 using AssetManager.Api.Attributes.Types;
