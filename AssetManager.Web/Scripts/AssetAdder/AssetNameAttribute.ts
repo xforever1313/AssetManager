@@ -42,7 +42,7 @@ class AssetNameAttribute extends BaseAttribute {
     // -------- Setters --------
 
     public SetValue(newValue: string): AssetNameAttribute {
-        if (newValue === "") {
+        if (Helpers.StringIsNullOrEmpty(newValue)) {
             this.value = null;
         }
         else {

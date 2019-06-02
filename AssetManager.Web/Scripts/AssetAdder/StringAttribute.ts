@@ -49,7 +49,7 @@ class StringAttribute extends BaseAttribute {
     // -------- Setters --------
 
     public SetValue(newValue: string): StringAttribute {
-        if (newValue === "") {
+        if (Helpers.StringIsNullOrEmpty(newValue)) {
             this.value = null;
         }
         else {
