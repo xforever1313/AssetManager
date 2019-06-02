@@ -9,6 +9,7 @@
 /// <reference path="Common/HelpersTest.ts"/>
 /// <reference path="Common/StringAttributeTypeInfoTests.ts"/>
 /// <reference path="Common/IntegerAttributeTypeInfoTests.ts"/>
+/// <reference path="Common/AssetNameAttributeTypeInfoTests.ts"/>
 
 class Main {
     constructor() {
@@ -20,6 +21,7 @@ class Main {
         instance.AddTestFixture(new HelpersTest());
         instance.AddTestFixture(new StringAttributeTypeInfoTests());
         instance.AddTestFixture(new IntegerAttributeTypeInfoTests());
+        instance.AddTestFixture(new AssetNameAttributeTypeInfoTests());
 
         let results: TestResults = instance.Execute();
 
