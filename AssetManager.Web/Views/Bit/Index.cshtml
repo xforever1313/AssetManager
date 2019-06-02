@@ -6,12 +6,20 @@
     @model IModel;
 }
 
+<div class="alert alert-info">
+    This is the Built-In-Test (BIT) for clients of AssetManager.  This runs various tests in your browser to make
+    sure your browser is compatible with AssetManager.  If any fail, please <a href="https://github.com/xforever1313/AssetManager/issues">submit an ssue</a>
+    which includes your browser, version, operating system, and which tests failed.
+</div>
+
 <div id="messages"></div>
 
 <div id="overall">
     Running...
     <noscript>
-        Can not run!
+        <div class="alert alert-danger">
+            Can not run!  JavaScript is required!
+        </div>
     </noscript>
 </div>
 
