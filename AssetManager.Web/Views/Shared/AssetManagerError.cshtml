@@ -1,0 +1,28 @@
+﻿@using System.Net;
+
+@{
+    ViewData["Title"] = "Error";
+    Layout = "_Content";
+    @model ErrorModel;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-danger">
+            @if ( @Model.HttpStatusCode == HttpStatusCode.InternalServerError )
+            {
+                <p>An error occurred Server-Side, please try to reproduce and <a href="https://github.com/xforever1313/AssetManager/issues">submit an issue.</a></p>
+            }
+            else if ( @Model.HttpStatusCode == HttpStatusCode.BadRequest )
+            {
+                <p>An error occurred with the client's request.  Did you edit the request somehow in a way that was invalid?</p>
+            }
+            else if(@Model.HttpStatusCode == HttpStatusCode.NotFound )
+            {
+                <p>Page Not Found</p>
+            }
+
+            <p>@Model.Message</p>
+        </div>
+    </div>
+</div>

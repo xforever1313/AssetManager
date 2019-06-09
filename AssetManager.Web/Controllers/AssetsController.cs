@@ -25,40 +25,43 @@ namespace AssetManager.Web.Controllers
 
         public IActionResult Index()
         {
-            DatabaseQueryMultiResult<IList<AssetTypeInfo>> result = this.Api.DataBase.GetAssetTypeInfo();
+            IActionResult action()
+            {
+                DatabaseQueryMultiResult<IList<AssetTypeInfo>> result = this.Api.DataBase.GetAssetTypeInfo();
 
-            return View( new AssetTypeInfoModel( result, this.Api ) );
+                return View( new AssetTypeInfoModel( result, this.Api ) );
+            };
+
+            return this.SafePerformAction( action );
         }
 
         public IActionResult List( string database, int assetTypeId )
         {
-            if ( Guid.TryParse( database, out Guid databaseId ) )
+            IActionResult action()
             {
+                Guid databaseId = ParseGuid( database );
                 AssetListInfo assets = this.Api.DataBase.GetAssetsOfType( databaseId, assetTypeId );
                 AssetListModel model = new AssetListModel( this.Api, assets );
                 return View( model );
             }
-            else
-            {
-                return BadRequest( "Invalid database ID: " + database );
-            }
+
+            return this.SafePerformAction( action );
         }
 
         public IActionResult Add( string database, int assetTypeId )
         {
-            if ( Guid.TryParse( database, out Guid databaseId ) )
+            IActionResult action()
             {
+                Guid databaseId = this.ParseGuid( database );
                 Asset emptyAsset = this.Api.DataBase.GenerateEmptyAsset( databaseId, assetTypeId );
 
                 // TODO: Should we make this one query instead of 2?
                 IAssetType assetType = this.Api.DataBase.GetAssetType( databaseId, assetTypeId );
                 AssetModel assetModel = new AssetModel( this.Api, emptyAsset, assetTypeId, assetType );
                 return View( assetModel );
-            }
-            else
-            {
-                return BadRequest( "Invalid database ID: " + database );
-            }
+            };
+
+            return this.SafePerformAction( action );
         }
 
         [HttpPost]
@@ -66,27 +69,22 @@ namespace AssetManager.Web.Controllers
         {
             try
             {
-                if ( Guid.TryParse( database, out Guid databaseId ) )
+                Guid databaseId = this.ParseGuid( database );
+                if ( assetBuilder.Success )
                 {
-                    if ( assetBuilder.Success )
+                    // TODO: Should we make this one query instead of 2?
+                    Asset asset = this.Api.DataBase.GenerateEmptyAsset( databaseId, assetTypeId );
+                    foreach ( KeyValuePair<string, IAttribute> attribute in assetBuilder.Attributes )
                     {
-                        Asset asset = this.Api.DataBase.GenerateEmptyAsset( databaseId, assetTypeId );
-                        foreach ( KeyValuePair<string, IAttribute> attribute in assetBuilder.Attributes )
-                        {
-                            asset.SetAttribute( attribute.Key, attribute.Value );
-                        }
-                        this.Api.DataBase.AddAsset( asset );
+                        asset.SetAttribute( attribute.Key, attribute.Value );
+                    }
+                    this.Api.DataBase.AddAsset( asset );
 
-                        return Ok();
-                    }
-                    else
-                    {
-                        return BadRequest( assetBuilder.ErrorMessage );
-                    }
+                    return Ok();
                 }
                 else
                 {
-                    return BadRequest( "Invalid database ID: " + database );
+                    return BadRequest( assetBuilder.ErrorMessage );
                 }
             }
             catch ( Exception e )
@@ -98,17 +96,25 @@ namespace AssetManager.Web.Controllers
         [HttpPost]
         public IActionResult Delete( string database, int assetTypeId, int assetId )
         {
-            try
+            IActionResult action()
             {
                 Guid databaseGuid = Guid.Parse( database );
                 this.Api.DataBase.DeleteAsset( databaseGuid, assetTypeId, assetId );
 
                 return Redirect( "/Assets/List/" + database + "/" + assetTypeId );
-            }
-            catch ( Exception e )
+            };
+            return this.SafePerformAction( action );
+        }
+
+        private Guid ParseGuid( string database )
+        {
+            if ( Guid.TryParse( database, out Guid databaseId ) )
             {
-                // TODO: Return an error view?
-                return BadRequest( e.Message );
+                return databaseId;
+            }
+            else
+            {
+                throw new ArgumentException( "Invalid database ID: " + database );
             }
         }
     }
