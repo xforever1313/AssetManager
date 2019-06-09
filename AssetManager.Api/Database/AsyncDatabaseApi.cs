@@ -47,6 +47,11 @@ namespace AssetManager.Api.Database
             return Task.Factory.StartNew( () => this.databaseApi.AddAsset( asset ) );
         }
 
+        public Task AsyncDeleteAsset( Guid databaseId, int assetTypeId, int assetId )
+        {
+            return Task.Factory.StartNew( () => this.databaseApi.DeleteAsset( databaseId, assetTypeId, assetId ) );
+        }
+
         public Task<AssetListInfo> GetAssets( Guid databaseId, int assetTypeId )
         {
             return Task.Factory.StartNew( () => this.databaseApi.GetAssetsOfType( databaseId, assetTypeId ) );

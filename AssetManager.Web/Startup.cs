@@ -77,6 +77,11 @@ namespace AssetManager.Web
                         name: "AssetList",
                         template: "{controller=Assets}/{action=List}/{database}/{assetTypeId}"
                     );
+
+                    routes.MapRoute(
+                        name: "QueryAsset",
+                        template: "{controller=Assets}/{action=Edit}/{database}/{assetTypeId}/{assetId}"
+                    );
                 }
              );
         }

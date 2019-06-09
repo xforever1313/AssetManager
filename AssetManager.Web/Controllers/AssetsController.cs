@@ -94,5 +94,22 @@ namespace AssetManager.Web.Controllers
                 return BadRequest( e.Message );
             }
         }
+
+        [HttpPost]
+        public IActionResult Delete( string database, int assetTypeId, int assetId )
+        {
+            try
+            {
+                Guid databaseGuid = Guid.Parse( database );
+                this.Api.DataBase.DeleteAsset( databaseGuid, assetTypeId, assetId );
+
+                return Redirect( "/Assets/List/" + database + "/" + assetTypeId );
+            }
+            catch ( Exception e )
+            {
+                // TODO: Return an error view?
+                return BadRequest( e.Message );
+            }
+        }
     }
 }

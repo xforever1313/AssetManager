@@ -129,6 +129,31 @@ namespace AssetManager.Api.Database
             }
         }
 
+        public void DeleteAsset( Guid databaseId, int assetTypeId, int assetId )
+        {
+            this.GuidCheck( databaseId );
+
+            using ( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs[databaseId] ) )
+            {
+                AssetType assetType = this.GetAssetType( conn, assetTypeId );
+
+                AssetInstance asset = conn.AssetInstances.FirstOrDefault( a => a.Id == assetId );
+                if ( asset == null )
+                {
+                    throw new ArgumentException( "Could not find asset with ID " + assetId + " in database " + this.DatabaseNames[databaseId] );
+                }
+
+                // First, we need to delete all values that are related to the asset from the database.
+                IEnumerable<AssetInstanceAttributeValues> values = conn.AssetInstanceAttributeValues.Where( v => v.AssetInstance.Id == asset.Id );
+                conn.AssetInstanceAttributeValues.RemoveRange( values );
+
+                // Lastly, delete the asset itself.
+                conn.AssetInstances.Remove( asset );
+
+                conn.SaveChanges();
+            }
+        }
+
         public IAssetType GetAssetType( Guid databaseId, int assetTypeId )
         {
             this.GuidCheck( databaseId );
@@ -252,7 +277,7 @@ namespace AssetManager.Api.Database
         {
             this.GuidCheck( databaseId );
 
-            List<Asset> assets = new List<Asset>();
+            Dictionary<int, Asset> assets = new Dictionary<int, Asset>();
 
             using ( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs[databaseId] ) )
             {
@@ -284,7 +309,7 @@ namespace AssetManager.Api.Database
                         asset.SetAttribute( value.AttributeKey.Name, attr );
                     }
 
-                    assets.Add( asset );
+                    assets.Add( assetInstance.Id, asset );
                 }
 
                 return new AssetListInfo( databaseId, assets, assetType.Id, assetType.Name );

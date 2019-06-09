@@ -35,6 +35,6 @@ namespace AssetManager.Web.Models
 
         public int AssetTypeID { get; private set; }
 
-        public IList<Asset> Assets { get; private set; }
+        public IReadOnlyDictionary<int, Asset> Assets { get; private set; }
     }
 }

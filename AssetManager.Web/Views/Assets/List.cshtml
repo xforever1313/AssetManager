@@ -5,7 +5,7 @@
     Layout = "_Content";
     ViewData["Title"] = Model.AssetName;
 
-    IList<Asset> assetList = Model.Assets;
+    IReadOnlyDictionary<int, Asset> assetList = Model.Assets;
 }
 
 @if ( assetList.Count == 0 )
@@ -14,19 +14,21 @@
 }
 else
 {
-    @for ( int i = 0; i < assetList.Count; )
+    List<int> keyList = new List<int>( assetList.Keys );
+    @for ( int i = 0; i < keyList.Count; )
     {
         <div class="row">
-            @for ( ; i < assetList.Count; ++i )
+            @for ( ; i < keyList.Count; ++i )
             {
-                Asset asset = assetList[i];
+                int key = keyList[i];
+                Asset asset = assetList[key];
 
                 <div class="col-md-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <strong style="font-size:2em;">@asset.Name</strong>
                         </div>
-                        <div class="panel panel-body">
+                        <div class="panel-body">
                             @foreach ( string attributeKey in asset.Keys )
                             {
                                 AttributeTypes attributeType = asset.GetAttributeTypeOfKey( attributeKey );
@@ -52,6 +54,15 @@ else
                                     // Skip the AssetName type, as that is already defined in the title.
                                 }
                             }
+                        </div>
+                        <div class="panel-footer">
+                            <form style="float:left;margin-right:1em;">
+                                <button type="submit" class="btn btn-success" formmethod="post"><i class="fa fa-edit"></i> Edit</button>
+                            </form>
+                            <form style="float:right;" action="/Assets/Delete/@asset.DatabaseId/@Model.AssetTypeID/@key" method="post">
+                                <button type="submit" class="btn btn-danger" formmethod="post"><i class="fa fa-trash"></i> Delete</button>
+                            </form>
+                            <div style="clear: both;"></div>
                         </div>
                     </div>
                 </div>

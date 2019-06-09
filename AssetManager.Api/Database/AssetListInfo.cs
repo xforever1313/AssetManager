@@ -19,7 +19,7 @@ namespace AssetManager.Api.Database
     {
         // ---------------- Constructor ----------------
 
-        public AssetListInfo( Guid databaseId, IList<Asset> assetList, int assetTypeId, string assetTypeName )
+        public AssetListInfo( Guid databaseId, IReadOnlyDictionary<int, Asset> assetList, int assetTypeId, string assetTypeName )
         {
             this.DatabaseId = databaseId;
             this.AssetList = assetList;
@@ -33,8 +33,9 @@ namespace AssetManager.Api.Database
 
         /// <summary>
         /// A list of the assets that fall under the specified type.
+        /// Key is the Asset ID in the database.  Value is the model of the asset.
         /// </summary>
-        public IList<Asset> AssetList { get; private set; }
+        public IReadOnlyDictionary<int, Asset> AssetList { get; private set; }
 
         /// <summary>
         /// The ID of the asset type these assets fall under.

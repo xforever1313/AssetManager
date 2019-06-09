@@ -44,6 +44,11 @@ namespace AssetManager.Api.Database
         Task<int> AsyncAddAsset( Asset asset );
 
         /// <summary>
+        /// Deletes the given asset from the database.
+        /// </summary>
+        Task AsyncDeleteAsset( Guid databaseId, int assetTypeId, int assetId );
+
+        /// <summary>
         /// Gets a list of assets based on the given asset type.
         /// </summary>
         /// <returns>
