@@ -96,6 +96,14 @@ namespace AssetManager.Api
 
         // ---------------- Functions ----------------
 
+        /// <summary>
+        /// Does the asset contain the given key?
+        /// </summary>
+        public bool ContainsKey( string key )
+        {
+            return this.attributes.ContainsKey( key );
+        }
+
         public AttributeTypes GetAttributeTypeOfKey( string key )
         {
             this.KeyCheck( key );

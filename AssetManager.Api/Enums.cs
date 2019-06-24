@@ -28,7 +28,7 @@ namespace AssetManager.Api
         /// Render the value as an image.
         /// The value is a URL to an image.
         /// </summary>
-        Image = 4,
+        ImageUrl = 4,
 
         /// <summary>
         /// Render the value as an ordered list.
