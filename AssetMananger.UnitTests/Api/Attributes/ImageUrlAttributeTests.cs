@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace AssetMananger.UnitTests.Api.Attributes
 {
     [TestFixture]
-    public class ImagueUrlAttributeTests
+    public class ImageUrlAttributeTests
     {
         // ---------------- Tests ----------------
 

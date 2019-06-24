@@ -11,6 +11,7 @@
     <None Remove="Scripts\AssetAdder\AssetNameAttribute.ts" />
     <None Remove="Scripts\AssetAdder\BaseAttribute.ts" />
     <None Remove="Scripts\AssetAdder\IAttribute.ts" />
+    <None Remove="Scripts\AssetAdder\ImageUrlAttribute.ts" />
     <None Remove="Scripts\AssetAdder\IntegerAttribute.ts" />
     <None Remove="Scripts\AssetAdder\StringAttribute.ts" />
     <None Remove="Scripts\AssetTypeMaker.ts" />
@@ -18,8 +19,11 @@
     <None Remove="Scripts\AssetTypeMaker\BaseAttribute.ts" />
     <None Remove="Scripts\AssetTypeMaker\Helpers.ts" />
     <None Remove="Scripts\AssetTypeMaker\IAttribute.ts" />
+    <None Remove="Scripts\AssetTypeMaker\ImageUrlAttributeType.ts" />
     <None Remove="Scripts\AssetTypeMaker\StringAttribute.ts" />
+    <None Remove="Scripts\Bit\AssetAdder\ImageUrlAttributeTests.ts" />
     <None Remove="Scripts\Bit\AssetAdder\IntegerAttributeTests.ts" />
+    <None Remove="Scripts\Bit\Common\ImageUrlAttributeTypeInfoTests.ts" />
     <None Remove="Scripts\Bit\Common\IntegerAttributeTypeInfoTests.ts" />
     <None Remove="Scripts\Bit\Common\StringAttributeTypeInfoTests.ts" />
     <None Remove="Scripts\Bit\Main.ts" />
@@ -28,6 +32,7 @@
     <None Remove="Scripts\Common\BaseInputWrapper.ts" />
     <None Remove="Scripts\Common\Enums.ts" />
     <None Remove="Scripts\Common\IInputWrapper.ts" />
+    <None Remove="Scripts\Common\ImageUrlAttributeTypeInfo.ts" />
     <None Remove="Scripts\Common\IntegerAttributeTypeInfo.ts" />
     <None Remove="Scripts\Common\StringAttributeTypeInfo.ts" />
     <None Remove="Scripts\Common\TextBoxWrapper.ts" />
@@ -52,6 +57,7 @@
     <TypeScriptCompile Include="Scripts\AssetAdder\AssetNameAttribute.ts" />
     <TypeScriptCompile Include="Scripts\AssetAdder\BaseAttribute.ts" />
     <TypeScriptCompile Include="Scripts\AssetAdder\IAttribute.ts" />
+    <TypeScriptCompile Include="Scripts\AssetAdder\ImageUrlAttribute.ts" />
     <TypeScriptCompile Include="Scripts\AssetAdder\IntegerAttribute.ts" />
     <TypeScriptCompile Include="Scripts\AssetAdder\StringAttribute.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\AssetNameAttributeType.ts" />
@@ -59,9 +65,12 @@
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\AssetTypeNameEditor.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\BaseAttributeType.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\IAttributeType.ts" />
+    <TypeScriptCompile Include="Scripts\AssetTypeMaker\ImageUrlAttributeType.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\IntegerAttributeType.ts" />
     <TypeScriptCompile Include="Scripts\AssetTypeMaker\StringAttributeType.ts" />
+    <TypeScriptCompile Include="Scripts\Bit\AssetAdder\ImageUrlAttributeTests.ts" />
     <TypeScriptCompile Include="Scripts\Bit\AssetAdder\IntegerAttributeTests.ts" />
+    <TypeScriptCompile Include="Scripts\Bit\Common\ImageUrlAttributeTypeInfoTests.ts" />
     <TypeScriptCompile Include="Scripts\Bit\Common\IntegerAttributeTypeInfoTests.ts" />
     <TypeScriptCompile Include="Scripts\Bit\Common\StringAttributeTypeInfoTests.ts" />
     <TypeScriptCompile Include="Scripts\Bit\Main.ts" />
@@ -69,6 +78,7 @@
     <TypeScriptCompile Include="Scripts\Common\AssetNameAttributeTypeInfo.ts" />
     <TypeScriptCompile Include="Scripts\Common\BaseInputWrapper.ts" />
     <TypeScriptCompile Include="Scripts\Common\Enums.ts" />
+    <TypeScriptCompile Include="Scripts\Common\ImageUrlAttributeTypeInfo.ts" />
     <TypeScriptCompile Include="Scripts\Common\IInputWrapper.ts" />
     <TypeScriptCompile Include="Scripts\Common\IntegerAttributeTypeInfo.ts" />
     <TypeScriptCompile Include="Scripts\Common\StringAttributeTypeInfo.ts" />

@@ -48,6 +48,9 @@ class AssetTypeMaker {
             case AttributeType.AssetNameAttribute:
                 attr = new AssetNameAttributeType();
                 break;
+            case AttributeType.ImageUrl:
+                attr = new ImageUrlAttributeType();
+                break;
         }
 
         if (attr !== undefined) {

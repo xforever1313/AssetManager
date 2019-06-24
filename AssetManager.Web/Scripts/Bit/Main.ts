@@ -7,12 +7,13 @@
 
 /// <reference path="../../../SethCS/TypescriptBit/Bit.ts"/>
 /// <reference path="Common/HelpersTest.ts"/>
-/// <reference path="Common/StringAttributeTypeInfoTests.ts"/>
-/// <reference path="Common/IntegerAttributeTypeInfoTests.ts"/>
 /// <reference path="Common/AssetNameAttributeTypeInfoTests.ts"/>
+/// <reference path="Common/ImageUrlAttributeTypeInfoTests.ts"/>
+/// <reference path="Common/IntegerAttributeTypeInfoTests.ts"/>
+/// <reference path="Common/StringAttributeTypeInfoTests.ts"/>
+/// <reference path="AssetAdder/AssetNameAttributeTests.ts"/>
 /// <reference path="AssetAdder/IntegerAttributeTests.ts"/>
 /// <reference path="AssetAdder/StringAttributeTests.ts"/>
-/// <reference path="AssetAdder/AssetNameAttributeTests.ts"/>
 
 class Main {
     constructor() {
@@ -22,12 +23,14 @@ class Main {
     Run(messageDiv: HTMLDivElement, overallDiv: HTMLDivElement): void {
         let instance: TestRunner = TestRunner.Instance();
         instance.AddTestFixture(new HelpersTest());
-        instance.AddTestFixture(new StringAttributeTypeInfoTests());
-        instance.AddTestFixture(new IntegerAttributeTypeInfoTests());
         instance.AddTestFixture(new AssetNameAttributeTypeInfoTests());
+        instance.AddTestFixture(new ImageUrlAttributeTypeInfoTests());
+        instance.AddTestFixture(new IntegerAttributeTypeInfoTests());
+        instance.AddTestFixture(new StringAttributeTypeInfoTests());
+        instance.AddTestFixture(new AssetNameAttributeTests());
+        instance.AddTestFixture(new ImageUrlAttributeTests());
         instance.AddTestFixture(new IntegerAttributeTests());
         instance.AddTestFixture(new StringAttributeTests());
-        instance.AddTestFixture(new AssetNameAttributeTests());
 
         let results: TestResults = instance.Execute();
 
