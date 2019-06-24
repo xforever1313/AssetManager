@@ -64,6 +64,15 @@
                                 break;
                             }
 
+                            case AttributeTypes.ImageUrl:
+                            {
+                                ImageUrlAttributeType type = (ImageUrlAttributeType)attrType;
+                                ImageUrlAttribute attr = Model.Asset.CloneAttributeAsType<ImageUrlAttribute>( type.Key );
+                                Tuple<ImageUrlAttributeType, ImageUrlAttribute> model = new Tuple<ImageUrlAttributeType, ImageUrlAttribute>( type, attr );
+                                <partial name="~/Views/ReadWriteAssetAttributes/_ImageUrlAttribute.cshtml" model="model"/>
+                                break;
+                            }
+
                             default:
                                 throw new NotImplementedException( attrType.AttributeType + " not implemented yet." );
                         }

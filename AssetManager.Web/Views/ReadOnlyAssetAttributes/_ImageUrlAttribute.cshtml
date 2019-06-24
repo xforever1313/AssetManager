@@ -1,0 +1,30 @@
+﻿
+@{
+    @using AssetManager.Api.Attributes;
+    @model KeyValuePair<string, ImageUrlAttribute>;
+}
+
+<div>
+    <strong><i class="fa fa-caret-right"></i> @Model.Key:</strong>
+    @if ( string.IsNullOrWhiteSpace( Model.Value.Value ) )
+    {
+        <span> (None)</span>
+    }
+    else
+    {
+        <div>
+            <img 
+                 src="@Model.Value.Value"
+                 @if ( @Model.Value.Width.HasValue )
+                 {
+                     @:width="@Model.Value.Width.Value"
+                 }
+                 @if ( @Model.Value.Height.HasValue )
+                 {
+                     @:height="@Model.Value.Height.Value"
+                 }
+             />
+        </div>
+    }
+</div>
+

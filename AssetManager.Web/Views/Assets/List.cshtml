@@ -51,6 +51,14 @@ else
                                         break;
                                     }
 
+                                    case AttributeTypes.ImageUrl:
+                                    {
+                                        ImageUrlAttribute imgAttr = asset.CloneAttributeAsType<ImageUrlAttribute>( attributeKey );
+                                        KeyValuePair<string, ImageUrlAttribute> kvPair = new KeyValuePair<string, ImageUrlAttribute>( attributeKey, imgAttr );
+                                        <partial name="~/Views/ReadOnlyAssetAttributes/_ImageUrlAttribute.cshtml", model="kvPair"/>
+                                        break;
+                                    }
+
                                     // Skip the AssetName type, as that is already defined in the title.
                                 }
                             }

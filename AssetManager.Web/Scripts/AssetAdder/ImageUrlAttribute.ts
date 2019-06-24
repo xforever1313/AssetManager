@@ -54,15 +54,21 @@ class ImageUrlAttribute extends BaseAttribute {
         let data = {
             "Key": this.Key,
             "AttributeType": this.AttributeType,
-            "Value": {
-                "SchemaVersion": 1,
-                "Width": this.GetWidth(),
-                "Height": this.GetHeight(),
-                "Value": this.GetValue()
-            }
+            "Value": this.GetValueJson()
         };
 
         return data;
+    }
+
+    private GetValueJson(): string {
+        let value = {
+            "SchemaVersion": 1,
+            "Width": this.GetWidth(),
+            "Height": this.GetHeight(),
+            "Value": this.GetValue()
+        };
+
+        return JSON.stringify(value);
     }
 
     // -------- Setters --------

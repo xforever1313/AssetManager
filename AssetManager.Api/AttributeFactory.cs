@@ -30,6 +30,9 @@ namespace AssetManager.Api
                 case AttributeTypes.AssetName:
                     return new AssetNameAttribute();
 
+                case AttributeTypes.ImageUrl:
+                    return new ImageUrlAttribute();
+
                 default:
                     throw new ArgumentException( "Invalid Attribute Type: " + attributeType );
             }
