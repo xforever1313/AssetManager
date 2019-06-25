@@ -9,37 +9,44 @@
     string escapedKey = typeInfo.EscapeKey();
 }
 
-<label><i class="fa fa-caret-right"></i> @typeInfo.Key@if ( typeInfo.Required ){<span style="color:darkred;"> *</span>}</label>
-<input id="imgUrl_@(escapedKey)_value"
-       class="form-control"
-       value="@attributeInfo.Value"
-       type="text"
-       name="@typeInfo.Key"
-/>
+<div class="panel panel-default">
+    <div class="panel panel-heading">
+        <label><i class="fa fa-caret-right"></i> @typeInfo.Key@if ( typeInfo.Required ){<span style="color:darkred;"> *</span>}</label>
+    </div>
+    <div class="panel panel-body">
+        <label><i class="fa fa-caret-right"></i> URL</label>
+        <input id="imgUrl_@(escapedKey)_value"
+               class="form-control"
+               value="@attributeInfo.Value"
+               type="text"
+               name="@typeInfo.Key"
+        />
 
-<label><i class="fa fa-caret-right"></i> Width</label>
-<input id="imgUrl_@(escapedKey)_width"
-       class="form-control"
-       @if(@attributeInfo.Width.HasValue)
-       {
-           @:value="@attributeInfo.Width.Value"
-       }
-       type="number"
-       min="0"
-/>
+        <label><i class="fa fa-caret-right"></i>Image Width</label>
+        <input id="imgUrl_@(escapedKey)_width"
+               class="form-control"
+               @if(@attributeInfo.Width.HasValue)
+               {
+                   @:value="@attributeInfo.Width.Value"
+               }
+               type="number"
+               min="0"
+        />
 
-<label><i class="fa fa-caret-right"></i> Height</label>
-<input id="imgUrl_@(escapedKey)_height"
-       class="form-control"
-       @if(@attributeInfo.Height.HasValue)
-       {
-           @:value="@attributeInfo.Height.Value"
-       }
-       type="number"
-       min="0"
-/>
+        <label><i class="fa fa-caret-right"></i>Image Height</label>
+        <input id="imgUrl_@(escapedKey)_height"
+               class="form-control"
+               @if(@attributeInfo.Height.HasValue)
+               {
+                   @:value="@attributeInfo.Height.Value"
+               }
+               type="number"
+               min="0"
+        />
 
-<div id="imgUrl_@(escapedKey)_error"></div>
+        <div id="imgUrl_@(escapedKey)_error"></div>
+    </div>
+</div>
 
 <script>
     let imgUrlAttributeType_@(escapedKey) = new ImageUrlAttributeTypeInfo();
