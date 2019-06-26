@@ -10,12 +10,14 @@
     "outFile": "../../wwwroot/static/compiled_ts/AssetAdder.js"
   },
   "files": [
+    "../Common/ValidatorToInputMapper.ts",
     "BaseAttribute.ts",
     "../Common/BaseInputWrapper.ts",
     "../Common/TextBoxWrapper.ts"
   ],
   "include": [
     "*.ts",
+    "./FrontEnd/*.ts",
     "../Common/*.ts"
   ],
   "compileOnSave": true

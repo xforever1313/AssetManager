@@ -9,8 +9,7 @@ class AssetAdder {
 
     // ---------------- Fields ----------------
 
-    readonly attributes: Array<IAttribute>;
-    readonly inputs: Array<IInputWrapper>;
+    readonly attributes: Array<AttributeInputMapper>;
 
     readonly databaseId: string;
     readonly assetTypeId: number;
@@ -18,8 +17,7 @@ class AssetAdder {
     // ---------------- Constructor ----------------
 
     constructor(databaseId: string, assetTypeId: number) {
-        this.attributes = new Array<IAttribute>();
-        this.inputs = new Array<IInputWrapper>();
+        this.attributes = new Array<AttributeInputMapper>();
         this.databaseId = databaseId;
         this.assetTypeId = assetTypeId;
     }
@@ -28,25 +26,14 @@ class AssetAdder {
 
     // ---------------- Functions ----------------
 
-    public AddAttribute(attribute: IAttribute, input: IInputWrapper) {
+    public AddAttribute(attribute: AttributeInputMapper) {
         this.attributes.push(attribute);
-        this.inputs.push(input);
     }
 
     public Validate(): boolean {
         let success: boolean = true;
         for (let i = 0; i < this.attributes.length; ++i) {
-
-            // First, sync all values
-            this.inputs[i].SyncValue();
-
-            // Then validate, and display any errors.
-            let errors: Array<string> = this.attributes[i].Validate();
-
-            this.inputs[i].DisplayErrors(errors);
-            if (errors.length !== 0) {
-                success = false;
-            }
+            success = this.attributes[i].Validate() && success;
         }
 
         return success;
@@ -65,7 +52,7 @@ class AssetAdder {
             };
 
             for (let i = 0; i < this.attributes.length; ++i) {
-                data.AttributeList.push(this.attributes[i].ToJson());
+                data.AttributeList.push(this.attributes[i].GetValidator().ToJson());
             }
 
             let jsonString: string = JSON.stringify(data);
@@ -94,14 +81,14 @@ class AssetAdder {
     }
 
     private EnableForm(): void {
-        for (let input of this.inputs) {
-            input.Enable();
+        for (let attr of this.attributes) {
+            attr.EnableInputs();
         }
     }
 
     private DisableForm(): void {
-        for (let input of this.inputs) {
-            input.Disable();
+        for (let attr of this.attributes) {
+            attr.DisableInputs();
         }
     }
 }

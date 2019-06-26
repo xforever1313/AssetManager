@@ -26,12 +26,11 @@
 
     let strAttribute_@(escapedKey) = new StringAttribute(strAttributeType_@(escapedKey), "@typeInfo.Key");
 
-    let strForm_@(escapedKey) = new TextboxWrapper(
+    let strHtmlMapper_@(escapedKey) = new StringHtmlToAttribute(
         document.getElementById("str_@escapedKey"),
-        document.getElementById("str_@(escapedKey)_error")
+        document.getElementById("str_@(escapedKey)_error"),
+        strAttribute_@(escapedKey)
     );
 
-    strForm_@(escapedKey).OnSyncValue = function (value) { strAttribute_@(escapedKey).SetValue(value); };
-
-    adder.AddAttribute(strAttribute_@(escapedKey), strForm_@(escapedKey));
+    adder.AddAttribute(strHtmlMapper_@(escapedKey).GetMapper());
 </script>

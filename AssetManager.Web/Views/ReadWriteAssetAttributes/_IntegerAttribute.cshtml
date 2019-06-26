@@ -36,12 +36,11 @@
 
     let intAttribute_@(escapedKey) = new IntegerAttribute(intAttributeType_@(escapedKey), "@typeInfo.Key");
 
-    let intForm_@(escapedKey) = new TextboxWrapper(
+    let intUrlHtmlMapper_@(escapedKey) = new IntegerHtmlToAttribute(
         document.getElementById("integer_@escapedKey"),
-        document.getElementById("integer_@(escapedKey)_error")
+        document.getElementById("integer_@(escapedKey)_error"),
+        intAttribute_@(escapedKey)
     );
 
-    intForm_@(escapedKey).OnSyncValue = function (value) { intAttribute_@(escapedKey).SetValue(parseInt(value)); };
-
-    adder.AddAttribute(intAttribute_@(escapedKey), intForm_@(escapedKey));
+    adder.AddAttribute(intUrlHtmlMapper_@(escapedKey).GetMapper());
 </script>

@@ -5,7 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-interface IAttribute {
+interface IAttribute extends IValidator {
 
     // ---------------- Properties -----------------
 

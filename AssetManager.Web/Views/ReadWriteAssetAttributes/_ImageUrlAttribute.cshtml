@@ -54,12 +54,13 @@
 
     let imgUrlAttribute_@(escapedKey) = new ImageUrlAttribute(imgUrlAttributeType_@(escapedKey), "@typeInfo.Key");
 
-    let imgUrlForm_@(escapedKey)_Value = new TextboxWrapper(
+    let imgUrlHtmlMapper_@(escapedKey) = new ImageUrlHtmlToAttribute(
         document.getElementById("imgUrl_@(escapedKey)_value"),
-        document.getElementById("imgUrl_@(escapedKey)_error")
+        document.getElementById("imgUrl_@(escapedKey)_width"),
+        document.getElementById("imgUrl_@(escapedKey)_height"),
+        document.getElementById("imgUrl_@(escapedKey)_error"),
+        imgUrlAttribute_@(escapedKey)
     );
 
-    imgUrlForm_@(escapedKey)_Value.OnSyncValue = function (value) { imgUrlAttribute_@(escapedKey).SetValue(value); }
-
-    adder.AddAttribute(imgUrlAttribute_@(escapedKey), imgUrlForm_@(escapedKey)_Value);
+    adder.AddAttribute(imgUrlHtmlMapper_@(escapedKey).GetMapper());
 </script>

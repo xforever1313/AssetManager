@@ -9,7 +9,12 @@
   <ItemGroup>
     <None Remove="Scripts\AssetAdder\AssetAdder.ts" />
     <None Remove="Scripts\AssetAdder\AssetNameAttribute.ts" />
+    <None Remove="Scripts\AssetAdder\AttributeInputMapper.ts" />
     <None Remove="Scripts\AssetAdder\BaseAttribute.ts" />
+    <None Remove="Scripts\AssetAdder\FrontEnd\AssetNameHtmlToAttribute.ts" />
+    <None Remove="Scripts\AssetAdder\FrontEnd\ImageUrlHtmlToAttribute.ts" />
+    <None Remove="Scripts\AssetAdder\FrontEnd\IntegerHtmlToAttribute.ts" />
+    <None Remove="Scripts\AssetAdder\FrontEnd\StringHtmlToAttribute.ts" />
     <None Remove="Scripts\AssetAdder\IAttribute.ts" />
     <None Remove="Scripts\AssetAdder\ImageUrlAttribute.ts" />
     <None Remove="Scripts\AssetAdder\IntegerAttribute.ts" />
@@ -34,8 +39,10 @@
     <None Remove="Scripts\Common\IInputWrapper.ts" />
     <None Remove="Scripts\Common\ImageUrlAttributeTypeInfo.ts" />
     <None Remove="Scripts\Common\IntegerAttributeTypeInfo.ts" />
+    <None Remove="Scripts\Common\IValidator.ts" />
     <None Remove="Scripts\Common\StringAttributeTypeInfo.ts" />
     <None Remove="Scripts\Common\TextBoxWrapper.ts" />
+    <None Remove="Scripts\Common\ValidatorToInputMapper.ts" />
   </ItemGroup>
 
 
@@ -55,7 +62,12 @@
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\AssetAdder\AssetAdder.ts" />
     <TypeScriptCompile Include="Scripts\AssetAdder\AssetNameAttribute.ts" />
+    <TypeScriptCompile Include="Scripts\AssetAdder\AttributeInputMapper.ts" />
     <TypeScriptCompile Include="Scripts\AssetAdder\BaseAttribute.ts" />
+    <TypeScriptCompile Include="Scripts\AssetAdder\FrontEnd\AssetNameHtmlToAttribute.ts" />
+    <TypeScriptCompile Include="Scripts\AssetAdder\FrontEnd\ImageUrlHtmlToAttribute.ts" />
+    <TypeScriptCompile Include="Scripts\AssetAdder\FrontEnd\IntegerHtmlToAttribute.ts" />
+    <TypeScriptCompile Include="Scripts\AssetAdder\FrontEnd\StringHtmlToAttribute.ts" />
     <TypeScriptCompile Include="Scripts\AssetAdder\IAttribute.ts" />
     <TypeScriptCompile Include="Scripts\AssetAdder\ImageUrlAttribute.ts" />
     <TypeScriptCompile Include="Scripts\AssetAdder\IntegerAttribute.ts" />
@@ -81,8 +93,10 @@
     <TypeScriptCompile Include="Scripts\Common\ImageUrlAttributeTypeInfo.ts" />
     <TypeScriptCompile Include="Scripts\Common\IInputWrapper.ts" />
     <TypeScriptCompile Include="Scripts\Common\IntegerAttributeTypeInfo.ts" />
+    <TypeScriptCompile Include="Scripts\Common\IValidator.ts" />
     <TypeScriptCompile Include="Scripts\Common\StringAttributeTypeInfo.ts" />
     <TypeScriptCompile Include="Scripts\Common\TextBoxWrapper.ts" />
+    <TypeScriptCompile Include="Scripts\Common\ValidatorToInputMapper.ts" />
   </ItemGroup>
 
 

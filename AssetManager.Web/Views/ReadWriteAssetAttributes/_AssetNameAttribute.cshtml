@@ -26,12 +26,11 @@
 
     let assetNameAttribute_@(escapedKey) = new AssetNameAttribute(assetNameAttributeType_@(escapedKey), "@typeInfo.Key");
 
-    let assetNameForm_@(escapedKey) = new TextboxWrapper(
+    let assetNameHtmlMapper_@(escapedKey) = new AssetNameHtmlToAttribute(
         document.getElementById("assetName_@escapedKey"),
-        document.getElementById("assetName_@(escapedKey)_error")
+        document.getElementById("assetName_@(escapedKey)_error"),
+        assetNameAttribute_@(escapedKey)
     );
 
-    assetNameForm_@(escapedKey).OnSyncValue = function (value) { assetNameAttribute_@(escapedKey).SetValue(value); };
-
-    adder.AddAttribute(assetNameAttribute_@(escapedKey), assetNameForm_@(escapedKey));
+    adder.AddAttribute(assetNameHtmlMapper_@(escapedKey).GetMapper());
 </script>

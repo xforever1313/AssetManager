@@ -26,10 +26,4 @@ interface IInputWrapper {
      * Call this to take the value of the wrapped input and save it somewhere.
      **/
     SyncValue(): void;
-
-    /**
-     * Displays error messages near the input.
-     * @param messages - Messages to display.  Pass in null, undefined, or an empty array to show none.
-     */
-    DisplayErrors(messages: Array<string>): void;
 }

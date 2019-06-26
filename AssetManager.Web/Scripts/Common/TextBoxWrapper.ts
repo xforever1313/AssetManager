@@ -13,8 +13,8 @@ class TextboxWrapper extends BaseInputWrapper {
 
     // ---------------- Constructor ----------------
 
-    constructor(input: HTMLInputElement, errorDiv: HTMLDivElement) {
-        super(input, errorDiv)
+    constructor(input: HTMLInputElement) {
+        super(input)
     }
 
     // ---------------- Functions ----------------

@@ -11,13 +11,10 @@ abstract class BaseInputWrapper implements IInputWrapper {
 
     protected readonly input: HTMLInputElement;
 
-    private errorDiv: HTMLDivElement;
-
     // ---------------- Constructor ----------------
 
-    constructor(input: HTMLInputElement, errorDiv: HTMLDivElement) {
+    constructor(input: HTMLInputElement) {
         this.input = input;
-        this.errorDiv = errorDiv;
     }
 
     // ---------------- Functions ----------------
@@ -31,30 +28,4 @@ abstract class BaseInputWrapper implements IInputWrapper {
     }
 
     public abstract SyncValue(): void;
-
-    public DisplayErrors(messages: Array<string>): void {
-
-        // First, remove all old error message children
-        while (this.errorDiv.firstChild) {
-            this.errorDiv.removeChild(this.errorDiv.firstChild);
-        }
-
-        if (Helpers.IsNullOrUndefined(messages) || (messages.length === 0)) {
-            this.errorDiv.className = "";
-            this.errorDiv.style.margin = "";
-        }
-        else {
-            this.errorDiv.className = "alert alert-danger";
-            this.errorDiv.style.margin = "1em";
-
-            let errorList: HTMLUListElement = document.createElement("ul");
-            for (let msg of messages) {
-                let listElement: HTMLLIElement = document.createElement("li");
-                listElement.innerText = msg;
-                errorList.appendChild(listElement);
-            }
-
-            this.errorDiv.appendChild(errorList);
-        }
-    }
 }
