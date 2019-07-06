@@ -3,6 +3,8 @@ Asset Manager
 
 Asset Manager is a simple asset management system.
 
+[![Build status](https://ci.appveyor.com/api/projects/status/gj2kkkn0jybrw78p?svg=true)](https://ci.appveyor.com/project/xforever1313/assetmanager)
+
 Packages
 --------
 There are none avaiable yet, this software is still a work-in-progress. Therefore, you have to compile it yourself.
