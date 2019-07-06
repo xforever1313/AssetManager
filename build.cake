@@ -47,7 +47,8 @@ Task( "unit_test" )
         {
             Configuration = "Debug",
             NoBuild = true,
-            NoRestore = true
+            NoRestore = true,
+            Filter = "TestCategory!=selenium"
         };
 
         DotNetCoreTest( "./AssetManager.sln", settings );
