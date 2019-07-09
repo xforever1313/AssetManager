@@ -58,7 +58,7 @@ Task( "unit_test" )
             VSTestReportPath = results.CombineWithFilePath( resultsFile )
         };
 
-        DotNetCoreTest( "./AssetManager.sln", settings );
+        DotNetCoreTest( "./AssetMananger.UnitTests/AssetMananger.UnitTests.csproj", settings );
     }
 )
 .IsDependentOn( "debug" )
