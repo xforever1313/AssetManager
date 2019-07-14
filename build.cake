@@ -43,14 +43,22 @@ Task( "unit_test" )
 .Does(
     () =>
     {
+        DirectoryPath results = rootDirectory.Combine( "TestResults" );
+        FilePath resultsFile = new FilePath( "TestResults.xml" );
+        EnsureDirectoryExists( results );
+        CleanDirectory( results );
+
         DotNetCoreTestSettings settings = new DotNetCoreTestSettings
         {
             Configuration = "Debug",
             NoBuild = true,
-            NoRestore = true
+            NoRestore = true,
+            Filter = "TestCategory!=selenium",
+            ResultsDirectory = results,
+            VSTestReportPath = results.CombineWithFilePath( resultsFile )
         };
 
-        DotNetCoreTest( "./AssetManager.sln", settings );
+        DotNetCoreTest( "./AssetMananger.UnitTests/AssetMananger.UnitTests.csproj", settings );
     }
 )
 .IsDependentOn( "debug" )
@@ -123,5 +131,15 @@ Task( "publish_all" )
 .IsDependentOn( "publish_linux" )
 .IsDependentOn( "publish_rasp_pi" )
 .Description( "Packages the app for all platforms.");
+
+Task( "appveyor" )
+.Does(
+    () =>
+    {
+
+    }
+)
+.IsDependentOn( "unit_test" )
+.Description( "Runs on a per-commit basis on appveyor." );
 
 RunTarget( target );

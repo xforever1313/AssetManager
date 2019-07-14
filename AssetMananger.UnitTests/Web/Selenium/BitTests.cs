@@ -18,6 +18,7 @@ namespace AssetMananger.UnitTests.Web.Selenium
     /// This tests runs the TypeScript BIT test to ensure
     /// all of our TypeScript classes work as expected.
     /// </summary>
+    [Category( "selenium" )]
     [TestFixture]
     public class BitTests
     {

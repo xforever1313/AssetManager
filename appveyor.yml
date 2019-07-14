@@ -1,0 +1,50 @@
+# We only care about master for now.
+branches:
+    only:
+        - master
+
+# Do not build tags
+skip_tags: true
+
+#--------------------#
+# Environment Config #
+#--------------------#
+
+image: Visual Studio 2019
+
+matrix:
+    fast_finish: true # Fail right away if something goes wrong.
+
+#--------------#
+# Build Config #
+#--------------#
+
+install:
+    - git submodule update --init --recursive
+
+build_script:
+- ps: >-
+    .\build.ps1 --target=appveyor
+
+    # upload results to AppVeyor
+
+    #$wc = New-Object 'System.Net.WebClient'
+    
+    #$wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResults\TestResults.xml))
+
+notifications:
+    - provider: Email
+      to:
+          - seth@shendrick.net
+      subject: 'AssetManager Build {{status}}'
+
+
+# Cake does this for us.
+test: off
+
+#-----------#
+# Artifacts #
+#-----------#
+
+artifacts:
+    - path: 'TestResults\*.xml'
