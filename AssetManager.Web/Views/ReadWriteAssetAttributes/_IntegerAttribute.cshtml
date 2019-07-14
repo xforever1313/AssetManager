@@ -21,7 +21,16 @@
        {
            @:max="@typeInfo.MaxValue.Value"
        }
-       value="@attributeInfo.Value"
+
+       @if ( @Model.IsEditing )
+       {
+           @:value="@attributeInfo.Value"
+       }
+       else
+       {
+           @:value="@typeInfo.DefaultValue"
+       }
+
        name="@typeInfo.Key"
 />
 

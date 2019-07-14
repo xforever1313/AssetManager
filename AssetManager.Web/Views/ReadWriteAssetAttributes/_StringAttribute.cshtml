@@ -12,9 +12,16 @@
 <label><i class="fa fa-caret-right"></i> @typeInfo.Key@if ( typeInfo.Required ){<span style="color:darkred;"> *</span>}</label>
 <input id="str_@escapedKey"
         class="form-control"
-        value="@attributeInfo.Value"
-        type="text"
-        name="@typeInfo.Key"
+       @if ( @Model.IsEditing )
+       {
+           @:value="@attributeInfo.Value"
+       }
+       else
+       {
+           @:value="@typeInfo.DefaultValue"
+       }
+       type="text"
+       name="@typeInfo.Key"
 />
 
 <div id="str_@(escapedKey)_error"></div>
