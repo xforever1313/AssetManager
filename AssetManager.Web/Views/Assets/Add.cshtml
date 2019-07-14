@@ -5,7 +5,7 @@
     @using AssetManager.Web.Models;
 
     Layout = "_Content";
-    @model AssetModel;
+    @model AddAssetModel;
     ViewData["Title"] = "Add new " + @Model.Asset.AssetType + " asset";
 }
 
@@ -21,7 +21,7 @@
                     JavaScript required to add Assets.
                 </noscript>
                 <script>
-                    let adder = new AssetAdder("@Model.AssetType.DatabaseId", @Model.AssetTypeId);
+                    let adder = new AssetAdder("@Model.AssetType.DatabaseId", @Model.AssetTypeId, 0); // 0 to represent we are adding a new one.
                 </script>
 
                 @foreach ( IAttributeType attrType in @Model.AssetType.AttributeTypes )

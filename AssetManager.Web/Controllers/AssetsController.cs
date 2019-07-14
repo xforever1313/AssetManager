@@ -57,7 +57,7 @@ namespace AssetManager.Web.Controllers
 
                 // TODO: Should we make this one query instead of 2?
                 IAssetType assetType = this.Api.DataBase.GetAssetType( databaseId, assetTypeId );
-                AssetModel assetModel = new AssetModel( this.Api, emptyAsset, assetTypeId, assetType );
+                AddAssetModel assetModel = new AddAssetModel( this.Api, emptyAsset, assetTypeId, assetType );
                 return View( assetModel );
             };
 
@@ -102,7 +102,7 @@ namespace AssetManager.Web.Controllers
 
                 // TODO: Should we make this one query instead of 2?
                 IAssetType assetType = this.Api.DataBase.GetAssetType( databaseId, assetTypeId );
-                AssetModel assetModel = new AssetModel( this.Api, asset, assetTypeId, assetType );
+                EditAssetModel assetModel = new EditAssetModel( this.Api, asset, assetTypeId, assetType, assetId );
                 return View( assetModel );
             };
 

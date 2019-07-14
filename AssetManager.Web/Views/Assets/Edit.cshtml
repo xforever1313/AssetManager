@@ -5,7 +5,7 @@
     @using AssetManager.Web.Models;
 
     Layout = "_Content";
-    @model AssetModel;
+    @model EditAssetModel;
     ViewData["Title"] = "Editing " + @Model.Asset.Name;
 }
 
@@ -14,14 +14,14 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Editing new @Model.Asset.Name
+                Editing @Model.Asset.Name
             </div>
             <div class="panel-body">
                 <noscript class="alert alert-danger">
                     JavaScript required to edit Assets.
                 </noscript>
                 <script>
-                    let adder = new AssetAdder("@Model.AssetType.DatabaseId", @Model.AssetTypeId);
+                    let adder = new AssetAdder("@Model.AssetType.DatabaseId", @Model.AssetTypeId, @Model.AssetId);
                 </script>
 
                 @foreach ( IAttributeType attrType in @Model.AssetType.AttributeTypes )
