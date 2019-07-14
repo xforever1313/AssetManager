@@ -93,6 +93,34 @@ namespace AssetManager.Web.Controllers
             }
         }
 
+        public IActionResult Edit( string database, int assetTypeId, int assetId, [FromBody] AssetBuilderModel assetBuilder )
+        {
+            try
+            {
+                Guid databaseId = this.ParseGuid( database );
+                if ( assetBuilder.Success )
+                {
+                    // TODO: Should we make this one query instead of 2?
+                    Asset asset = this.Api.DataBase.GenerateEmptyAsset( databaseId, assetTypeId );
+                    foreach ( KeyValuePair<string, IAttribute> attribute in assetBuilder.Attributes )
+                    {
+                        asset.SetAttribute( attribute.Key, attribute.Value );
+                    }
+                    this.Api.DataBase.UpdateAsset( assetId, asset );
+
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest( assetBuilder.ErrorMessage );
+                }
+            }
+            catch ( Exception e )
+            {
+                return BadRequest( e.Message );
+            }
+        }
+
         [HttpPost]
         public IActionResult Delete( string database, int assetTypeId, int assetId )
         {

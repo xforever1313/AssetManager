@@ -49,6 +49,11 @@ namespace AssetManager.Api.Database
         int AddAsset( Asset asset );
 
         /// <summary>
+        /// Updates (edits) the given asset at the specified ID with the passed in asset.
+        /// </summary>
+        void UpdateAsset( int id, Asset asset );
+
+        /// <summary>
         /// Deletes the given asset from the database.
         /// </summary>
         void DeleteAsset( Guid databaseId, int assetTypeId, int assetId );
