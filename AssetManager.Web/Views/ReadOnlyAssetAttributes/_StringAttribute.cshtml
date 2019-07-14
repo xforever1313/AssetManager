@@ -1,20 +1,10 @@
 ﻿@{
     @using System.IO;
     @using AssetManager.Api.Attributes;
+    @using SethCS.Extensions;
     @model KeyValuePair<string, StringAttribute>;
 }
 
 <div>
-    <strong><i class="fa fa-caret-right"></i> @Model.Key:</strong>
-    <blockquote>
-        @using ( StringReader reader = new StringReader( Model.Value.Value ) )
-        {
-            string line = reader.ReadLine();
-            while ( line != null )
-            {
-                <p>@line</p>
-                line = reader.ReadLine();
-            }
-        }
-    </blockquote>
+    <strong><i class="fa fa-caret-right"></i> @Model.Key: </strong> @Model.Value.Value.NormalizeWhiteSpace()
 </div>
