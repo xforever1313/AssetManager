@@ -1,10 +1,10 @@
 ﻿@{
     @using AssetManager.Api.Attributes;
     @using AssetManager.Api.Attributes.Types;
-    @model Tuple<AssetNameAttributeType, AssetNameAttribute>;
+    @model AddEditAttributeModel<AssetNameAttributeType, AssetNameAttribute>;
 
-    AssetNameAttributeType typeInfo = @Model.Item1;
-    AssetNameAttribute attributeInfo = @Model.Item2;
+    AssetNameAttributeType typeInfo = @Model.AttributeType;
+    AssetNameAttribute attributeInfo = @Model.Attribute;
 
     string escapedKey = typeInfo.EscapeKey();
 }
