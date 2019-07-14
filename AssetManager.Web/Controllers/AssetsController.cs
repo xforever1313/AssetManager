@@ -93,6 +93,23 @@ namespace AssetManager.Web.Controllers
             }
         }
 
+        public IActionResult Edit( string database, int assetTypeId, int assetId )
+        {
+            IActionResult action()
+            {
+                Guid databaseId = this.ParseGuid( database );
+                Asset asset = this.Api.DataBase.GetAsset( databaseId, assetId );
+
+                // TODO: Should we make this one query instead of 2?
+                IAssetType assetType = this.Api.DataBase.GetAssetType( databaseId, assetTypeId );
+                AssetModel assetModel = new AssetModel( this.Api, asset, assetTypeId, assetType );
+                return View( assetModel );
+            };
+
+            return this.SafePerformAction( action );
+        }
+
+        [HttpPost]
         public IActionResult Edit( string database, int assetTypeId, int assetId, [FromBody] AssetBuilderModel assetBuilder )
         {
             try

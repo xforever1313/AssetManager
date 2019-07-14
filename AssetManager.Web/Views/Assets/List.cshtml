@@ -64,8 +64,8 @@ else
                             }
                         </div>
                         <div class="panel-footer">
-                            <form style="float:left;margin-right:1em;">
-                                <button type="submit" class="btn btn-success" formmethod="post"><i class="fa fa-edit"></i> Edit</button>
+                            <form style="float:left;margin-right:1em;" action="/Assets/Edit/@asset.DatabaseId/@Model.AssetTypeID/@key">
+                                <button type="submit" class="btn btn-success" formmethod="get"><i class="fa fa-edit"></i> Edit</button>
                             </form>
                             <form style="float:right;" action="/Assets/Delete/@asset.DatabaseId/@Model.AssetTypeID/@key" method="post">
                                 <button type="submit" class="btn btn-danger" formmethod="post"><i class="fa fa-trash"></i> Delete</button>
