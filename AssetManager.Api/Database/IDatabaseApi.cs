@@ -38,6 +38,11 @@ namespace AssetManager.Api.Database
         Asset GenerateEmptyAsset( Guid databaseId, int assetTypeId );
 
         /// <summary>
+        /// Gets the asset of the specified ID.
+        /// </summary>
+        Asset GetAsset( Guid databaseId, int assetId );
+
+        /// <summary>
         /// Adds the given asset to the database.
         /// </summary>
         /// <returns>The ID of the asset just added for its database.</returns>

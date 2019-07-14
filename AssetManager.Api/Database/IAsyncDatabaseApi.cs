@@ -38,6 +38,11 @@ namespace AssetManager.Api.Database
         Task<Asset> AsyncGenerateEmptyAsset( Guid databaseId, int assetTypeId );
 
         /// <summary>
+        /// Gets the asset of the specified ID.
+        /// </summary>
+        Task<Asset> AsyncGetAsset( Guid databaseId, int assetId );
+
+        /// <summary>
         /// Adds the given asset to the database.
         /// </summary>
         /// <returns>The ID of the asset that was added in its database.</returns>

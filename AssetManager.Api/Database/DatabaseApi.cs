@@ -273,6 +273,69 @@ namespace AssetManager.Api.Database
             }
         }
 
+        public Asset GetAsset( Guid databaseId, int assetId )
+        {
+            GuidCheck( databaseId );
+            using ( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs[databaseId] ) )
+            {
+                AssetInstance assetInstance = conn.AssetInstances
+                    .Include( nameof( AssetInstance.AssetType ) )
+                    .FirstOrDefault( i => i.Id == assetId );
+
+                if ( assetInstance == null )
+                {
+                    throw new ArgumentException(
+                        "Can not find asset id " + assetId + " in database " + databaseId,
+                        nameof( assetId )
+                    );
+                }
+
+                return CreateAsset( conn, databaseId, assetInstance.AssetType.Name, assetInstance );
+            }
+        }
+
+        public void UpdateAsset( int id, Asset asset )
+        {
+            ArgumentChecker.IsNotNull( asset, nameof( asset ) );
+
+            GuidCheck( asset.DatabaseId );
+
+            using ( DatabaseConnection conn = new DatabaseConnection( this.databaseConfigs[asset.DatabaseId] ) )
+            {
+                // First, find the type of asset.
+                AssetType assetType = this.GetAssetType( conn, asset.AssetType );
+
+                // Ensure our asset is compatiable with our type.
+                IAssetType fullAssetType = this.GetAssetType( conn, asset.DatabaseId, assetType.Id );
+                fullAssetType.ValidateAsset( asset );
+
+                // Get the asset instance currently in the database.
+                AssetInstance assetInstance = conn.AssetInstances.FirstOrDefault( i => i.Id == id );
+                if ( assetInstance == null )
+                {
+                    throw new ArgumentException( "Can not find asset of ID " + id + " in database " + asset.DatabaseId );
+                }
+
+                // Update all values of attributes.
+                IEnumerable<AssetInstanceAttributeValues> values = conn.AssetInstanceAttributeValues
+                    .Include( nameof(AssetInstanceAttributeValues.AttributeKey ) )
+                    .Where( v => v.AssetInstance.Id == assetInstance.Id );
+
+                foreach ( AssetInstanceAttributeValues value in values )
+                {
+                    value.Value = asset.Attributes[value.AttributeKey.Name].Serialize();
+                    conn.AssetInstanceAttributeValues.Update( value );
+                }
+
+                // Update modified timestamp in the database.
+                DateTime timestamp = DateTime.UtcNow;
+                assetInstance.ModifiedDate = timestamp;
+                conn.AssetInstances.Update( assetInstance );
+
+                conn.SaveChanges();
+            }
+        }
+
         public AssetListInfo GetAssetsOfType( Guid databaseId, int assetTypeId )
         {
             this.GuidCheck( databaseId );
@@ -288,32 +351,38 @@ namespace AssetManager.Api.Database
 
                 foreach ( AssetInstance assetInstance in assetInstances )
                 {
-                    // Next, get all of the attributes and their values associated with the asset instance.
-                    IEnumerable<AssetInstanceAttributeValues> attributeValues = conn.AssetInstanceAttributeValues
-                        .Include( nameof( AssetInstanceAttributeValues.AssetInstance ) )
-                        .Include( nameof( AssetInstanceAttributeValues.AttributeKey ) )
-                        .Where( i => i.AssetInstance.Id == assetInstance.Id );
-
-                    // Create the asset.
-                    Asset asset = new Asset( databaseId )
-                    {
-                        AssetType = assetType.Name
-                    };
-
-                    foreach ( AssetInstanceAttributeValues value in attributeValues )
-                    {
-                        IAttribute attr = AttributeFactory.CreateAttribute( value.AttributeKey.AttributeType );
-                        attr.Deserialize( value.Value );
-
-                        asset.AddEmptyAttribute( value.AttributeKey.Name, attr.AttributeType );
-                        asset.SetAttribute( value.AttributeKey.Name, attr );
-                    }
-
+                    Asset asset = this.CreateAsset( conn, databaseId, assetType.Name, assetInstance );
                     assets.Add( assetInstance.Id, asset );
                 }
 
                 return new AssetListInfo( databaseId, assets, assetType.Id, assetType.Name );
             }
+        }
+
+        private Asset CreateAsset( DatabaseConnection conn, Guid databaseId, string assetType, AssetInstance assetInstance )
+        {
+            // Next, get all of the attributes and their values associated with the asset instance.
+            IEnumerable<AssetInstanceAttributeValues> attributeValues = conn.AssetInstanceAttributeValues
+                .Include( nameof( AssetInstanceAttributeValues.AssetInstance ) )
+                .Include( nameof( AssetInstanceAttributeValues.AttributeKey ) )
+                .Where( i => i.AssetInstance.Id == assetInstance.Id );
+
+            // Create the asset.
+            Asset asset = new Asset( databaseId )
+            {
+                AssetType = assetType
+            };
+
+            foreach ( AssetInstanceAttributeValues value in attributeValues )
+            {
+                IAttribute attr = AttributeFactory.CreateAttribute( value.AttributeKey.AttributeType );
+                attr.Deserialize( value.Value );
+
+                asset.AddEmptyAttribute( value.AttributeKey.Name, attr.AttributeType );
+                asset.SetAttribute( value.AttributeKey.Name, attr );
+            }
+
+            return asset;
         }
 
         public DatabaseQueryMultiResult<IList<AssetType>> GetAssetTypeNames()
