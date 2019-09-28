@@ -1,4 +1,5 @@
 string target = Argument( "target", "debug" );
+bool zipDists = Argument<bool>( "zip_dists", false );
 
 const string version = "0.1.0"; // This is the version.  Update before releasing.
 
@@ -101,6 +102,14 @@ void DoPublish( string runtime )
 {
     PublishProject( runtime, "AssetManager.Sqlite", "./AssetManager.Sqlite/AssetManager.Sqlite.csproj" );
     PublishProject( runtime, "AssetManager.Web", "./AssetManager.Web/AssetManager.Web.csproj" );
+
+    if( zipDists )
+    {
+        Zip(
+            outputPackages.Combine( runtime ),
+            outputPackages.CombineWithFilePath( "AssetManager." + runtime + ".zip" )
+        );
+    }
 }
 
 void PublishProject( string runtime, string projectName, string csproj )
